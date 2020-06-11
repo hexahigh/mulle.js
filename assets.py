@@ -176,6 +176,7 @@ MulleResources.append(resRoadDog)
 resRoadThing = MulleResource('roadthing')
 resRoadThing.addFile({ 'dir': '84.DXR', 'lib': 'Internal', 'num': 25 }) # images
 resRoadThing.addFile({ 'dir': '84.DXR', 'lib': 'Internal', 'num': 201 }) # audio
+resRoadThing.addFile({ 'dir': '00.CXT', 'lib': 'Internal', 'num': 446 }) # audio ding
 MulleResources.append(resRoadThing)
 
 

@@ -68,6 +68,7 @@ class RoadThingState extends MulleState {
     this.game.mulle.user.Car.addCache(this.game.mulle.SetWhenDone.Cache[0])
 
     this.game.mulle.actors.mulle.talk('84d001v0', () => {
+      this.game.mulle.playAudio('00e028v0')
       game.time.events.add(Phaser.Timer.SECOND * 2, () => {
         this.game.state.start('world')
       }, this)
