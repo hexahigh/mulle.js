@@ -7,7 +7,7 @@ env:
   - ISO=$ISO_NO LANG=NO
   - ISO=$ISO_SE LANG=SE
   global:
-    secure: oekDY6nP/tg3bBr0EIYB7v1fTVz0L4vyMr0vTqDHkDSaDBSP+U0zrhvaUk5gfvIFzUMSHGu/KU1wH7jfi/X50fd2pTDSFsRIzC3UANwt/7Mtv7MwCu4HXMz0m5VzsibFLq7bNEOpIou5vYwGFbAOMGkES7Jq2Gi1FguP9EonARE2bby577BmrdKN0SYafVWvL02AUxmYMxFnvJpn5XwacyadKR70CM3Iw2p6gq/as7FNWNWBoAmaApvGyp9DL2/bsDRRcBTD/Rbc3V2sn5o3RF5Nt9WxTHmELk448McImWDaSkKPojACDb3L+A+2tiWocJojKRVUNp035a0M3UWC0ZFeB2dTX3App54eq122e9wLqg8dOGVV+tJsDlhJm7eZ7rgyxQ4dB4em7RaU0uJN082CMAz8bM4+dLK/znMcRHvXAJvxy3s00x/JDVh85hepDMYrGR5482ioSkt1sAvIorpjSD/EZodZ+0IEO7I844cpfxjZcM4ZGCfqF3mziPvD+hc7sQG49eFr6zunFLd/6k3sUatAJahlSRbkSP2EQs8/4+Ld8VAKg9CysTmK1j7YkycG5dgLZYrHQEvuQmM7XD1U3UxcmnELMA1Z0SYjKCVglaJKLDVUwOvtF32Dp1zfPa6bWopzrDIsfirvRYQPAQzIXl6Krb3oRNByHTLobV0=
+    secure: mc3//Nt/1aRwofdnF4bFcG8UQ7EJelaFwiPY5syuOtS909czX4GNR7yHEK3a9wzawD8NWpM8wlkB+1y5MgMsxw/skhdPXzRUM/08bJLePYS3nVs2z4m6cSN03ReOHonkMFwkNvpdUkytlMqv0ndWRXUGwm60VrWD9NuUOullIAMFwcy9hpX44rRBLnRMah5BccGWyw7sDVVPvAqZ+uerFawvGyEn6uLz4v4xJj3LW9r96aTMFcl7aW1rETsDmWA2eJlkWyNpcmmGf+gZuMv0J5WmSTjYQ91GCdcgi++0/0Ic4nEMbP0D2p6tI0tuxM5Jbsdf8UiN4HMElHLBB763Ow95QBlqAV7OpyPO+ZNKQ/4qkbETma+wjml9LT94aUhJI4VPD+xeKJFdVhFCijTgPardiuEAhC2yRAE0QMusTNbacmbmgA6S9rKiH4cVb1bmFbWwyze4wH41DK0x/Si0OVTk4jT7bWlfl5wsb35eGfSb3UNOv4swIFzqqvPbJe1VHmr1wtAKUQMowrd1Fea9z5MT/111wF87H6EavsX60GOGZTTi3fZ707cxFEyox+RELInUrec15D7emX/eV5hkAGHJhcjjJb6aotgkPq8BeNMgCWKyD+8WgOAVDTzyYmlRe38l/djSrMxuWnNQWyToEbgzX8k1U+rMDIw06rk4jEQ=
 addons:
   apt:
     packages:
@@ -39,4 +39,4 @@ script:
   - npm run build
 after_script:
 - tar -czf ~/Mulle_$LANG.tgz .
-- sshpass -p $UPLOAD_PW scp -r mulle@dedicated.datagutten.net:/home/mulle ~/Mulle_$LANG.tgz
+- sshpass -e scp mulle@dedicated.datagutten.net:/home/mulle ~/Mulle_$LANG.tgz
