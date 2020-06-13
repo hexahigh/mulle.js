@@ -30,5 +30,7 @@ before_script:
   - sudo mount -o loop mullebil.iso ~/mullebil
 
 script:
+  - echo "travis_fold:start:SCRIPT folding starts"
   - ./extract.sh
+  - echo "travis_fold:end:SCRIPT folding ends"
   - npm run build
