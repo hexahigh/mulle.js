@@ -1,0 +1,10 @@
+language: node_js
+
+env:
+    - ISO=https://archive.org/download/bygg-biler-med-mulle-mekk/Bygg%20biler%20med%20Mulle%20Mekk.iso
+    - ISO=https://archive.org/download/byggbilarmedmullemeck/byggbilarmedmullemeck.iso
+
+before_install:
+  wget -O mullebil.iso $ISO
+  mkdir ~/mullebil
+  sudo mount -o loop mullebil.iso ~/mullebil
