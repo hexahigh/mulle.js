@@ -1,6 +1,6 @@
-language: node_js
-node_js:
-  - 10
+language: python
+python:
+  - 3.8
 
 env:
     - ISO=https://archive.org/download/bygg-biler-med-mulle-mekk/Bygg%20biler%20med%20Mulle%20Mekk.iso
@@ -9,25 +9,20 @@ env:
 addons:
   apt:
     packages:
-      - python3
-      - python3-pip
-      - python3-setuptools
+      - nodejs
+      - npm
       - ffmpeg
 
 before_install:
-  - which python
-  - export PYTHON2=$(which python)
-  - sudo rm $PYTHON2
-  - sudo ln -s $(which python3) $PYTHON2
-  - sudo -H python -m pip install --upgrade pip
-  - sudo -H python -m pip install PyTexturePacker pydub bitstring
-  - python -V
   - mkdir bin
   - wget -O bin/magick https://imagemagick.org/download/binaries/magick
   - chmod +x bin/magick
   - export PATH="$PWD/bin:$PATH"
   - magick -version
-  - python check_dependencies.py
+
+install:
+  - pip install -r requirements.txt
+  - npm install
 
 before_script:
   - wget -O mullebil.iso $ISO
