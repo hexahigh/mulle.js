@@ -79,6 +79,16 @@ var partNames = {
 
   66: 'fender',
 
+  69: 'wine bucket',
+  74: 'vacuum',
+  75: 'plane steering wheel',
+  76: 'watering can',
+  81: 'small battery',
+  89: 'signal horn',
+  91: 'solar panel',
+  92: 'F1 steering wheel',
+  93: 'cogwheels',
+
   96: 'wood wheels',
 
   99: 'horse carriage',
@@ -107,6 +117,10 @@ var partNames = {
 
   146: 'telephone kiosk',
 
+  172: 'tank',
+
+  176: 'electric horn',
+
   149: 'caterpillar',
 
   150: 'brakes',
@@ -116,6 +130,16 @@ var partNames = {
   155: 'tent',
 
   162: 'milk jar',
+
+  167: 'toilet',
+
+  177: 'ambulance middle',
+
+  181: 'boat engine',
+
+  191: 'toothpaste mid',
+  192: 'toothpaste front',
+  193: 'toothpaste back',
 
   303: 'tires',
 
