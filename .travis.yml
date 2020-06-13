@@ -19,8 +19,8 @@ before_install:
   - export PYTHON2=$(which python)
   - sudo rm $PYTHON2
   - sudo ln -s $(which python3) $PYTHON2
-  - sudo -H pip3 install --upgrade pip
-  - sudo -H pip3 install PyTexturePacker pydub bitstring
+  - sudo -H python -m pip install --upgrade pip
+  - sudo -H python -m pip install PyTexturePacker pydub bitstring
   - which python
   - wget -O mullebil.iso $ISO
   - mkdir ~/mullebil
