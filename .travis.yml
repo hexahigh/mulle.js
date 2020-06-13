@@ -15,6 +15,7 @@ addons:
       - ffmpeg
 
 before_install:
+  - which python
   - export PYTHON2=$(which python)
   - sudo rm $PYTHON2
   - sudo ln -s $(which python3) $PYTHON2
@@ -23,6 +24,7 @@ before_install:
   - python -V
   - mkdir bin
   - wget -O bin/magick https://imagemagick.org/download/binaries/magick
+  - chmod +x bin/magick
   - export PATH="$PWD/bin:$PATH"
   - magick -version
   - python check_dependencies.py
