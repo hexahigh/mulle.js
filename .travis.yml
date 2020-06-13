@@ -21,3 +21,6 @@ before_install:
   - wget -O mullebil.iso $ISO
   - mkdir ~/mullebil
   - sudo mount -o loop mullebil.iso ~/mullebil
+
+script:
+  - npm run build
