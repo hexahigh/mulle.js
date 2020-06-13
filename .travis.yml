@@ -13,7 +13,6 @@ addons:
       - python3-pip
       - python3-setuptools
       - ffmpeg
-      - imagemagick
 
 before_install:
   - export PYTHON2=$(which python)
@@ -25,6 +24,8 @@ before_install:
   - wget -O mullebil.iso $ISO
   - mkdir ~/mullebil
   - sudo mount -o loop mullebil.iso ~/mullebil
+  - wget https://imagemagick.org/download/binaries/magick
+  - magick -version
 
 script:
   - ./extract.sh
