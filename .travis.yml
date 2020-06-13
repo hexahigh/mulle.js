@@ -14,7 +14,7 @@ addons:
       - nodejs
       - npm
       - ffmpeg
-      - sshpass
+  ssh_known_hosts: dedicated.datagutten.net
 
 before_install:
   - mkdir bin
