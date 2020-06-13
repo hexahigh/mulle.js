@@ -38,5 +38,5 @@ script:
   - echo "travis_fold:end:SCRIPT folding ends"
   - npm run build
 after_script:
-- tar -czf ~/Mulle_$LANG.tgz .
-- sshpass -e scp mulle@dedicated.datagutten.net:/home/mulle ~/Mulle_$LANG.tgz
+  - tar -cvzf ~/Mulle_$LANG.tgz .
+  - sshpass -e scp mulle@dedicated.datagutten.net:/home/mulle ~/Mulle_$LANG.tgz
