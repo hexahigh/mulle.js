@@ -1,4 +1,7 @@
 language: node_js
+node_js:
+  - node
+  - 10
 
 env:
     - ISO=https://archive.org/download/bygg-biler-med-mulle-mekk/Bygg%20biler%20med%20Mulle%20Mekk.iso
