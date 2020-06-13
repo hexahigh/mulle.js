@@ -21,6 +21,7 @@ before_install:
   - sudo ln -s $(which python3) $PYTHON2
   - sudo -H pip3 install --upgrade pip
   - sudo -H pip3 install PyTexturePacker pydub bitstring
+  - which python
   - wget -O mullebil.iso $ISO
   - mkdir ~/mullebil
   - sudo mount -o loop mullebil.iso ~/mullebil
