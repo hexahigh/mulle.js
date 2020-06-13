@@ -5,6 +5,7 @@ env:
     - ISO=https://archive.org/download/byggbilarmedmullemeck/byggbilarmedmullemeck.iso
 
 before_install:
-  wget -O mullebil.iso $ISO
-  mkdir ~/mullebil
-  sudo mount -o loop mullebil.iso ~/mullebil
+  - sudo pip3 install PyTexturePacker pydub bitstring
+  - wget -O mullebil.iso $ISO
+  - mkdir ~/mullebil
+  - sudo mount -o loop mullebil.iso ~/mullebil
