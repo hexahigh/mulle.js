@@ -4,6 +4,14 @@ env:
     - ISO=https://archive.org/download/bygg-biler-med-mulle-mekk/Bygg%20biler%20med%20Mulle%20Mekk.iso
     - ISO=https://archive.org/download/byggbilarmedmullemeck/byggbilarmedmullemeck.iso
 
+addons:
+  apt:
+    packages:
+      - python3
+      - python3-pip
+      - ffmpeg
+      - imagemagick
+
 before_install:
   - sudo pip3 install PyTexturePacker pydub bitstring
   - wget -O mullebil.iso $ISO
