@@ -3,9 +3,11 @@ python:
   - 3.8
 
 env:
-    - ISO=https://archive.org/download/bygg-biler-med-mulle-mekk/Bygg%20biler%20med%20Mulle%20Mekk.iso
-    - ISO=https://archive.org/download/byggbilarmedmullemeck/byggbilarmedmullemeck.iso
-
+  matrix:
+  - ISO=$ISO_NO LANG=NO
+  - ISO=$ISO_SE LANG=SE
+  global:
+    secure: oekDY6nP/tg3bBr0EIYB7v1fTVz0L4vyMr0vTqDHkDSaDBSP+U0zrhvaUk5gfvIFzUMSHGu/KU1wH7jfi/X50fd2pTDSFsRIzC3UANwt/7Mtv7MwCu4HXMz0m5VzsibFLq7bNEOpIou5vYwGFbAOMGkES7Jq2Gi1FguP9EonARE2bby577BmrdKN0SYafVWvL02AUxmYMxFnvJpn5XwacyadKR70CM3Iw2p6gq/as7FNWNWBoAmaApvGyp9DL2/bsDRRcBTD/Rbc3V2sn5o3RF5Nt9WxTHmELk448McImWDaSkKPojACDb3L+A+2tiWocJojKRVUNp035a0M3UWC0ZFeB2dTX3App54eq122e9wLqg8dOGVV+tJsDlhJm7eZ7rgyxQ4dB4em7RaU0uJN082CMAz8bM4+dLK/znMcRHvXAJvxy3s00x/JDVh85hepDMYrGR5482ioSkt1sAvIorpjSD/EZodZ+0IEO7I844cpfxjZcM4ZGCfqF3mziPvD+hc7sQG49eFr6zunFLd/6k3sUatAJahlSRbkSP2EQs8/4+Ld8VAKg9CysTmK1j7YkycG5dgLZYrHQEvuQmM7XD1U3UxcmnELMA1Z0SYjKCVglaJKLDVUwOvtF32Dp1zfPa6bWopzrDIsfirvRYQPAQzIXl6Krb3oRNByHTLobV0=
 addons:
   apt:
     packages:
@@ -34,3 +36,6 @@ script:
   - ./extract.sh
   - echo "travis_fold:end:SCRIPT folding ends"
   - npm run build
+after_script:
+- tar -czf ~/Mulle_$LANG.tgz .
+- sshpass -p $UPLOAD_PW scp -r mulle@dedicated.datagutten.net:/home/mulle ~/Mulle_$LANG.tgz
