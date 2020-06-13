@@ -37,6 +37,16 @@ script:
   - ./extract.sh
   - echo "travis_fold:end:SCRIPT folding ends"
   - npm run build
-after_script:
-  - tar -cvzf ~/Mulle_$LANG.tgz .
-  - sshpass -e scp ~/Mulle_$LANG.tgz mulle@dedicated.datagutten.net:/home/mulle
+
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in deploy_rsa.enc -out deploy_rsa -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/deploy_rsa
+  - ssh-add /tmp/deploy_rsa
+  - tar -czf ~/Mulle_$LANG.tgz .
+  - du -h ~/Mulle_$LANG.tgz
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: scp -q ~/Mulle_$LANG.tgz mulle@dedicated.datagutten.net:/home/mulle
