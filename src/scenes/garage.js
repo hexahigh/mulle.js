@@ -411,6 +411,59 @@ class GarageState extends MulleState {
       this.popupMenu.setDirectorMember('00.CXT', 84)
       this.game.add.existing(this.popupMenu)
 
+      const rectList = {
+        Trash: [165, 125, 245, 260],
+        Diploma: [265, 127, 345, 264],
+        quit: [365, 125, 445, 266],
+        Cancel: [460, 210, 528, 365],
+      };
+
+      const soundList = {
+        Trash: '09d001v0',
+        quit: '09d003v0',
+        Diploma: '09d002v0',
+        Cancel: '09d004v0',
+      };
+
+      let currentAudio;
+
+      const funcList = {
+        Trash: () => {
+          alert('Trash your car')
+        },
+        Diploma: () => {
+          alert('Show diploma')
+        },
+        Cancel: () => {
+          this.toolbox.toggleToolbox(this.toolbox)
+        },
+        quit: () => {
+          this.game.state.start('menu')
+        }
+      };
+
+      this.popupMenuButtons = game.add.group();
+
+      for (let n in rectList) {
+        let r = rectList[n];
+
+        let b = new Phaser.Button(this.game, r[0], r[1] - 40);
+        b.width = r[2] - r[0];
+        b.height = r[3] - r[1];
+
+        b.onInputOver.add(() => {
+          if (currentAudio) currentAudio.stop();
+          currentAudio = this.game.mulle.playAudio(soundList[n])
+        });
+
+        b.onInputDown.add(() => {
+          if (currentAudio) currentAudio.stop();
+          funcList[n]()
+        });
+
+        this.popupMenuButtons.addChild(b)
+      }
+
       return true
     }
 
@@ -418,6 +471,8 @@ class GarageState extends MulleState {
       this.blockSprite.destroy()
 
       this.popupMenu.destroy()
+
+      this.popupMenuButtons.destroy()
 
       return true
     }
