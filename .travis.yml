@@ -20,12 +20,13 @@ before_install:
   - sudo ln -s $(which python3) $PYTHON2
   - sudo -H python -m pip install --upgrade pip
   - sudo -H python -m pip install PyTexturePacker pydub bitstring
-  - which python
+  - python -V
   - wget -O mullebil.iso $ISO
   - mkdir ~/mullebil
   - sudo mount -o loop mullebil.iso ~/mullebil
   - wget https://imagemagick.org/download/binaries/magick
   - magick -version
+  - python check_dependencies.py
 
 script:
   - ./extract.sh
