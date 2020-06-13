@@ -46,12 +46,12 @@ before_deploy:
   - eval "$(ssh-agent -s)"
   - chmod 600 /tmp/deploy_rsa
   - ssh-add /tmp/deploy_rsa
-  - tar -czf ~/Mulle_$LANG.tgz .
+  - tar -czf ~/Mulle_$LANG.tgz ./dist
   - du -h ~/Mulle_$LANG.tgz
 
 deploy:
   provider: script
   skip_cleanup: true
-  script: scp -q ~/Mulle_$LANG.tgz mulle@dedicated.datagutten.net:/home/mulle/dist
+  script: scp -q ~/Mulle_$LANG.tgz mulle@dedicated.datagutten.net:/home/mulle
   on:
     branch: travis
