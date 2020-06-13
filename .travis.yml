@@ -17,6 +17,7 @@ addons:
       - imagemagick
 
 before_install:
+  - sudo -H pip3 install --upgrade pip
   - sudo -H pip3 install PyTexturePacker pydub bitstring
   - wget -O mullebil.iso $ISO
   - mkdir ~/mullebil
