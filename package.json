@@ -7,7 +7,8 @@
 		"build": "gulp",
 		"start": "webpack-dev-server --config webpack.dev.js",
 		"start-prod": "webpack-dev-server --config webpack.prod.js",
-		"server": "node server/server.js"
+		"server": "node server/server.js",
+		"test": "standard"
 	},
 	"repository": {
 		"type": "git",
@@ -31,7 +32,8 @@
 		"webpack": "^3.7.0",
 		"webpack-merge": "^4.1.0",
 		"webpack-stream": "^4.0.0",
-		"ws": "^3.2.0"
+		"ws": "^3.2.0",
+		"standard": "*"
 	},
 	"dependencies": {
 		"colors": "^1.1.2",
