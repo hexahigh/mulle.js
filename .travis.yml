@@ -50,3 +50,5 @@ deploy:
   provider: script
   skip_cleanup: true
   script: scp -q ~/Mulle_$LANG.tgz mulle@dedicated.datagutten.net:/home/mulle
+  on:
+    branch: travis
