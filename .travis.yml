@@ -37,7 +37,7 @@ script:
   - echo "travis_fold:start:SCRIPT folding starts"
   - ./extract.sh
   - echo "travis_fold:end:SCRIPT folding ends"
-  - node_modules/gulp/bin/gulp.js build-prod
+  - npx gulp build-prod
   - python3 assets.py 7
   - python3 copy_ui.py
 
