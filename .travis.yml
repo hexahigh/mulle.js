@@ -39,4 +39,4 @@ script:
   - npm run build
 after_script:
   - tar -cvzf ~/Mulle_$LANG.tgz .
-  - sshpass -e scp mulle@dedicated.datagutten.net:/home/mulle ~/Mulle_$LANG.tgz
+  - sshpass -e scp ~/Mulle_$LANG.tgz mulle@dedicated.datagutten.net:/home/mulle
