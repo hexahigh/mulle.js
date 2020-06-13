@@ -415,8 +415,9 @@ for res in MulleResources:
 			PyTexturePackerUtils.save_image(packed_image, assetOutPath + "/" + atlasName + '.png')
 
 			if optimizeImages > 0:
-				call('optipng.exe -o' + str( optimizeImages ) + ' ' + assetOutPath + "/" + atlasName + '.png')
-			
+				# call('optipng.exe -o' + str( optimizeImages ) + ' ' + assetOutPath + "/" + atlasName + '.png')
+				call(['optipng', '-o', optimizeImages, assetOutPath, os.path.join(assetOutPath, atlasName + '.png')])
+
 			# make json
 			for image_rect in atlas.image_rect_list:
 				width, height = (image_rect.width, image_rect.height) if not image_rect.rotated \
