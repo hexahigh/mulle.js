@@ -4,8 +4,8 @@ python:
 
 env:
   matrix:
-  - ISO=$ISO_NO LANG=NO
-  - ISO=$ISO_SE LANG=SE
+  - ISO=$ISO_NO BUILD_LANG=NO
+  - ISO=$ISO_SE BUILD_LANG=SE
   global:
     secure: mc3//Nt/1aRwofdnF4bFcG8UQ7EJelaFwiPY5syuOtS909czX4GNR7yHEK3a9wzawD8NWpM8wlkB+1y5MgMsxw/skhdPXzRUM/08bJLePYS3nVs2z4m6cSN03ReOHonkMFwkNvpdUkytlMqv0ndWRXUGwm60VrWD9NuUOullIAMFwcy9hpX44rRBLnRMah5BccGWyw7sDVVPvAqZ+uerFawvGyEn6uLz4v4xJj3LW9r96aTMFcl7aW1rETsDmWA2eJlkWyNpcmmGf+gZuMv0J5WmSTjYQ91GCdcgi++0/0Ic4nEMbP0D2p6tI0tuxM5Jbsdf8UiN4HMElHLBB763Ow95QBlqAV7OpyPO+ZNKQ/4qkbETma+wjml9LT94aUhJI4VPD+xeKJFdVhFCijTgPardiuEAhC2yRAE0QMusTNbacmbmgA6S9rKiH4cVb1bmFbWwyze4wH41DK0x/Si0OVTk4jT7bWlfl5wsb35eGfSb3UNOv4swIFzqqvPbJe1VHmr1wtAKUQMowrd1Fea9z5MT/111wF87H6EavsX60GOGZTTi3fZ707cxFEyox+RELInUrec15D7emX/eV5hkAGHJhcjjJb6aotgkPq8BeNMgCWKyD+8WgOAVDTzyYmlRe38l/djSrMxuWnNQWyToEbgzX8k1U+rMDIw06rk4jEQ=
 addons:
@@ -42,16 +42,16 @@ script:
   - python3 copy_ui.py
 
 before_deploy:
-  - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in deploy_rsa.enc -out /tmp/deploy_rsa -d
+  - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in deployment/deploy_rsa.enc -out /tmp/deploy_rsa -d
   - eval "$(ssh-agent -s)"
   - chmod 600 /tmp/deploy_rsa
   - ssh-add /tmp/deploy_rsa
-  - tar -czf ~/Mulle_$LANG.tgz ./dist
+  - deployment/package.sh
   - du -h ~/Mulle_$LANG.tgz
 
 deploy:
   provider: script
   skip_cleanup: true
-  script: scp -q ~/Mulle_$LANG.tgz mulle@dedicated.datagutten.net:/home/mulle
+  script: deployment/deploy.sh
   on:
     branch: travis
