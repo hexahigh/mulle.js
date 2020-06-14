@@ -13,7 +13,9 @@ jobs:
       install:
         - python -m pip install -r requirements.txt
         - npm install
-      env: PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:$PATH"
+      env:
+        - ISO=$ISO_SE BUILD_LANG=SE
+        - PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:$PATH"
     - os: linux
 
   allow_failures:
