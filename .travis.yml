@@ -47,7 +47,9 @@ install:
 before_script:
   - wget -O mullebil.iso $ISO
   - mkdir ~/mullebil
-  - sudo mount -o loop mullebil.iso ~/mullebil
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then powershell 'Mount-DiskImage "~/mullebil.iso" '; ln -s /d ~/mullebil;
+    else sudo mount -o loop mullebil.iso ~/mullebil;
+    fi
 
 script:
   - echo "travis_fold:start:SCRIPT folding starts"
