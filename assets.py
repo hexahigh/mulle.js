@@ -233,6 +233,8 @@ if not os.path.exists(assetOutPath):
 	os.makedirs(assetOutPath)
 assetWebPath = "assets"
 resourcePath = 'cst_out_new'
+if not os.path.exists(resourcePath):
+	raise FileNotFoundError(resourcePath)
 meta = {}
 
 assetIndex = {}
