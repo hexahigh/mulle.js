@@ -39,6 +39,7 @@ script:
   - echo "travis_fold:end:SCRIPT folding ends"
   - npx gulp build-prod
   - python3 assets.py 7
+  - python3 topography.py
   - python3 copy_ui.py
 
 before_deploy:
