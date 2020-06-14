@@ -10,9 +10,9 @@ jobs:
         - choco install imagemagick.tool
         - choco install python
         - choco install optipng
-    install:
-      - python -m pip install -r requirements.txt
-      - npm install
+      install:
+        - python -m pip install -r requirements.txt
+        - npm install
     - os: linux
 
   allow_failures:
