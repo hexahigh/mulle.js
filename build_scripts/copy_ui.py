@@ -2,12 +2,13 @@ import os
 from shutil import copy
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-ui_source = os.path.join(dir_path, "cst_out_new", "00.CXT", "Standalone")
-arrows_source = os.path.join(dir_path, "cst_out_new", "05.DXR", "Internal")
-ui_path = os.path.join(dir_path, "dist", "ui")
+project_path = os.path.realpath(os.path.join(dir_path, '..'))
+ui_source = os.path.join(project_path, "cst_out_new", "00.CXT", "Standalone")
+arrows_source = os.path.join(project_path, "cst_out_new", "05.DXR", "Internal")
+ui_path = os.path.join(project_path, "dist", "ui")
 
-data_source = os.path.join(dir_path, "data")
-data_path = os.path.join(dir_path, "dist", "data")
+data_source = os.path.join(project_path, "data")
+data_path = os.path.join(project_path, "dist", "data")
 
 if not os.path.exists(ui_path):
     os.mkdir(ui_path)
@@ -38,7 +39,7 @@ for num in range(161, 192):
     dest_file = os.path.join(ui_path, str(num) + ".png")
     copy(source_file, dest_file)
 
-copy(os.path.join(dir_path, "loading.png"), os.path.join(dir_path, "dist"))
+copy(os.path.join(project_path, "loading.png"), os.path.join(project_path, "dist"))
 
 for file in os.scandir(os.path.join(data_source)):
-    copy(file, os.path.join(dir_path, "dist", "data"))
+    copy(file, os.path.join(project_path, "dist", "data"))

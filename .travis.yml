@@ -52,8 +52,8 @@ script:
   - echo "travis_fold:end:SCRIPT folding ends"
   - npx gulp build-prod
   - python3 assets.py 7
-  - python3 topography.py
-  - python3 copy_ui.py
+  - python3 build_scripts/topography.py
+  - python3 build_scripts/copy_ui.py
 
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in deployment/deploy_rsa.enc -out /tmp/deploy_rsa -d
