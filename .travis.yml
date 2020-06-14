@@ -46,7 +46,7 @@ install:
 
 before_script:
   - wget -O mullebil.iso $ISO
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then powershell 'Mount-DiskImage "$HOME\mullebil.iso" '; ln -s /d ~/mullebil;
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then powershell deployment/mount.ps1;
     else mkdir ~/mullebil; sudo mount -o loop mullebil.iso ~/mullebil;
     fi
 
