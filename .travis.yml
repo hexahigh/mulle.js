@@ -10,9 +10,6 @@ jobs:
         - choco install imagemagick.tool
         - choco install python --version 3.8
         - choco install optipng
-      install:
-        - python -m pip install -r requirements.txt
-        - npm install
       env:
         - ISO=$ISO_SE BUILD_LANG=SE
         - PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:$PATH"
@@ -44,7 +41,7 @@ before_install:
   - magick -version
 
 install:
-  - pip install -r requirements.txt
+  - python -m pip install -r requirements.txt
   - npm install
 
 before_script:
@@ -66,7 +63,6 @@ before_deploy:
   - eval "$(ssh-agent -s)"
   - chmod 600 /tmp/deploy_rsa
   - ssh-add /tmp/deploy_rsa
-  - deployment/package.sh
 
 deploy:
   provider: script
