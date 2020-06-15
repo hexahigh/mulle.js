@@ -54,12 +54,12 @@ install:
 
 script:
   - echo "travis_fold:start:SCRIPT folding starts"
-  - ./extract.sh
+  - python extract.py
   - echo "travis_fold:end:SCRIPT folding ends"
   - npx gulp build-prod
-  - python3 assets.py 7
-  - python3 build_scripts/topography.py
-  - python3 build_scripts/copy_ui.py
+  - python assets.py 7
+  - python build_scripts/topography.py
+  - python build_scripts/copy_ui.py
 
 before_deploy:
 - deployment/package.sh
