@@ -65,7 +65,6 @@ script:
   - python3 build_scripts/copy_ui.py
 
 before_deploy:
-- deployment/ssh_setup.sh
 - deployment/package.sh
 
 deploy:
