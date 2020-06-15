@@ -54,7 +54,7 @@ install:
 
 script:
   - echo "travis_fold:start:SCRIPT folding starts"
-  - python extract.py
+  - python extract.py ~/mullebil
   - echo "travis_fold:end:SCRIPT folding ends"
   - npx gulp build-prod
   - python assets.py 7
