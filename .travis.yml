@@ -6,7 +6,7 @@ jobs:
     - os: windows
       language: sh
       before_install:
-        - choco install nodejs-lts
+        - choco install nodejs --version 10.21.0
         - choco install imagemagick.tool
         - choco install python --version 3.8
         - choco install optipng
