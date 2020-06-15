@@ -11,7 +11,7 @@ jobs:
         - choco install python --version 3.8
         - choco install optipng
       before_script:
-        - wget -O mullebil.iso $ISO
+        - wget -O ~/mullebil.iso $ISO
         - powershell -ExecutionPolicy bypass deployment/mount.ps1
       env:
         - ISO=$ISO_SE BUILD_LANG=SE
@@ -24,7 +24,7 @@ jobs:
         - ssh-add /tmp/deploy_rsa
         - scp -q mulle@dedicated.datagutten.net:/home/mulle/iso/mullebil_$BUILD_LANG.iso ~/mullebil.iso
         - mkdir ~/mullebil
-        - sudo mount -o loop mullebil.iso ~/mullebil
+        - sudo mount -o loop ~/mullebil.iso ~/mullebil
 
   allow_failures:
     - os: windows
