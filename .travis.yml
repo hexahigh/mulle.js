@@ -16,7 +16,7 @@ jobs:
         - PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:$PATH"
         - ISO=$ISO_NO
       before_install:
-        cmd /c deployment/windows_dependencies.cmd
+        - deployment/windows_dependencies.cmd
       <<: *_windows_mount
 
     - os: windows
@@ -26,7 +26,7 @@ jobs:
         - PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:$PATH"
         - ISO=$ISO_SE
       before_install:
-        cmd /c deployment/windows_dependencies.cmd
+        - deployment/windows_dependencies.cmd
       <<: *_windows_mount
 
     - os: linux
@@ -50,11 +50,7 @@ addons:
   ssh_known_hosts: dedicated.datagutten.net
 
 before_install:
-  - mkdir bin
-  - wget -O bin/magick https://imagemagick.org/download/binaries/magick
-  - chmod +x bin/magick
-  - export PATH="$PWD/bin:$PATH"
-  - magick -version
+  - deployment/imagemagick.sh
   - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in deployment/deploy_rsa.enc -out /tmp/deploy_rsa -d
   - eval "$(ssh-agent -s)"
   - chmod 600 /tmp/deploy_rsa
