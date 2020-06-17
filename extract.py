@@ -20,4 +20,7 @@ if not files:
     raise FileNotFoundError('No files found in %s' % gameDir)
 
 for file in files:
-    main(['-e', '-i', file])
+    try:
+        main(['-e', '-i', file])
+    except UnicodeEncodeError as e:
+        print('Error extracting %s: %s' % (file, e))
