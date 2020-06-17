@@ -185,6 +185,8 @@ class ShockwaveParser:
 		'7061': '??'
 	}
 
+	debug = False
+
 	def __init__(self, file):
 
 		self.fileName = file
@@ -207,7 +209,8 @@ class ShockwaveParser:
 		self.forceLittle = False
 
 	def log(self, t):
-		print(t.encode('iso8859-1'))
+		if self.debug:
+			print(t.encode('iso8859-1'))
 
 	def readByte(self, big):
 		return struct.unpack( ('b' if big else '>b'), self.f.read(1) )[0]
