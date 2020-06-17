@@ -14,16 +14,6 @@ _windows_mount: &_windows_mount
     - wget -O ~/mullebil.iso $ISO
     - powershell -ExecutionPolicy bypass deployment/mount.ps1
 
-_linux_specific: &_linux_specific
-  before_script:
-    - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in deployment/deploy_rsa.enc -out /tmp/deploy_rsa -d
-    - eval "$(ssh-agent -s)"
-    - chmod 600 /tmp/deploy_rsa
-    - ssh-add /tmp/deploy_rsa
-    - scp -q mulle@dedicated.datagutten.net:/home/mulle/iso/mullebil_$BUILD_LANG.iso ~/mullebil.iso
-    - mkdir ~/mullebil
-    - sudo mount -o loop ~/mullebil.iso ~/mullebil
-
 jobs:
   include:
     - os: windows
@@ -47,12 +37,10 @@ jobs:
     - os: linux
       env:
         - BUILD_LANG=NO
-      <<: *_linux_specific
 
     - os: linux
       env:
         - BUILD_LANG=SE
-      <<: *_linux_specific
 
   allow_failures:
     - os: windows
@@ -77,6 +65,15 @@ install:
   - python -m pip install -r requirements.txt
   - npm install
   - python extract.py ~/mullebil
+
+before_script:
+  - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in deployment/deploy_rsa.enc -out /tmp/deploy_rsa -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/deploy_rsa
+  - ssh-add /tmp/deploy_rsa
+  - scp -q mulle@dedicated.datagutten.net:/home/mulle/iso/mullebil_$BUILD_LANG.iso ~/mullebil.iso
+  - mkdir ~/mullebil
+  - sudo mount -o loop ~/mullebil.iso ~/mullebil
 
 script:
   - npx gulp build-prod
