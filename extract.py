@@ -11,7 +11,7 @@ gameDir = os.path.join(gameDir, 'MOVIES')
 
 files = glob('%s%s*.CXT' % (gameDir, os.path.sep)) + glob('%s%s*.DXR' % (gameDir, os.path.sep))
 if not files:
-    raise FileNotFoundError('No files found')
+    raise FileNotFoundError('No files found in %s' % gameDir)
 
 for file in files:
     main(['-e', '-i', file])
