@@ -2,13 +2,6 @@ language: python
 python:
   - 3.8
 
-_windows_specific: &_windows_specific
-  before_install:
-    - choco install nodejs --version 10.21.0
-    - choco install imagemagick.tool
-    - choco install python --version 3.8
-    - choco install optipng
-
 _windows_mount: &_windows_mount
   before_script:
     - wget -O ~/mullebil.iso $ISO
@@ -22,7 +15,8 @@ jobs:
         - BUILD_LANG=NO
         - PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:$PATH"
         - ISO=$ISO_NO
-      <<: *_windows_specific
+      before_install:
+        cmd /c deployment/windows_dependencies.cmd
       <<: *_windows_mount
 
     - os: windows
@@ -31,7 +25,8 @@ jobs:
         - BUILD_LANG=SE
         - PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:$PATH"
         - ISO=$ISO_SE
-      <<: *_windows_specific
+      before_install:
+        cmd /c deployment/windows_dependencies.cmd
       <<: *_windows_mount
 
     - os: linux
