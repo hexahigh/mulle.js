@@ -10,12 +10,10 @@ jobs:
         - choco install imagemagick.tool
         - choco install python --version 3.8
         - choco install optipng
+        - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:$PATH"
       before_script:
         - wget -O ~/mullebil.iso $ISO
         - powershell -ExecutionPolicy bypass deployment/mount.ps1
-      env:
-        - ISO=$ISO_SE BUILD_LANG=SE
-        - PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:$PATH"
     - os: linux
       before_script:
         - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in deployment/deploy_rsa.enc -out /tmp/deploy_rsa -d
@@ -25,12 +23,14 @@ jobs:
         - scp -q mulle@dedicated.datagutten.net:/home/mulle/iso/mullebil_$BUILD_LANG.iso ~/mullebil.iso
         - mkdir ~/mullebil
         - sudo mount -o loop ~/mullebil.iso ~/mullebil
-      env:
-        - ISO=$ISO_NO BUILD_LANG=NO
-        - ISO=$ISO_SE BUILD_LANG=SE
 
   allow_failures:
     - os: windows
+
+env:
+  matrix:
+    - ISO=$ISO_NO BUILD_LANG=NO
+    - ISO=$ISO_SE BUILD_LANG=SE
 
 addons:
   apt:
