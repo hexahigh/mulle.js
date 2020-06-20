@@ -8,10 +8,10 @@ jobs:
       language: shell
       env:
         - BUILD_LANG=NO
-        - PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:$PATH"
         - ISO=$ISO_NO
       before_install:
         - deployment/windows_dependencies.cmd
+        - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PATH"
         - wget -O ~/mullebil.iso $ISO
         - powershell -ExecutionPolicy bypass deployment/mount.ps1
 
@@ -19,10 +19,10 @@ jobs:
       language: shell
       env:
         - BUILD_LANG=SE
-        - PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PATH"
         - ISO=$ISO_SE
       before_install:
         - deployment/windows_dependencies.cmd
+        - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PATH"
         - wget -O ~/mullebil.iso $ISO
         - powershell -ExecutionPolicy bypass deployment/mount.ps1
 
