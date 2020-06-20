@@ -1483,20 +1483,22 @@ class ShockwaveParser:
 
 								#if entry["imageWidth"] > 390 or entry["imageHeight"] > 390:
 								if self.baseName.upper() in OPAQUE and num in OPAQUE[self.baseName.upper()]:
-									print("***"*10)
-									print("Opaque!")							
-									print(fullOutFile)
-									print("***"*10)
+									if self.debug:
+										print("***"*10)
+										print("Opaque!")
+										print(fullOutFile)
+										print("***"*10)
 									if OS_PLATFORM == 'Windows':
 										call(["cmd", '/c', "magick convert", tmpFile.name, fullOutFile])
 									else:
 										call(["magick", "convert", tmpFile.name, fullOutFile])
 									#call("magick convert " + outPath + "/" + outFileName + ".bmp " + outPath + "/" + outFileName + ".png")
 								else:
-									print("***"*10)
-									print("Translucent!")						
-									print(fullOutFile)
-									print("***"*10)
+									if self.debug:
+										print("***"*10)
+										print("Translucent!")
+										print(fullOutFile)
+										print("***"*10)
 									if OS_PLATFORM == 'Windows':
 										call(["cmd", '/c', "magick convert", tmpFile.name, "-transparent", "#FFFFFF", fullOutFile])
 									else:
