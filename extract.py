@@ -12,7 +12,7 @@ if os.path.exists(os.path.join(gameDir, 'MOVIES')):
     files = glob('%s%s*.CXT' % (gameDir, os.path.sep)) + glob('%s%s*.DXR' % (gameDir, os.path.sep))
 elif os.path.join(gameDir, 'movies'):
     gameDir = os.path.join(gameDir, 'movies')
-    files = glob('%s%s*.dxr' % (gameDir, os.path.sep)) + glob('%s%s*.dxr' % (gameDir, os.path.sep))
+    files = glob('%s%s*.cxt' % (gameDir, os.path.sep)) + glob('%s%s*.dxr' % (gameDir, os.path.sep))
 else:
     raise FileNotFoundError('movies directory not found at %s' % gameDir)
 
