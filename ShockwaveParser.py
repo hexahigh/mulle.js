@@ -999,7 +999,7 @@ class ShockwaveParser:
 
 			bitmapValues = [[0 for x in range( width )] for y in range( height )]
 
-		print("W: " + str(width) + ", H: " + str(height))
+		self.log("W: " + str(width) + ", H: " + str(height))
 
 		self.f.seek( offset, 0 )
 		self.f.seek(8, 1) # fourcc, length
@@ -1202,9 +1202,9 @@ class ShockwaveParser:
 				entry = c['members'][num]
 
 				# print(entry)
-				print( " Name: " + str( entry['name'] ) )
-				print( " Type: " + str( entry['castType'] ) )
-				print( " Base: " + str( self.baseName ) )
+				self.log( " Name: " + str( entry['name'] ) )
+				self.log( " Type: " + str( entry['castType'] ) )
+				self.log( " Base: " + str( self.baseName ) )
 
 				outFileName = str(num)
 
