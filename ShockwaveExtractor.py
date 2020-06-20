@@ -329,7 +329,7 @@ def main(argv):
 
 				# json output
 				
-				debug_print("Output metadata JSON")
+				print("Output metadata JSON")
 				
 				meta = {}
 
@@ -383,7 +383,7 @@ def main(argv):
 				})
 
 
-				debug_print("Output pack JSON")
+				print("Output pack JSON")
 
 				fFilesOut = open( basePath + "/pack.json", "w")
 				fFilesOut.write( json.dumps( pack_files ) )
