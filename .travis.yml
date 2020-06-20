@@ -22,6 +22,7 @@ jobs:
         - PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:$PATH"
         - ISO=$ISO_SE
       before_install:
+        - deployment/windows_dependencies.cmd
         - wget -O ~/mullebil.iso $ISO
         - powershell -ExecutionPolicy bypass deployment/mount.ps1
 
