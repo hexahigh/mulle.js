@@ -98,7 +98,7 @@ class MulleGame extends Phaser.Game {
 
       '86': 'solhem',
       '87': 'saftfabrik',
-      '86': 'sturestortand',
+      '88': 'sturestortand',
       '89': 'viola',
       '90': 'dorisdigital',
       '91': 'luddelabb',
@@ -124,8 +124,8 @@ class MulleGame extends Phaser.Game {
       'roadthing': RoadThingState, // 84
       'roaddog': RoadDogState, // 85
       'solhem': SolhemState, // 86
-      'saftfabrik': SaftfabrikState,
-      'sturestortand': StureStortandState,
+      'saftfabrik': SaftfabrikState, // 87
+      'sturestortand': StureStortandState, // 88
       'figgeferrum': FiggeFerrumState, // 92
 
       'carshow': CarShowState // 94
