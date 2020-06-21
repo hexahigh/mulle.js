@@ -24,6 +24,7 @@ import CarShowState from 'scenes/carshow'
 import StureStortandState from 'scenes/sturestortand'
 import SaftfabrikState from 'scenes/saftfabrik'
 import SolhemState from 'scenes/solhem'
+import DorisDigitalState from 'scenes/dorisdigital'
 
 // var requireScenes = require.context('scenes', true, /\.js$/);
 // requireScenes.keys().forEach(requireScenes);
@@ -126,6 +127,7 @@ class MulleGame extends Phaser.Game {
       'solhem': SolhemState, // 86
       'saftfabrik': SaftfabrikState,
       'sturestortand': StureStortandState,
+      'dorisdigital': DorisDigitalState, // 90
       'figgeferrum': FiggeFerrumState, // 92
 
       'carshow': CarShowState // 94
