@@ -132,6 +132,15 @@ resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '116-118' })
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '228-230' })
 MulleResources.append(resYard)
 
+resAlbum = MulleResource('album')
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '21-27'})  # Medals
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '38-40'})  # UI sounds
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '49-84'})  # Page numbers
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': 93})  # Page
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '97-101'})  # Page
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '137-150'})  # Sounds
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '153-164'})  # UI
+MulleResources.append(resAlbum)
 
 resCutscenes = MulleResource('cutscenes')
 resCutscenes.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': '66-76' })
