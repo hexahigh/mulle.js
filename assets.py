@@ -226,6 +226,12 @@ resSolhem.addFile({ 'dir': '86.DXR', 'lib': 'Internal', 'num': '181-185' })
 resSolhem.addFile({ 'dir': '86.DXR', 'lib': 'Internal', 'num': '200-206' })
 MulleResources.append(resSolhem)
 
+resDoris = MulleResource('dorisdigital')
+resDoris.addFile({'dir': '90.DXR', 'lib': 'Internal', 'num': 1})  # Outside
+resDoris.addFile({'dir': '90.DXR', 'lib': 'Internal', 'num': '18-19'})  # Window
+resDoris.addFile({'dir': '90.DXR', 'lib': 'Internal', 'num': 185})  # Game sounds
+resDoris.addFile({'dir': '90.DXR', 'lib': 'Internal', 'num': '200-202'})  # Speech
+MulleResources.append(resDoris)
 
 assetOutPath = "./dist/assets"
 if not os.path.exists(assetOutPath):
