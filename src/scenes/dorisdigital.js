@@ -37,12 +37,12 @@ class DorisDigitalState extends MulleState {
     gameBlink.addAnimation('game', [['90.DXR', 18], ['90.DXR', 19]], 12, true)
     gameBlink.play('game')
 
-    this.car = new MulleBuildCar(this.game, 446, 368, null, true, false)
-    this.game.add.existing(this.car)
     const bgSnd = this.game.mulle.playAudio('90e001v0')
 
     console.log('given part', 306)
     if (!this.game.mulle.user.hasPart(306)) {
+      this.car = new MulleBuildCar(this.game, 446, 368, null, true, false)
+      this.game.add.existing(this.car)
       const part = new MulleSprite(this.game, 82, 373 - 47)
       part.setDirectorMember('CDDATA.CXT', 1003)
       this.game.add.existing(part)
@@ -64,6 +64,8 @@ class DorisDigitalState extends MulleState {
         })
       })
     } else { // Revisit
+      this.car = new MulleBuildCar(this.game, 446, 368, null, true, true)
+      this.game.add.existing(this.car)
       this.game.mulle.playAudio('90d007v0', () => {
         bgSnd.stop()
         this.game.state.start('world')
