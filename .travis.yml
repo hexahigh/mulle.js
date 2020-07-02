@@ -11,7 +11,7 @@ jobs:
         - ISO=$ISO_NO
       before_install:
         - deployment/windows_dependencies.cmd
-        - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PATH"
+        - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PWD/bin:$PATH"
         - wget -O ~/mullebil.iso $ISO
         - powershell -ExecutionPolicy bypass deployment/mount.ps1
 
@@ -22,7 +22,7 @@ jobs:
         - ISO=$ISO_SE
       before_install:
         - deployment/windows_dependencies.cmd
-        - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PATH"
+        - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PWD/bin:$PATH"
         - wget -O ~/mullebil.iso $ISO
         - powershell -ExecutionPolicy bypass deployment/mount.ps1
 
