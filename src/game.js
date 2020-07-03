@@ -1,3 +1,4 @@
+/* global Phaser */
 /**
  * MulleGame module
  * @module game
@@ -146,7 +147,7 @@ class MulleGame extends Phaser.Game {
      * @return {Phaser.Sound} sound object
      */
     this.mulle.playAudio = function (id, onStop = null) {
-      for (let a in this.game.mulle.audio) {
+      for (const a in this.game.mulle.audio) {
         var p = this.game.mulle.audio[a]
 
         for (var s in p.sounds) {
@@ -194,7 +195,7 @@ class MulleGame extends Phaser.Game {
     }
 
     this.mulle.stopAudio = function (id) {
-      for (let a in this.game.mulle.audio) {
+      for (const a in this.game.mulle.audio) {
         var p = this.game.mulle.audio[a]
 
         for (var s in p.sounds) {
@@ -223,7 +224,7 @@ class MulleGame extends Phaser.Game {
     }
 
     this.mulle.setData = function (key, value) {
-      this.game.mulle.UsersDB[ this.game.mulle.activeProfile ][ key ] = value
+      this.game.mulle.UsersDB[this.game.mulle.activeProfile][key] = value
     }
 
     this.mulle.loadData = function () {
@@ -282,8 +283,8 @@ class MulleGame extends Phaser.Game {
     }
 
     this.mulle.findDirectorMember = function (name) {
-      if (memberLookup[ name ]) {
-        return memberLookup[ name ]
+      if (memberLookup[name]) {
+        return memberLookup[name]
       }
 
       var keys = this.game.cache.getKeys(Phaser.Cache.IMAGE)
@@ -295,7 +296,7 @@ class MulleGame extends Phaser.Game {
 
         for (var f in frames) {
           if (frames[f].dirName === name) {
-            memberLookup[ name ] = frames[f]
+            memberLookup[name] = frames[f]
 
             return frames[f]
           }
