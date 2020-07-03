@@ -15,6 +15,7 @@ import MenuState from 'scenes/menu'
 import GarageState from 'scenes/garage'
 import JunkState from 'scenes/junk'
 import YardState from 'scenes/yard'
+import AlbumState from 'scenes/album'
 
 import WorldState from 'scenes/world'
 
@@ -90,6 +91,7 @@ class MulleGame extends Phaser.Game {
       '03': 'garage',
       '04': 'yard',
       '05': 'world',
+      '06': 'album',
 
       10: 'menu',
 
@@ -122,6 +124,7 @@ class MulleGame extends Phaser.Game {
       garage: GarageState, // 03
       yard: YardState, // 04
       world: WorldState, // 05
+      album: AlbumState, // 06
 
       roadthing: RoadThingState, // 84
       roaddog: RoadDogState, // 85

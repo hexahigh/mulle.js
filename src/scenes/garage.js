@@ -387,6 +387,28 @@ class GarageState extends MulleState {
 
     this.game.add.existing(this.door_side)
 
+    this.car_camera = MulleButton.fromRectangle(this.game, 589, 62, 41, 117, {
+      imageHover: ['03.DXR', 104],
+      soundHover: '02e011v0',
+      click: () => {
+        this.game.mulle.activeCutscene = 86
+        this.game.mulle.user.takePicture = true
+        this.game.state.start('album')
+      }
+    })
+    this.game.add.existing(this.car_camera)
+
+    this.album = MulleButton.fromRectangle(this.game, 383, 41, 50, 28, {
+      imageHover: ['03.DXR', 103],
+      soundHover: '02e011v0',
+      click: () => {
+        this.game.mulle.activeCutscene = 83
+        this.game.mulle.user.takePicture = false
+        this.game.state.start('album')
+      }
+    })
+    this.game.add.existing(this.album)
+
     this.car = new MulleBuildCar(this.game, 368, 240, null, false)
     this.game.add.existing(this.car)
 

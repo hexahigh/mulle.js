@@ -70,6 +70,7 @@ class MulleSave {
     this.givenMissions = []
     this.figgeIsComing = false
     this.missionIsComing = false
+    this.savedCars = []
 
     this.language = this.game.mulle.defaultLanguage // 'swedish'
   }
@@ -191,6 +192,7 @@ class MulleSave {
     this.givenMissions = data.givenMissions
     this.figgeIsComing = data.figgeIsComing
     this.missionIsComing = data.missionIsComing
+    this.savedCars = data.savedCars
 
     this.language = this.game.mulle.defaultLanguage // data.language ? data.language : this.game.mulle.defaultLanguage
   }
@@ -204,7 +206,8 @@ class MulleSave {
       CompletedMissions: this.CompletedMissions,
       OwnStuff: this.OwnStuff,
       givenMissions: this.givenMissions,
-      myLastPile: this.myLastPile
+      myLastPile: this.myLastPile,
+      savedCars: this.savedCars
     }
   }
 }

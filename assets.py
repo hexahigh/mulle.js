@@ -110,12 +110,12 @@ MulleResources.append(resDriving)
 
 resGarage = MulleResource('garage')
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': 33 }) # back
-resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '34-39' }) # doors
+resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '34-40' }) # doors
 
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '81-93' }) # figge
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '107-108' }) # figge truck
 
-resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': 101 }) # phone
+resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '101-105' }) # phone and hover
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '181-183' }) # ui sounds
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '208-264' }) # voices
 MulleResources.append(resGarage)
@@ -132,6 +132,15 @@ resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '116-118' })
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '228-230' })
 MulleResources.append(resYard)
 
+resAlbum = MulleResource('album')
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '21-27'})  # Medals
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '38-40'})  # UI sounds
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '49-84'})  # Page numbers
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': 93})  # Page
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '97-101'})  # Page
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '137-150'})  # Sounds
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '153-164'})  # UI
+MulleResources.append(resAlbum)
 
 resCutscenes = MulleResource('cutscenes')
 resCutscenes.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': '66-76' })
