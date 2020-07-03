@@ -1,3 +1,4 @@
+/* global alert, Phaser */
 /**
  * GarageState
  * @module GarageState
@@ -13,7 +14,7 @@ import MulleButton from 'objects/button'
 import MulleCarPart from 'objects/carpart'
 import MulleToolbox from 'objects/toolbox'
 
-var partNames = {
+const partNames = {
 
   1: 'chassi',
 
@@ -178,7 +179,7 @@ class GarageState extends MulleState {
     this.game.mulle.playAudio('03e009v0', () => {
       // narrator
       this.game.mulle.playAudio('03d043v0', () => {
-        var figge = new MulleActor(this.game, 320, 240, 'figgeDoor')
+        const figge = new MulleActor(this.game, 320, 240, 'figgeDoor')
 
         this.game.add.existing(figge)
 
@@ -231,8 +232,8 @@ class GarageState extends MulleState {
 
   figgeGiveParts () {
     if (this.game.mulle.user.availableParts.JunkMan.length > 0) {
-      for (var i = 0; i < 3; i++) {
-        var partId = this.game.mulle.user.availableParts.JunkMan[ i ]
+      for (let i = 0; i < 3; i++) {
+        const partId = this.game.mulle.user.availableParts.JunkMan[i]
 
         if (!partId) break
 
@@ -250,26 +251,26 @@ class GarageState extends MulleState {
   }
 
   makePart (partId, x, y) {
-    let cPart = new MulleCarPart(this.game, partId, x, y)
+    const cPart = new MulleCarPart(this.game, partId, x, y)
 
     cPart.car = this.car
     cPart.junkParts = this.junkParts
 
-    cPart.dropTargets.push([ this.door_junk, (d) => {
+    cPart.dropTargets.push([this.door_junk, (d) => {
       d.destroy()
       this.game.mulle.user.Junk.Pile1[partId] = { x: this.game.rnd.integerInRange(0, 640), y: 240 }
       this.game.mulle.playAudio('00e004v0')
       return true
     }])
 
-    cPart.dropTargets.push([ this.door_side, (d) => {
+    cPart.dropTargets.push([this.door_side, (d) => {
       d.destroy()
       this.game.mulle.user.Junk.yard[partId] = { x: this.game.rnd.integerInRange(0, 640), y: 240 }
       this.game.mulle.playAudio('00e004v0')
       return true
     }])
 
-    cPart.dropTargets.push([ this.door_garage, (d) => {
+    cPart.dropTargets.push([this.door_garage, (d) => {
       d.destroy()
       this.game.mulle.user.Junk.yard[partId] = { x: this.game.rnd.integerInRange(0, 640), y: 240 }
       this.game.mulle.playAudio('00e004v0')
@@ -306,7 +307,7 @@ class GarageState extends MulleState {
 
     // this.game.mulle.user.calculateParts();
 
-    var background = new MulleSprite(this.game, 320, 240)
+    const background = new MulleSprite(this.game, 320, 240)
     // background.setFrameId('03b001v0');
     background.setDirectorMember('03.DXR', 33)
 
@@ -390,7 +391,7 @@ class GarageState extends MulleState {
     this.game.add.existing(this.car)
 
     this.car.onDetach.add((partId, newId, newPos) => {
-      var part = this.makePart(newId, newPos.x, newPos.y)
+      const part = this.makePart(newId, newPos.x, newPos.y)
 
       part.justDetached = true
 
@@ -413,8 +414,8 @@ class GarageState extends MulleState {
     this.junkParts.pileName = 'shopFloor'
     this.car.junkParts = this.junkParts
 
-    for (let partId in this.game.mulle.user.Junk.shopFloor) {
-      let pos = this.game.mulle.user.Junk.shopFloor[partId]
+    for (const partId in this.game.mulle.user.Junk.shopFloor) {
+      const pos = this.game.mulle.user.Junk.shopFloor[partId]
 
       this.makePart(partId, pos.x, pos.y)
     }
@@ -439,17 +440,17 @@ class GarageState extends MulleState {
         Trash: [165, 125, 245, 260],
         Diploma: [265, 127, 345, 264],
         quit: [365, 125, 445, 266],
-        Cancel: [460, 210, 528, 365],
-      };
+        Cancel: [460, 210, 528, 365]
+      }
 
       const soundList = {
         Trash: '09d001v0',
         quit: '09d003v0',
         Diploma: '09d002v0',
-        Cancel: '09d004v0',
-      };
+        Cancel: '09d004v0'
+      }
 
-      let currentAudio;
+      let currentAudio
 
       const funcList = {
         Trash: () => {
@@ -464,26 +465,26 @@ class GarageState extends MulleState {
         quit: () => {
           this.game.state.start('menu')
         }
-      };
+      }
 
-      this.popupMenuButtons = game.add.group();
+      this.popupMenuButtons = this.game.add.group()
 
-      for (let n in rectList) {
-        let r = rectList[n];
+      for (const n in rectList) {
+        const r = rectList[n]
 
-        let b = new Phaser.Button(this.game, r[0], r[1] - 40);
-        b.width = r[2] - r[0];
-        b.height = r[3] - r[1];
+        const b = new Phaser.Button(this.game, r[0], r[1] - 40)
+        b.width = r[2] - r[0]
+        b.height = r[3] - r[1]
 
         b.onInputOver.add(() => {
-          if (currentAudio) currentAudio.stop();
+          if (currentAudio) currentAudio.stop()
           currentAudio = this.game.mulle.playAudio(soundList[n])
-        });
+        })
 
         b.onInputDown.add(() => {
-          if (currentAudio) currentAudio.stop();
+          if (currentAudio) currentAudio.stop()
           funcList[n]()
-        });
+        })
 
         this.popupMenuButtons.addChild(b)
       }
@@ -506,14 +507,14 @@ class GarageState extends MulleState {
     if (this.game.mulle.cheats) {
       document.getElementById('cheats').innerHTML = ''
 
-      for (let partId in this.game.mulle.PartsDB) {
-        let partData = this.game.mulle.PartsDB[partId]
+      for (const partId in this.game.mulle.PartsDB) {
+        const partData = this.game.mulle.PartsDB[partId]
 
         if (partData.master) continue
 
-        let has = this.game.mulle.user.hasPart(partId)
+        const has = this.game.mulle.user.hasPart(partId)
 
-        let b = document.createElement('button')
+        const b = document.createElement('button')
         b.innerHTML = (partNames && partNames[partId]) ? '(' + partId + ') ' + partNames[partId] : partId
         b.className = 'button'
 
@@ -539,7 +540,7 @@ class GarageState extends MulleState {
     this.game.mulle.user.Junk.shopFloor = {}
 
     this.junkParts.forEach((p) => {
-      this.game.mulle.user.Junk.shopFloor[ p.part_id ] = { x: p.x, y: p.y }
+      this.game.mulle.user.Junk.shopFloor[p.part_id] = { x: p.x, y: p.y }
     })
 
     this.game.mulle.user.save()
