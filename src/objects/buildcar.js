@@ -276,6 +276,28 @@ class MulleBuildCar extends Phaser.Group {
   }
 
   /**
+   * Trash the car and place the parts on the junk yard
+   */
+  trash () {
+    let partId, partData
+    for (partId of this.parts) {
+      if (partId > 1) {
+        partData = this.game.mulle.PartsDB[partId]
+
+        if (partData.master) { // Un-morph parts
+          partId = partData.master
+        }
+        // Place part in the junk yard
+        this.game.mulle.user.addPart('Pile1', partId, null, true)
+      }
+    }
+
+    this.parts = [1]
+    this.refresh()
+    this.save()
+  }
+
+  /**
    * Dump data into user save object
    * @return {void}
    */

@@ -454,7 +454,7 @@ class GarageState extends MulleState {
 
       const funcList = {
         Trash: () => {
-          alert('Trash your car')
+          this.car.trash()
         },
         Diploma: () => {
           alert('Show diploma')
