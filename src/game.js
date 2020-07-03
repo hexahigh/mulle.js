@@ -90,47 +90,47 @@ class MulleGame extends Phaser.Game {
       '04': 'yard',
       '05': 'world',
 
-      '10': 'menu',
+      10: 'menu',
 
-      '82': 'mudcar',
-      '83': 'treecar',
-      '84': 'roadthing',
-      '85': 'roaddog',
+      82: 'mudcar',
+      83: 'treecar',
+      84: 'roadthing',
+      85: 'roaddog',
 
-      '86': 'solhem',
-      '87': 'saftfabrik',
-      '86': 'sturestortand',
-      '89': 'viola',
-      '90': 'dorisdigital',
-      '91': 'luddelabb',
-      '92': 'figgeferrum',
+      86: 'solhem',
+      87: 'saftfabrik',
+      88: 'sturestortand',
+      89: 'viola',
+      90: 'dorisdigital',
+      91: 'luddelabb',
+      92: 'figgeferrum',
 
-      '93': 'ocean',
-      '94': 'carshow'
+      93: 'ocean',
+      94: 'carshow'
 
     }
 
     this.mulle.states = {
 
-      'boot': BootState,
-      'load': LoadState,
+      boot: BootState,
+      load: LoadState,
 
-      'menu': MenuState, // 10
+      menu: MenuState, // 10
 
-      'junk': JunkState, // 02
-      'garage': GarageState, // 03
-      'yard': YardState, // 04
-      'world': WorldState, // 05
+      junk: JunkState, // 02
+      garage: GarageState, // 03
+      yard: YardState, // 04
+      world: WorldState, // 05
 
-      'roadthing': RoadThingState, // 84
-      'roaddog': RoadDogState, // 85
-      'solhem': SolhemState, // 86
-      'saftfabrik': SaftfabrikState,
-      'sturestortand': StureStortandState,
-      'dorisdigital': DorisDigitalState, // 90
-      'figgeferrum': FiggeFerrumState, // 92
+      roadthing: RoadThingState, // 84
+      roaddog: RoadDogState, // 85
+      solhem: SolhemState, // 86
+      saftfabrik: SaftfabrikState, // 87
+      sturestortand: StureStortandState, // 88
+      dorisdigital: DorisDigitalState, // 90
+      figgeferrum: FiggeFerrumState, // 92
 
-      'carshow': CarShowState // 94
+      carshow: CarShowState // 94
 
     }
 
