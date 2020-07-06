@@ -11,7 +11,7 @@ var WebpackDev = require('./webpack.dev.js')
 
 var WebpackProd = require('./webpack.prod.js')
 
-gulp.task('phaser', function () {
+gulp.task('phaser', function (done) {
   var exclude = [
     'gamepad',
     // 'rendertexture',
@@ -58,25 +58,28 @@ gulp.task('phaser', function () {
   // grunt custom --exclude=ninja,p2,tilemaps,particles,weapon,creature,video --uglify --sourcemap
 
   // return gulp.src('./node_modules/phaser-ce/build/phaser.min.js').pipe( gulp.dest('dist/') );
+  done()
 })
 
-gulp.task('html', function () {
+gulp.task('html', function (done) {
   gulp.src('./progress/**').pipe(gulp.dest('dist/progress/'))
   gulp.src('./info/**').pipe(gulp.dest('dist/info/'))
   gulp.src('./src/index.html').pipe(gulp.dest('dist/'))
+  done()
 })
 
 gulp.task('css', function () {
   return gulp.src('./src/style.scss').pipe(sass({ /* outputStyle: 'compressed' */ }).on('error', sass.logError)).pipe(gulp.dest('dist/'))
 })
 
-gulp.task('data', function () {
+gulp.task('data', function (done) {
   gulp.src('./loading.png').pipe(gulp.dest('dist/'))
   gulp.src('./data/*.json').pipe(gulp.dest('dist/data/'))
 
   gulp.src('./ui/*').pipe(gulp.dest('dist/ui/'))
 
   gulp.src('./topography/*').pipe(gulp.dest('dist/assets/topography/'))
+  done()
 })
 
 gulp.task('assets-dev', function () {
@@ -139,9 +142,10 @@ gulp.task("start", function(callback) {
 })
 */
 
-gulp.task('build-dev', [ 'phaser', 'js-dev', 'html', 'css' ])
-gulp.task('build-prod', [ 'phaser', 'js-prod', 'html', 'css' ])
+gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
+gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
+gulp.task('build-prod', gulp.series( 'phaser', 'js-prod', 'html', 'css' ))
 
-gulp.task('build-full', [ 'phaser', 'js-prod', 'html', 'css', 'assets-prod', 'data' ])
+gulp.task('build-full', gulp.series( 'phaser', 'js-prod', 'html', 'css', 'assets-prod', 'data' ))
 
-gulp.task('default', [ 'build-dev', 'assets-dev', 'data' ])
+gulp.task('default', gulp.series( 'build-dev', 'assets-dev', 'data' ))
