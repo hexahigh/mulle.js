@@ -124,24 +124,6 @@ gulp.task('js-prod', function () {
   )
 })
 
-/*
-gulp.task("start", function(callback) {
-
-  var myConfig = Object.create( WebpackDev )
-
-  // Start a webpack-dev-server
-  new WebpackDevServer(webpack(myConfig), {
-    publicPath: "/" + myConfig.output.publicPath,
-    stats: {
-      colors: true
-    }
-  }).listen(8080, "localhost", function(err) {
-    if(err) throw new gutil.PluginError("webpack-dev-server", err)
-    gutil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/index.html")
-  })
-})
-*/
-
 gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
 gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
 gulp.task('build-prod', gulp.series( 'phaser', 'js-prod', 'html', 'css' ))
