@@ -4,6 +4,8 @@ var webpack = require('webpack-stream')
 var exec = require('child_process').exec
 var spawn = require('child_process').spawn
 var sass = require('gulp-sass')
+const git = require('gulp-git');
+const install = require("gulp-install");
 
 // var WebpackDevServer = require("webpack-dev-server")
 
@@ -11,7 +13,20 @@ var WebpackDev = require('./webpack.dev.js')
 
 var WebpackProd = require('./webpack.prod.js')
 
-gulp.task('phaser', function (done) {
+gulp.task('phaser-clone', function (done) {
+  git.clone('https://github.com/photonstorm/phaser-ce.git', { 'args': './phaser-ce' }, function (error) {
+    if (error) throw error
+    done()
+  })
+})
+
+gulp.task('phaser-install', function (done) {
+  gulp.src('./phaser-ce/package.json').pipe(install({npm: '-f' }, function () {
+    done()
+  }))
+})
+
+gulp.task('phaser-build', function (done) {
   var exclude = [
     'gamepad',
     // 'rendertexture',
@@ -30,9 +45,10 @@ gulp.task('phaser', function (done) {
   ]
 
   var cmd = [
+    'npx',
     'grunt',
     'custom',
-    '--gruntfile ./node_modules/phaser-ce/Gruntfile.js',
+    '--gruntfile ./phaser-ce/Gruntfile.js',
     '--exclude=' + exclude.join(','),
     '--uglify',
     '--sourcemap'
@@ -46,19 +62,15 @@ gulp.task('phaser', function (done) {
   })
   */
 
-  /*exec(cmd.join(' '), function (err, stdout, stderr) {
+  exec(cmd.join(' '), function (err, stdout, stderr) {
     console.log('phaser err: ' + err)
     console.log('phaser stdout: ' + stdout)
     console.log('phaser stderr: ' + stderr)
 
-    gulp.src('./node_modules/phaser-ce/dist/phaser.min.js').pipe(gulp.dest('dist/'))
-    gulp.src('./node_modules/phaser-ce/dist/phaser.map').pipe(gulp.dest('dist/'))
-  })*/
-
-  // grunt custom --exclude=ninja,p2,tilemaps,particles,weapon,creature,video --uglify --sourcemap
-
-  // return gulp.src('./node_modules/phaser-ce/build/phaser.min.js').pipe( gulp.dest('dist/') );
-  done()
+    gulp.src('./phaser-ce/dist/phaser.min.js').pipe(gulp.dest('dist/'))
+    gulp.src('./phaser-ce/dist/phaser.map').pipe(gulp.dest('dist/'))
+    done()
+  })
 })
 
 gulp.task('html', function (done) {
@@ -124,6 +136,7 @@ gulp.task('js-prod', function () {
   )
 })
 
+gulp.task('phaser', gulp.series('phaser-clone', 'phaser-install', 'phaser-build'))
 gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
 gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
 gulp.task('build-prod', gulp.series( 'phaser', 'js-prod', 'html', 'css' ))
