@@ -22,6 +22,10 @@ class AlbumState extends MulleState {
     return new Phaser.Sprite(this.game, x, y, image.key, image.name)
   }
 
+  init (mode) {
+    this.mode = mode
+  }
+
   preload () {
     this.DirResource = '06.DXR'
     super.preload()
@@ -207,7 +211,7 @@ class AlbumState extends MulleState {
     this.game.add.existing(this.background)
     this.setPage(1)
 
-    if (this.game.mulle.user.takePicture) {
+    if (this.mode === 'save') {
       this.game.mulle.playAudio('06e002v0', () => {
         this.game.mulle.playAudio('06d001v0')
       })

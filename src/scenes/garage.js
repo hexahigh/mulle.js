@@ -392,8 +392,7 @@ class GarageState extends MulleState {
       soundHover: '02e011v0',
       click: () => {
         this.game.mulle.activeCutscene = 86
-        this.game.mulle.user.takePicture = true
-        this.game.state.start('album')
+        this.game.state.start('album', true, false, 'save')
       }
     })
     this.game.add.existing(this.car_camera)
@@ -403,8 +402,7 @@ class GarageState extends MulleState {
       soundHover: '02e011v0',
       click: () => {
         this.game.mulle.activeCutscene = 83
-        this.game.mulle.user.takePicture = false
-        this.game.state.start('album')
+        this.game.state.start('album', true, false, 'load')
       }
     })
     this.game.add.existing(this.album)
