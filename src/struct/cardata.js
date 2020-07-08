@@ -35,6 +35,14 @@ class MulleCar {
     return this.Parts.indexOf(parseInt(partId)) !== -1
   }
 
+  hasMedal(id) {
+    return id in this.Medals
+  }
+
+  addMedal(id) {
+    this.Medals.append(id)
+  }
+
   hasCache (name) {
     return this.CacheList.indexOf(name) !== -1
   }
