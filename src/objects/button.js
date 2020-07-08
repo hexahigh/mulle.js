@@ -81,6 +81,31 @@ class MulleButton extends Phaser.Button {
   onDown () {
 
   }
-};
+
+  /**
+   * Destroy the button and its sprite
+   * @param destroyChildren
+   */
+  destroy (destroyChildren) {
+    super.destroy(destroyChildren)
+    this.displaySprite.destroy()
+  }
+
+  /**
+   * Hide the button and its sprite
+   */
+  hide() {
+    this.visible = false
+    this.displaySprite.visible = false
+  }
+
+  /**
+   * Show the button and its sprite
+   */
+  show() {
+    this.visible = true
+    this.displaySprite.visible = true
+  }
+}
 
 export default MulleButton
