@@ -1,9 +1,10 @@
 /* global Phaser */
-import MulleState from 'scenes/base'
+import MulleState from './base'
 
-import MulleSprite from 'objects/sprite'
-import MulleBuildCar from 'objects/buildcar'
-import MulleButton from 'objects/button'
+import TextInput from '../objects/TextInput'
+import MulleSprite from '../objects/sprite'
+import MulleBuildCar from '../objects/buildcar'
+import MulleButton from '../objects/button'
 import MulleFileBrowser from '../objects/MulleFileBrowser'
 import LoadSaveCar from '../util/LoadSaveCar'
 

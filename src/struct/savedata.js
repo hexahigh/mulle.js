@@ -1,4 +1,4 @@
-import MulleCar from 'struct/cardata'
+import MulleCar from './cardata'
 
 class MulleSave {
   constructor (game, data) {

@@ -3,20 +3,18 @@
  * @module WorldState
  */
 
-import MulleState from 'scenes/base'
+import MulleState from './base'
 
-import MulleSprite from 'objects/sprite'
-import MulleDriveCar from 'objects/drivecar'
-import MulleToolbox from 'objects/toolbox'
+import MulleSprite from '../objects/sprite'
+import MulleDriveCar from '../objects/drivecar'
+import MulleToolbox from '../objects/toolbox'
 
-import MulleMapObject from 'objects/mapobject'
+import MulleMapObject from '../objects/mapobject'
 
-// import MulleMapObject.Hill from 'objects/mapobjects/30.hill';
+import MulleBuildCar from '../objects/buildcar'
+import MulleMPCar from '../objects/mpcar'
 
-import MulleBuildCar from 'objects/buildcar'
-import MulleMPCar from 'objects/mpcar'
-
-import MulleWorld from 'struct/world'
+import MulleWorld from '../struct/world'
 
 /**
  * World scene, extension of phaser state

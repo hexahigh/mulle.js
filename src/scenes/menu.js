@@ -1,10 +1,10 @@
-import MulleState from 'scenes/base'
+import MulleState from './base'
 
-import MulleSprite from 'objects/sprite'
-import MulleActor from 'objects/actor'
-// import MulleAudio from 'objects/audio'
+import MulleSprite from '../objects/sprite'
+import MulleActor from '../objects/actor'
+// import MulleAudio from '../objects/audio'
 
-import MulleSave from 'struct/savedata'
+import MulleSave from '../struct/savedata'
 
 class MenuState extends MulleState {
   preload () {

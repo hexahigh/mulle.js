@@ -1,12 +1,12 @@
 'use strict'
 
-import MulleState from 'scenes/base'
+import MulleState from './base'
 
-import MulleSprite from 'objects/sprite'
-import MulleBuildCar from 'objects/buildcar'
-// import MulleActor from 'objects/actor'
-import MulleButton from 'objects/button'
-import MulleCarPart from 'objects/carpart'
+import MulleSprite from '../objects/sprite'
+import MulleBuildCar from '../objects/buildcar'
+// import MulleActor from '../objects/actor'
+import MulleButton from '../objects/button'
+import MulleCarPart from '../objects/carpart'
 
 class YardState extends MulleState {
   preload () {

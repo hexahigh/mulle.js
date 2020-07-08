@@ -5,14 +5,14 @@
  */
 'use strict'
 
-import MulleState from 'scenes/base'
+import MulleState from './base'
 
-import MulleSprite from 'objects/sprite'
-import MulleBuildCar from 'objects/buildcar'
-import MulleActor from 'objects/actor'
-import MulleButton from 'objects/button'
-import MulleCarPart from 'objects/carpart'
-import MulleToolbox from 'objects/toolbox'
+import MulleSprite from '../objects/sprite'
+import MulleBuildCar from '../objects/buildcar'
+import MulleActor from '../objects/actor'
+import MulleButton from '../objects/button'
+import MulleCarPart from '../objects/carpart'
+import MulleToolbox from '../objects/toolbox'
 
 const partNames = {
 
@@ -156,6 +156,7 @@ const partNames = {
  */
 class GarageState extends MulleState {
   preload () {
+    this.DirResource = '03.DXR'
     super.preload()
 
     this.game.load.pack('garage', 'assets/garage.json', null, this)
@@ -387,6 +388,12 @@ class GarageState extends MulleState {
 
     this.game.add.existing(this.door_side)
 
+    /*this.car_camera = DirectorHelper.rectangleButton(this.game, 589, 62-50, 41, 117, () => {
+      this.game.mulle.activeCutscene = 86
+      this.game.mulle.user.takePicture = true
+      this.game.state.start('album')
+    }, this.DirResource, 104, null)  */
+
     this.car_camera = MulleButton.fromRectangle(this.game, 589, 62, 41, 117, {
       imageHover: ['03.DXR', 104],
       soundHover: '02e011v0',
@@ -395,7 +402,7 @@ class GarageState extends MulleState {
         this.game.state.start('album', true, false, 'save')
       }
     })
-    this.game.add.existing(this.car_camera)
+     this.game.add.existing(this.car_camera)
 
     this.album = MulleButton.fromRectangle(this.game, 383, 41, 50, 28, {
       imageHover: ['03.DXR', 103],
