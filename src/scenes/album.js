@@ -4,6 +4,8 @@ import MulleState from 'scenes/base'
 import MulleSprite from 'objects/sprite'
 import MulleBuildCar from 'objects/buildcar'
 import MulleButton from 'objects/button'
+import MulleFileBrowser from '../objects/MulleFileBrowser'
+import LoadSaveCar from '../util/LoadSaveCar'
 
 /**
  * Album UI
@@ -30,17 +32,14 @@ class AlbumState extends MulleState {
     this.DirResource = '06.DXR'
     super.preload()
     this.game.load.pack('album', 'assets/album.json', null, this)
-    if (!this.game.mulle.user.savedCars) {
-      this.game.mulle.user.savedCars = []
-    }
+    this.game.load.pack('fileBrowser', 'assets/fileBrowser.json', null, this)
   }
 
   buildPages () {
     let pageNumSprite
-    this.savedCars = this.game.mulle.user.savedCars
 
     for (let page = 1; page <= 12; page++) {
-      if (page in this.savedCars) { // Is a car saved on this page?
+      if (this.loadSave.isSaved(page)) { // Is a car saved on this page?
         pageNumSprite = this.positionSprite(this.DirResource, page + 60)
       } else {
         pageNumSprite = this.positionSprite(this.DirResource, page + 48)
@@ -53,10 +52,6 @@ class AlbumState extends MulleState {
 
         this.pagenumSpriteSelected = this.positionSprite(this.DirResource, page + 72)
         this.game.add.existing(this.pagenumSpriteSelected)
-        if (this.fetchButton) {
-          this.fetchButton.displaySprite.visible = page in this.savedCars
-          this.fetchButton.visible = page in this.savedCars
-        }
       } else {
         const button = MulleButton.fromRectangle(this.game, pageNumSprite.x, pageNumSprite.y, 40, 40, {
           click: () => {
@@ -120,18 +115,7 @@ class AlbumState extends MulleState {
     this.pasting_car.destroy()
     this.albumCar()
 
-    this.saveCar(this.selectedPage, this.game.mulle.user.Car.Parts)
-  }
-
-  /**
-   * Save a car
-   * @param {int} page Album page
-   * @param {array} parts
-   */
-  saveCar (page, parts) {
-    console.log(`Save car to page ${page}`)
-    this.game.mulle.user.savedCars[page] = parts
-    this.game.mulle.user.save()
+    this.loadSave.saveCurrentCar(this.selectedPage)
   }
 
   /**
@@ -140,7 +124,7 @@ class AlbumState extends MulleState {
    */
   buildSavedCar (page) {
     let partId
-    const parts = this.game.mulle.user.savedCars[page]
+    const [parts, medals] = this.loadSave.loadCar(page)
     // Place redundant parts in the junk yard
     for (partId of this.game.mulle.user.Car.Parts) {
       if (!(partId in parts)) {
@@ -155,6 +139,7 @@ class AlbumState extends MulleState {
 
     this.removeParts(parts) // Remove the parts from wherever they are
     this.game.mulle.user.Car.Parts = parts
+    this.game.mulle.user.Car.Medals = medals
     this.close()
   }
 
@@ -163,11 +148,16 @@ class AlbumState extends MulleState {
    * @param {int} page Album page
    */
   showSavedCar (page) {
-    this.parts = this.game.mulle.user.savedCars[page]
-    if (!this.parts && this.albumCarImage) {
-      this.albumCarImage.destroy()
+    if (this.loadSave.isSaved(page)) {
+      const [parts, medals] = this.loadSave.loadCar(page)
+      this.albumCar(parts)
+      this.parts = parts
+      this.showMedals(medals)
+      if (this.mode === 'load') this.fetchButton.show()
     } else {
-      this.albumCar(this.parts)
+      if (this.albumCarImage) { this.albumCarImage.destroy() }
+      if (this.mode === 'load') { this.fetchButton.hide() }
+      if (this.medals) { this.medals.destroy(true) }
     }
   }
 
@@ -199,12 +189,30 @@ class AlbumState extends MulleState {
   }
 
   importCar () {
-    console.warn('Not implemented')
+    this.browser = new MulleFileBrowser(this.game, (data) => {
+      this.loadSave.importCar(this.selectedPage, data)
+      this.showSavedCar(this.selectedPage)
+    })
+    this.album_ui.add(this.browser)
+  }
+
+  showMedals (medals) {
+    if (this.medals) { this.medals.destroy(true) }
+    this.medals = this.game.add.group()
+    let count = 1
+    for (const medal of medals) {
+      const { key, frame } = this.game.mulle.getDirectorImage(this.DirResource, 20 + medal)
+      console.log(frame)
+      const sprite = new Phaser.Sprite(this.game, 550, 55 * count, key, frame.name)
+      this.medals.add(sprite)
+      count++
+    }
   }
 
   create () {
     this.game.mulle.addAudio('album')
     super.create()
+    this.loadSave = new LoadSaveCar(this.game)
 
     this.background_layer = this.game.add.group()
     this.album_ui = this.game.add.group()

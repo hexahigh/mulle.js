@@ -142,6 +142,12 @@ resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '137-150'})  # Soun
 resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '153-164'})  # UI
 MulleResources.append(resAlbum)
 
+resBrowser = MulleResource('fileBrowser')
+resBrowser.addFile({'dir': '13.DXR', 'lib': 'Internal', 'num': 17})  # Audio
+resBrowser.addFile({'dir': '13.DXR', 'lib': 'Internal', 'num': 29})  # Scroll
+resBrowser.addFile({'dir': '13.DXR', 'lib': 'Internal', 'num': 32})  # File browser
+MulleResources.append(resBrowser)
+
 resCutscenes = MulleResource('cutscenes')
 resCutscenes.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': '66-76' })
 resCutscenes.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': 81 })
