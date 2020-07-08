@@ -91,7 +91,7 @@ class AlbumState extends MulleState {
     }
 
     this.albumCarImage = new MulleBuildCar(this.game, 320, 240, parts, true, false)
-    this.game.add.existing(this.albumCarImage)
+    this.background_layer.add(this.albumCarImage)
   }
 
   /**
@@ -206,9 +206,11 @@ class AlbumState extends MulleState {
     this.game.mulle.addAudio('album')
     super.create()
 
+    this.background_layer = this.game.add.group()
+    this.album_ui = this.game.add.group()
     this.background = new MulleSprite(this.game, 320, 240)
     this.background.setDirectorMember(this.DirResource, 93)
-    this.game.add.existing(this.background)
+    this.background_layer.add(this.background)
 
     if (this.mode === 'save') {
       this.game.mulle.playAudio('06e002v0', () => {
@@ -219,7 +221,7 @@ class AlbumState extends MulleState {
 
       const { key, frame } = this.game.mulle.getDirectorImage(this.DirResource, 101)
       this.name_input = new Phaser.Sprite(this.game, 215, 434, key, frame.name)
-      this.game.add.existing(this.name_input)
+      this.album_ui.add(this.name_input)
 
       this.export_button = new MulleButton(this.game, 487, 413, {
         imageDefault: ['06.DXR', 164],
@@ -239,7 +241,7 @@ class AlbumState extends MulleState {
         }
       })
 
-      this.game.add.existing(this.fetchButton)
+      this.album_ui.add(this.fetchButton)
 
       this.importButton = new MulleButton(this.game, 487, 413, {
         imageDefault: ['06.DXR', 161],
@@ -247,7 +249,7 @@ class AlbumState extends MulleState {
           this.importCar()
         }
       })
-      this.game.add.existing(this.importButton)
+      this.album_ui.add(this.importButton)
     }
 
     this.close_button = new MulleButton(this.game, 554, 414, {
@@ -258,7 +260,7 @@ class AlbumState extends MulleState {
       }
     })
 
-    this.game.add.existing(this.close_button)
+    this.album_ui.add(this.close_button)
     this.setPage(1)
   }
 
