@@ -477,7 +477,7 @@ class GarageState extends MulleState {
           this.car.trash()
         },
         Diploma: () => {
-          alert('Show diploma')
+          this.game.state.start('diploma')
         },
         Cancel: () => {
           this.toolbox.toggleToolbox(this.toolbox)

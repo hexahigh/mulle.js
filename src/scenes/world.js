@@ -317,6 +317,9 @@ class WorldState extends MulleState {
         },
         quit: () => {
           this.game.state.start('menu')
+        },
+        Diploma: () => {
+          this.game.state.start('diploma')
         }
       }
 
