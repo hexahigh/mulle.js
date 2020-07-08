@@ -209,7 +209,6 @@ class AlbumState extends MulleState {
     this.background = new MulleSprite(this.game, 320, 240)
     this.background.setDirectorMember(this.DirResource, 93)
     this.game.add.existing(this.background)
-    this.setPage(1)
 
     if (this.mode === 'save') {
       this.game.mulle.playAudio('06e002v0', () => {
@@ -260,6 +259,7 @@ class AlbumState extends MulleState {
     })
 
     this.game.add.existing(this.close_button)
+    this.setPage(1)
   }
 
   close () {
