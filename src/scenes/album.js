@@ -125,7 +125,7 @@ class AlbumState extends MulleState {
    */
   buildSavedCar (page) {
     let partId
-    const [parts, medals] = this.loadSave.loadCar(page)
+    const [parts, medals, name] = this.loadSave.loadCar(page)
     // Place redundant parts in the junk yard
     for (partId of this.game.mulle.user.Car.Parts) {
       if (!(partId in parts)) {
@@ -141,6 +141,7 @@ class AlbumState extends MulleState {
     this.removeParts(parts) // Remove the parts from wherever they are
     this.game.mulle.user.Car.Parts = parts
     this.game.mulle.user.Car.Medals = medals
+    this.game.mulle.user.Car.Name = name
     this.close()
   }
 
