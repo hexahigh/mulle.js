@@ -148,6 +148,16 @@ resBrowser.addFile({'dir': '13.DXR', 'lib': 'Internal', 'num': 29})  # Scroll
 resBrowser.addFile({'dir': '13.DXR', 'lib': 'Internal', 'num': 32})  # File browser
 MulleResources.append(resBrowser)
 
+resDiploma = MulleResource('diploma')
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': 15})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '17-18'})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '21-27'})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': 31})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '39-40'})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '66-71'})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '81-87'}) #  Strings
+MulleResources.append(resDiploma)
+
 resCutscenes = MulleResource('cutscenes')
 resCutscenes.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': '66-76' })
 resCutscenes.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': 81 })

@@ -92,6 +92,7 @@ class MulleGame extends Phaser.Game {
       '04': 'yard',
       '05': 'world',
       '06': 'album',
+      '08': 'diploma',
 
       10: 'menu',
 
@@ -125,6 +126,7 @@ class MulleGame extends Phaser.Game {
       yard: YardState, // 04
       world: WorldState, // 05
       album: AlbumState, // 06
+      diploma: DiplomaState, // 08
 
       roadthing: RoadThingState, // 84
       roaddog: RoadDogState, // 85

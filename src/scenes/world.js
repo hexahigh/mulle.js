@@ -317,7 +317,7 @@ class WorldState extends MulleState {
           this.game.state.start('menu')
         },
         Diploma: () => {
-          this.game.state.start('diploma')
+          this.game.state.start('diploma', true, false, this.key)
         }
       }
 
