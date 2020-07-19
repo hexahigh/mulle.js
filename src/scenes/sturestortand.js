@@ -44,7 +44,7 @@ class StureStortandState extends MulleState {
       this.game.add.existing(tube)
 
       var f = []
-      for (var i = 0; i < 9; i++) f.push([this.DirResource, 17 + i])
+      for (let i = 0; i < 7; i++) f.push([this.DirResource, 17 + i])
       tube.addAnimation('idle', f, 5, true)
 
       tube.animations.play('idle')

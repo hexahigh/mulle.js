@@ -164,19 +164,19 @@ class MulleActor extends MulleSprite {
     } else if (this.actorName === 'stureSad') {
       b = '88.DXR'
 
-      this.setDirectorMember(b, 42)
+      this.setDirectorMember(b, 41)
 
-      this.addAnimation('idle', [ [b, 42] ], 10, false)
+      this.addAnimation('idle', [ [b, 41] ], 10, false)
 
-      this.addAnimation('talk', [ [b, 43], [b, 44], [b, 45], [b, 46], [b, 47] ], 10, true)
+      this.addAnimation('talk', [ [b, 42], [b, 43], [b, 44], [b, 44], [b, 45]], 10, true)
     } else if (this.actorName === 'stureHappy') {
       b = '88.DXR'
 
-      this.setDirectorMember(b, 34)
+      this.setDirectorMember(b, 33)
 
-      this.addAnimation('idle', [ [b, 34] ], 10, false)
+      this.addAnimation('idle', [ [b, 33] ], 10, false)
 
-      this.addAnimation('talk', [ [b, 35], [b, 36], [b, 37], [b, 38], [b, 39] ], 8, true)
+      this.addAnimation('talk', [ [b, 34], [b, 35], [b, 36], [b, 36], [b, 37] ], 8, true)
     } else if (this.actorName === 'garson') {
       b = '87.DXR'
 
