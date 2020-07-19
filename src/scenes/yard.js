@@ -30,7 +30,7 @@ class YardState extends MulleState {
     this.game.physics.arcade.gravity.y = 800
 
     var background = new MulleSprite(this.game, 320, 240)
-    background.setDirectorMember('04.DXR', 118)
+    background.setDirectorMember('04.DXR', 37)
     this.game.add.existing(background)
 
     // var this.door_side, door_garage;

@@ -126,10 +126,8 @@ resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '13-14' })
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 16 })
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 27 })
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 30 })
-resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 37 })
+resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 37 }) # Background
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '40-44' })
-resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '116-118' })
-resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '228-230' })
 MulleResources.append(resYard)
 
 resAlbum = MulleResource('album')
