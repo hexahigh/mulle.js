@@ -1,11 +1,11 @@
 'use strict'
 
-import MulleState from 'scenes/base'
+import MulleState from './base'
 
-import MulleSprite from 'objects/sprite'
-// import MulleActor from 'objects/actor'
-import MulleButton from 'objects/button'
-import MulleCarPart from 'objects/carpart'
+import MulleSprite from '../objects/sprite'
+// import MulleActor from '../objects/actor'
+import MulleButton from '../objects/button'
+import MulleCarPart from '../objects/carpart'
 
 /* rects = [
 

@@ -34,12 +34,14 @@ class MulleResource:
 
 	def addFile( self, opt ):
 
-		if type(opt['num']) is str and '-' in opt['num']:
-			
-			f = opt['num'].split('-')
+		if (type(opt['num']) is str and '-' in opt['num']) or type(opt['num']) == list:
+			if type(opt['num']) == list:
+				files = opt['num']
+			else:
+				files = opt['num'].split('-')
 
-			for i in range( int(f[0]), int(f[1]) + 1 ):
-				self.addFile({ 'dir': opt['dir'], 'lib': opt['lib'], 'num': i });
+			for i in range( int(files[0]), int(files[1]) + 1 ):
+				self.addFile({ 'dir': opt['dir'], 'lib': opt['lib'], 'num': i })
 
 		else:
 
@@ -92,7 +94,7 @@ resDriving.addFile({ 'dir': '05.DXR', 'lib': 'Internal', 'num': 46 }) # speed me
 
 resDriving.addFile({ 'dir': '05.DXR', 'lib': 'Internal', 'num': 53 }) # menu
 
-# resDriving.addFile({ 'dir': '05.DXR', 'lib': 'Internal', 'num': '69-75' }) # medals
+resDriving.addFile({ 'dir': '05.DXR', 'lib': 'Internal', 'num': '69-75' }) # medals
 
 resDriving.addFile({ 'dir': '05.DXR', 'lib': 'Internal', 'num': '77-157' }) # car
 
@@ -110,14 +112,15 @@ MulleResources.append(resDriving)
 
 resGarage = MulleResource('garage')
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': 33 }) # back
-resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '34-39' }) # doors
+resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '34-40' }) # doors
 
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '81-93' }) # figge
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '107-108' }) # figge truck
 
-resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': 101 }) # phone
+resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '101-105' }) # phone and hover
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '181-183' }) # ui sounds
-resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '208-264' }) # voices
+resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '208-223' }) # voices
+resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '226-264' }) # voices
 MulleResources.append(resGarage)
 
 
@@ -126,12 +129,35 @@ resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '13-14' })
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 16 })
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 27 })
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 30 })
-resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 37 })
+resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 37 }) # Background
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '40-44' })
-resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '116-118' })
-resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '228-230' })
 MulleResources.append(resYard)
 
+resAlbum = MulleResource('album')
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '21-27'})  # Medals
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '38-40'})  # UI sounds
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '49-84'})  # Page numbers
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': 93})  # Page
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '97-101'})  # Page
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '137-150'})  # Sounds
+resAlbum.addFile({'dir': '06.DXR', 'lib': 'Internal', 'num': '153-164'})  # UI
+MulleResources.append(resAlbum)
+
+resBrowser = MulleResource('fileBrowser')
+resBrowser.addFile({'dir': '13.DXR', 'lib': 'Internal', 'num': 17})  # Audio
+resBrowser.addFile({'dir': '13.DXR', 'lib': 'Internal', 'num': 29})  # Scroll
+resBrowser.addFile({'dir': '13.DXR', 'lib': 'Internal', 'num': 32})  # File browser
+MulleResources.append(resBrowser)
+
+resDiploma = MulleResource('diploma')
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': 15})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '17-18'})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '21-27'})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': 31})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '39-40'})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '66-71'})
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '81-87'}) #  Strings
+MulleResources.append(resDiploma)
 
 resCutscenes = MulleResource('cutscenes')
 resCutscenes.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': '66-76' })
@@ -227,6 +253,12 @@ resSolhem.addFile({ 'dir': '86.DXR', 'lib': 'Internal', 'num': '181-185' })
 resSolhem.addFile({ 'dir': '86.DXR', 'lib': 'Internal', 'num': '200-206' })
 MulleResources.append(resSolhem)
 
+resDoris = MulleResource('dorisdigital')
+resDoris.addFile({'dir': '90.DXR', 'lib': 'Internal', 'num': 1})  # Outside
+resDoris.addFile({'dir': '90.DXR', 'lib': 'Internal', 'num': '18-19'})  # Window
+resDoris.addFile({'dir': '90.DXR', 'lib': 'Internal', 'num': 185})  # Game sounds
+resDoris.addFile({'dir': '90.DXR', 'lib': 'Internal', 'num': '200-202'})  # Speech
+MulleResources.append(resDoris)
 
 assetOutPath = "./dist/assets"
 if not os.path.exists(assetOutPath):
@@ -250,6 +282,7 @@ for res in MulleResources:
 
 	atlasData = {}
 	soundSprite = {}
+	textString = {}
 
 	imageRects = []
 
@@ -286,6 +319,24 @@ for res in MulleResources:
 		fileBasePath = libPath + '/' + str(f['num'])
 
 		if mem['castType'] == 1:
+			movie = f['dir']
+			opaque = []
+			if movie in director_data.data:
+				if 'opaque' in director_data.data[movie]:
+					opaque += director_data.resolve_list(director_data.data[movie]['opaque'])
+				if 'opaque_sw' in director_data.data[movie]:
+					opaque += director_data.resolve_list(director_data.data[movie]['opaque_sw'])
+			else:
+				print('No opaque data for %s' % movie)
+
+			if not os.path.exists(fileBasePath + '.bmp'):
+				print('Missing file %s' % fileBasePath + '.bmp')
+				continue
+
+			if f['num'] in opaque:
+				call(["magick", "convert", fileBasePath + '.bmp', fileBasePath + '.png'])
+			else:
+				call(["magick", "convert", fileBasePath + '.bmp', "-transparent", "#FFFFFF", fileBasePath + '.png'])
 
 			filePath = fileBasePath + ".png"
 
@@ -362,38 +413,50 @@ for res in MulleResources:
 				imageRects.append(image_rect)
 
 			# print("image " + f['dir'] + " " + str(lib['name']) + " " + str(f['num']))
-
-
-		if mem['castType'] == 6:
-			
-			filePath = fileBasePath + ".wav"
-
-			p = {}
-			p['path'] = filePath
-
-			if 'soundLooped' in mem:
-				p['loop'] = mem['soundLooped']
-			else:
-				p['loop'] = False
-
-			p['data'] = {}
+		else:
+			p = {'data': {}}
 			p['data']['dirName'] = mem['name']
-
 			p['data']['dirFile'] = f['dir']
 			p['data']['dirNum'] = f['num']
 
-			if 'soundCuePoints' in mem and len(mem['soundCuePoints']) > 0:
-				p['data']['cue'] = mem['soundCuePoints']
+			if mem['castType'] == 6:
 
-			soundSprite[ str( len(soundSprite) + 1 ) ] = p
+				filePath = fileBasePath + ".wav"
+				p['path'] = filePath
 
-			assetIndex[resName]['files'].append( { 'type': 'sound', 'dirFile': f['dir'], 'dirName': mem['name'], 'dirNum': f['num'] } )
+				if 'soundLooped' in mem:
+					p['loop'] = mem['soundLooped']
+				else:
+					p['loop'] = False
 
-			# print("audio " + f['dir'] + " " + str(lib['name']) + " " + str(f['num']))
+				if 'soundCuePoints' in mem and len(mem['soundCuePoints']) > 0:
+					p['data']['cue'] = mem['soundCuePoints']
+
+				soundSprite[ str( len(soundSprite) + 1 ) ] = p
+
+				assetIndex[resName]['files'].append( { 'type': 'sound', 'dirFile': f['dir'], 'dirName': mem['name'], 'dirNum': f['num'] } )
+
+				# print("audio " + f['dir'] + " " + str(lib['name']) + " " + str(f['num']))
+
+			if mem['castType'] == 12 or mem['castType'] == 3:
+				filePath = fileBasePath + ".txt"
+				p['path'] = filePath
+				fp = open(filePath, 'rb')
+				string = fp.read()
+				string = string.decode('iso8859-1')
+				if f['dir'] not in textString:
+					textString[f['dir']] = {}
+				textString[f['dir']][f['num']] = string
+
+	if len(textString) > 0:
+		file = '%s/%s-strings.json' % (assetOutPath, resName)
+		fp = open(file, 'w')
+		json.dump(textString, fp)
 
 	print("Images: " + str( len(imageRects) ) )
 	print("Sounds: " + str( len(soundSprite) ) )
-	
+	print("Strings: " + str(len(textString)))
+
 	if len(imageRects) > 0:
 
 		if res.opaque:
@@ -417,7 +480,6 @@ for res in MulleResources:
 			PyTexturePackerUtils.save_image(packed_image, assetOutPath + "/" + atlasName + '.png')
 
 			if optimizeImages > 0:
-				# call('optipng.exe -o' + str( optimizeImages ) + ' ' + assetOutPath + "/" + atlasName + '.png')
 				call(['optipng', '-o', str(optimizeImages), assetOutPath, os.path.join(assetOutPath, atlasName + '.png')])
 
 			# make json

@@ -1,8 +1,8 @@
-import MulleState from 'scenes/base'
+import MulleState from './base'
 
-import MulleSprite from 'objects/sprite'
-// import MulleBuildCar from 'objects/buildcar'
-import MulleActor from 'objects/actor'
+import MulleSprite from '../objects/sprite'
+// import MulleBuildCar from '../objects/buildcar'
+import MulleActor from '../objects/actor'
 
 class FiggeFerrumState extends MulleState {
   preload () {

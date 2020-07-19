@@ -4,6 +4,8 @@ var webpack = require('webpack-stream')
 var exec = require('child_process').exec
 var spawn = require('child_process').spawn
 var sass = require('gulp-sass')
+const git = require('gulp-git');
+const install = require("gulp-install");
 
 // var WebpackDevServer = require("webpack-dev-server")
 
@@ -11,7 +13,20 @@ var WebpackDev = require('./webpack.dev.js')
 
 var WebpackProd = require('./webpack.prod.js')
 
-gulp.task('phaser', function () {
+gulp.task('phaser-clone', function (done) {
+  git.clone('https://github.com/photonstorm/phaser-ce.git', { 'args': './phaser-ce' }, function (error) {
+    if (error) throw error
+    done()
+  })
+})
+
+gulp.task('phaser-install', function (done) {
+  gulp.src('./phaser-ce/package.json').pipe(install({npm: '-f' }, function () {
+    done()
+  }))
+})
+
+gulp.task('phaser-build', function (done) {
   var exclude = [
     'gamepad',
     // 'rendertexture',
@@ -30,9 +45,10 @@ gulp.task('phaser', function () {
   ]
 
   var cmd = [
+    'npx',
     'grunt',
     'custom',
-    '--gruntfile ./node_modules/phaser-ce/Gruntfile.js',
+    '--gruntfile ./phaser-ce/Gruntfile.js',
     '--exclude=' + exclude.join(','),
     '--uglify',
     '--sourcemap'
@@ -46,37 +62,36 @@ gulp.task('phaser', function () {
   })
   */
 
-  /*exec(cmd.join(' '), function (err, stdout, stderr) {
+  exec(cmd.join(' '), function (err, stdout, stderr) {
     console.log('phaser err: ' + err)
     console.log('phaser stdout: ' + stdout)
     console.log('phaser stderr: ' + stderr)
 
-    gulp.src('./node_modules/phaser-ce/dist/phaser.min.js').pipe(gulp.dest('dist/'))
-    gulp.src('./node_modules/phaser-ce/dist/phaser.map').pipe(gulp.dest('dist/'))
-  })*/
-
-  // grunt custom --exclude=ninja,p2,tilemaps,particles,weapon,creature,video --uglify --sourcemap
-
-  // return gulp.src('./node_modules/phaser-ce/build/phaser.min.js').pipe( gulp.dest('dist/') );
+    gulp.src('./phaser-ce/dist/phaser.min.js').pipe(gulp.dest('dist/'))
+    gulp.src('./phaser-ce/dist/phaser.map').pipe(gulp.dest('dist/'))
+    done()
+  })
 })
 
-gulp.task('html', function () {
+gulp.task('html', function (done) {
   gulp.src('./progress/**').pipe(gulp.dest('dist/progress/'))
   gulp.src('./info/**').pipe(gulp.dest('dist/info/'))
   gulp.src('./src/index.html').pipe(gulp.dest('dist/'))
+  done()
 })
 
 gulp.task('css', function () {
   return gulp.src('./src/style.scss').pipe(sass({ /* outputStyle: 'compressed' */ }).on('error', sass.logError)).pipe(gulp.dest('dist/'))
 })
 
-gulp.task('data', function () {
+gulp.task('data', function (done) {
   gulp.src('./loading.png').pipe(gulp.dest('dist/'))
   gulp.src('./data/*.json').pipe(gulp.dest('dist/data/'))
 
   gulp.src('./ui/*').pipe(gulp.dest('dist/ui/'))
 
   gulp.src('./topography/*').pipe(gulp.dest('dist/assets/topography/'))
+  done()
 })
 
 gulp.task('assets-dev', function () {
@@ -121,27 +136,11 @@ gulp.task('js-prod', function () {
   )
 })
 
-/*
-gulp.task("start", function(callback) {
+gulp.task('phaser', gulp.series('phaser-clone', 'phaser-install', 'phaser-build'))
+gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
+gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
+gulp.task('build-prod', gulp.series( 'phaser', 'js-prod', 'html', 'css' ))
 
-  var myConfig = Object.create( WebpackDev )
+gulp.task('build-full', gulp.series( 'phaser', 'js-prod', 'html', 'css', 'assets-prod', 'data' ))
 
-  // Start a webpack-dev-server
-  new WebpackDevServer(webpack(myConfig), {
-    publicPath: "/" + myConfig.output.publicPath,
-    stats: {
-      colors: true
-    }
-  }).listen(8080, "localhost", function(err) {
-    if(err) throw new gutil.PluginError("webpack-dev-server", err)
-    gutil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/index.html")
-  })
-})
-*/
-
-gulp.task('build-dev', [ 'phaser', 'js-dev', 'html', 'css' ])
-gulp.task('build-prod', [ 'phaser', 'js-prod', 'html', 'css' ])
-
-gulp.task('build-full', [ 'phaser', 'js-prod', 'html', 'css', 'assets-prod', 'data' ])
-
-gulp.task('default', [ 'build-dev', 'assets-dev', 'data' ])
+gulp.task('default', gulp.series( 'build-dev', 'assets-dev', 'data' ))

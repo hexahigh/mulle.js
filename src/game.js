@@ -1,3 +1,4 @@
+/* global Phaser */
 /**
  * MulleGame module
  * @module game
@@ -14,6 +15,7 @@ import MenuState from 'scenes/menu'
 import GarageState from 'scenes/garage'
 import JunkState from 'scenes/junk'
 import YardState from 'scenes/yard'
+import AlbumState from 'scenes/album'
 
 import WorldState from 'scenes/world'
 
@@ -24,6 +26,7 @@ import CarShowState from 'scenes/carshow'
 import StureStortandState from 'scenes/sturestortand'
 import SaftfabrikState from 'scenes/saftfabrik'
 import SolhemState from 'scenes/solhem'
+import DorisDigitalState from 'scenes/dorisdigital'
 
 // var requireScenes = require.context('scenes', true, /\.js$/);
 // requireScenes.keys().forEach(requireScenes);
@@ -88,48 +91,49 @@ class MulleGame extends Phaser.Game {
       '03': 'garage',
       '04': 'yard',
       '05': 'world',
+      '06': 'album',
+      '08': 'diploma',
 
-      '10': 'menu',
+      10: 'menu',
 
-      '82': 'mudcar',
-      '83': 'treecar',
-      '84': 'roadthing',
-      '85': 'roaddog',
+      82: 'mudcar',
+      83: 'treecar',
+      84: 'roadthing',
+      85: 'roaddog',
 
-      '86': 'solhem',
-      '87': 'saftfabrik',
-      '88': 'sturestortand',
-      '89': 'viola',
-      '90': 'dorisdigital',
-      '91': 'luddelabb',
-      '92': 'figgeferrum',
-
-      '93': 'ocean',
-      '94': 'carshow'
+      86: 'solhem',
+      87: 'saftfabrik',
+      88: 'sturestortand',
+      89: 'viola',
+      90: 'dorisdigital',
+      91: 'luddelabb',
+      92: 'figgeferrum',
+      93: 'ocean',
+      94: 'carshow'
 
     }
 
     this.mulle.states = {
 
-      'boot': BootState,
-      'load': LoadState,
+      boot: BootState,
+      load: LoadState,
 
-      'menu': MenuState, // 10
+      menu: MenuState, // 10
 
-      'junk': JunkState, // 02
-      'garage': GarageState, // 03
-      'yard': YardState, // 04
-      'world': WorldState, // 05
-
-      'roadthing': RoadThingState, // 84
-      'roaddog': RoadDogState, // 85
-      'solhem': SolhemState, // 86
-      'saftfabrik': SaftfabrikState, // 87
-      'sturestortand': StureStortandState, // 88
-      'figgeferrum': FiggeFerrumState, // 92
-
-      'carshow': CarShowState // 94
-
+      junk: JunkState, // 02
+      garage: GarageState, // 03
+      yard: YardState, // 04
+      world: WorldState, // 05
+      album: AlbumState, // 06
+      diploma: DiplomaState, // 08
+      roadthing: RoadThingState, // 84
+      roaddog: RoadDogState, // 85
+      solhem: SolhemState, // 86
+      saftfabrik: SaftfabrikState, // 87
+      sturestortand: StureStortandState, // 88
+      dorisdigital: DorisDigitalState, // 90
+      figgeferrum: FiggeFerrumState, // 92
+      carshow: CarShowState // 94
     }
 
     this.mulle.audio = {}
@@ -144,7 +148,7 @@ class MulleGame extends Phaser.Game {
      * @return {Phaser.Sound} sound object
      */
     this.mulle.playAudio = function (id, onStop = null) {
-      for (let a in this.game.mulle.audio) {
+      for (const a in this.game.mulle.audio) {
         var p = this.game.mulle.audio[a]
 
         for (var s in p.sounds) {
@@ -192,7 +196,7 @@ class MulleGame extends Phaser.Game {
     }
 
     this.mulle.stopAudio = function (id) {
-      for (let a in this.game.mulle.audio) {
+      for (const a in this.game.mulle.audio) {
         var p = this.game.mulle.audio[a]
 
         for (var s in p.sounds) {
@@ -221,7 +225,7 @@ class MulleGame extends Phaser.Game {
     }
 
     this.mulle.setData = function (key, value) {
-      this.game.mulle.UsersDB[ this.game.mulle.activeProfile ][ key ] = value
+      this.game.mulle.UsersDB[this.game.mulle.activeProfile][key] = value
     }
 
     this.mulle.loadData = function () {
@@ -280,8 +284,8 @@ class MulleGame extends Phaser.Game {
     }
 
     this.mulle.findDirectorMember = function (name) {
-      if (memberLookup[ name ]) {
-        return memberLookup[ name ]
+      if (memberLookup[name]) {
+        return memberLookup[name]
       }
 
       var keys = this.game.cache.getKeys(Phaser.Cache.IMAGE)
@@ -293,7 +297,7 @@ class MulleGame extends Phaser.Game {
 
         for (var f in frames) {
           if (frames[f].dirName === name) {
-            memberLookup[ name ] = frames[f]
+            memberLookup[name] = frames[f]
 
             return frames[f]
           }

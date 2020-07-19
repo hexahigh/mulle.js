@@ -1,4 +1,4 @@
-import MulleMap from 'struct/map'
+import MulleMap from './map'
 
 class MulleWorld {
   constructor (game, id) {
