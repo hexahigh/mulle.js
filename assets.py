@@ -92,7 +92,7 @@ resDriving.addFile({ 'dir': '05.DXR', 'lib': 'Internal', 'num': 46 }) # speed me
 
 resDriving.addFile({ 'dir': '05.DXR', 'lib': 'Internal', 'num': 53 }) # menu
 
-# resDriving.addFile({ 'dir': '05.DXR', 'lib': 'Internal', 'num': '69-75' }) # medals
+resDriving.addFile({ 'dir': '05.DXR', 'lib': 'Internal', 'num': '69-75' }) # medals
 
 resDriving.addFile({ 'dir': '05.DXR', 'lib': 'Internal', 'num': '77-157' }) # car
 
