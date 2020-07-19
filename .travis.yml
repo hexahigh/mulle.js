@@ -14,6 +14,8 @@ jobs:
         - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PWD/bin:$PATH"
         - wget -O ~/mullebil.iso $ISO
         - powershell -ExecutionPolicy bypass deployment/mount.ps1
+      before_script:
+        python rename.py
 
     - os: windows
       language: shell
@@ -29,15 +31,8 @@ jobs:
     - os: linux
       env:
         - BUILD_LANG=NO
-      # before_script:
-        # - mv cst_out_new cst_out_new_NO
-        # - scp -q mulle@dedicated.datagutten.net:/home/mulle/iso/mullebil_SE.iso ~/mullebil_SE.iso
-        # - mkdir ~/mullebil_SE
-        #  - sudo mount -o loop ~/mullebil_SE.iso ~/mullebil_SE
-        #  - python extract.py ~/mullebil_SE
-        # - mv cst_out_new cst_out_new_SE
-        # - python rename_metadata.py
-        # - mv cst_out_new_NO cst_out_new
+      before_script:
+        python rename.py
 
     - os: linux
       env:
