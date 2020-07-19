@@ -319,6 +319,24 @@ for res in MulleResources:
 		fileBasePath = libPath + '/' + str(f['num'])
 
 		if mem['castType'] == 1:
+			movie = f['dir']
+			opaque = []
+			if movie in director_data.data:
+				if 'opaque' in director_data.data[movie]:
+					opaque += director_data.resolve_list(director_data.data[movie]['opaque'])
+				if 'opaque_sw' in director_data.data[movie]:
+					opaque += director_data.resolve_list(director_data.data[movie]['opaque_sw'])
+			else:
+				print('No opaque data for %s' % movie)
+
+			if not os.path.exists(fileBasePath + '.bmp'):
+				print('Missing file %s' % fileBasePath + '.bmp')
+				continue
+
+			if f['num'] in opaque:
+				call(["magick", "convert", fileBasePath + '.bmp', fileBasePath + '.png'])
+			else:
+				call(["magick", "convert", fileBasePath + '.bmp', "-transparent", "#FFFFFF", fileBasePath + '.png'])
 
 			filePath = fileBasePath + ".png"
 
