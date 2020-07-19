@@ -117,7 +117,8 @@ resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '107-108' }) # fi
 
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '101-105' }) # phone and hover
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '181-183' }) # ui sounds
-resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '208-264' }) # voices
+resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '208-223' }) # voices
+resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '226-264' }) # voices
 MulleResources.append(resGarage)
 
 
