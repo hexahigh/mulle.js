@@ -34,12 +34,14 @@ class MulleResource:
 
 	def addFile( self, opt ):
 
-		if type(opt['num']) is str and '-' in opt['num']:
-			
-			f = opt['num'].split('-')
+		if (type(opt['num']) is str and '-' in opt['num']) or type(opt['num']) == list:
+			if type(opt['num']) == list:
+				files = opt['num']
+			else:
+				files = opt['num'].split('-')
 
-			for i in range( int(f[0]), int(f[1]) + 1 ):
-				self.addFile({ 'dir': opt['dir'], 'lib': opt['lib'], 'num': i });
+			for i in range( int(files[0]), int(files[1]) + 1 ):
+				self.addFile({ 'dir': opt['dir'], 'lib': opt['lib'], 'num': i })
 
 		else:
 
