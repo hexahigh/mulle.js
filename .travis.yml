@@ -15,7 +15,7 @@ jobs:
         - wget -O ~/mullebil.iso $ISO
         - powershell -ExecutionPolicy bypass deployment/mount.ps1
       before_script:
-        python rename.py
+        python build_scripts/rename.py
 
     - os: windows
       language: shell
@@ -32,7 +32,7 @@ jobs:
       env:
         - BUILD_LANG=NO
       before_script:
-        python rename.py
+        python build_scripts/rename.py
 
     - os: linux
       env:
