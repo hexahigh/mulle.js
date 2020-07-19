@@ -280,6 +280,7 @@ for res in MulleResources:
 
 	atlasData = {}
 	soundSprite = {}
+	textString = {}
 
 	imageRects = []
 
@@ -392,38 +393,50 @@ for res in MulleResources:
 				imageRects.append(image_rect)
 
 			# print("image " + f['dir'] + " " + str(lib['name']) + " " + str(f['num']))
-
-
-		if mem['castType'] == 6:
-			
-			filePath = fileBasePath + ".wav"
-
-			p = {}
-			p['path'] = filePath
-
-			if 'soundLooped' in mem:
-				p['loop'] = mem['soundLooped']
-			else:
-				p['loop'] = False
-
-			p['data'] = {}
+		else:
+			p = {'data': {}}
 			p['data']['dirName'] = mem['name']
-
 			p['data']['dirFile'] = f['dir']
 			p['data']['dirNum'] = f['num']
 
-			if 'soundCuePoints' in mem and len(mem['soundCuePoints']) > 0:
-				p['data']['cue'] = mem['soundCuePoints']
+			if mem['castType'] == 6:
 
-			soundSprite[ str( len(soundSprite) + 1 ) ] = p
+				filePath = fileBasePath + ".wav"
+				p['path'] = filePath
 
-			assetIndex[resName]['files'].append( { 'type': 'sound', 'dirFile': f['dir'], 'dirName': mem['name'], 'dirNum': f['num'] } )
+				if 'soundLooped' in mem:
+					p['loop'] = mem['soundLooped']
+				else:
+					p['loop'] = False
 
-			# print("audio " + f['dir'] + " " + str(lib['name']) + " " + str(f['num']))
+				if 'soundCuePoints' in mem and len(mem['soundCuePoints']) > 0:
+					p['data']['cue'] = mem['soundCuePoints']
+
+				soundSprite[ str( len(soundSprite) + 1 ) ] = p
+
+				assetIndex[resName]['files'].append( { 'type': 'sound', 'dirFile': f['dir'], 'dirName': mem['name'], 'dirNum': f['num'] } )
+
+				# print("audio " + f['dir'] + " " + str(lib['name']) + " " + str(f['num']))
+
+			if mem['castType'] == 12 or mem['castType'] == 3:
+				filePath = fileBasePath + ".txt"
+				p['path'] = filePath
+				fp = open(filePath, 'rb')
+				string = fp.read()
+				string = string.decode('iso8859-1')
+				if f['dir'] not in textString:
+					textString[f['dir']] = {}
+				textString[f['dir']][f['num']] = string
+
+	if len(textString) > 0:
+		file = '%s/%s-strings.json' % (assetOutPath, resName)
+		fp = open(file, 'w')
+		json.dump(textString, fp)
 
 	print("Images: " + str( len(imageRects) ) )
 	print("Sounds: " + str( len(soundSprite) ) )
-	
+	print("Strings: " + str(len(textString)))
+
 	if len(imageRects) > 0:
 
 		if res.opaque:
