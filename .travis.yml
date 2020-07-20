@@ -67,7 +67,7 @@ install:
   - python extract.py ~/mullebil
 
 script:
-  - npx gulp build-prod
+  - npx gulp build-dev
   - python assets.py 7
   - python build_scripts/topography.py
   - python build_scripts/copy_ui.py
