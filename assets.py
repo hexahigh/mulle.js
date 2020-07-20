@@ -14,6 +14,11 @@ import wave, aifc, sunau
 import glob
 
 from PIL import Image, ImageDraw, ImagePalette, ImageChops
+try:
+    from build_scripts.data import director_data
+except ImportError:
+    from .build_scripts.data import director_data
+
 
 from PyTexturePacker import Packer
 from PyTexturePacker import ImageRect
