@@ -28,6 +28,7 @@ jobs:
         - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PWD/bin:/c/ProgramData/chocolatey/lib/ffmpeg/tools:c/ProgramData/chocolatey/lib/OptiPNG/tools:$PATH"
         - wget -O ~/mullebil.iso $ISO
         - powershell -ExecutionPolicy bypass deployment/mount.ps1
+        - where ffmpeg
 
     - os: linux
       env:
