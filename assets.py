@@ -14,6 +14,8 @@ import wave, aifc, sunau
 import glob
 
 from PIL import Image, ImageDraw, ImagePalette, ImageChops
+from pydub.exceptions import CouldntEncodeError
+
 try:
     from build_scripts.data import director_data
 except ImportError:
@@ -549,8 +551,11 @@ for res in MulleResources:
 		for s in soundSprite:
 
 			sprite.addAudio( soundSprite[s]['path'], isLooped=soundSprite[s]['loop'], extraData=soundSprite[s]['data'] )
-
-		outSprite = sprite.save( assetOutPath, resName + '-audio', formats=['ogg'], bitrate='32k', parameters=['-ar', '22050'] )
+		try:
+			outSprite = sprite.save( assetOutPath, resName + '-audio', formats=['ogg'], bitrate='32k', parameters=['-ar', '22050'] )
+		except CouldntEncodeError as e:
+			print(e)
+			continue
 
 		# print("audiosprite done")
 		# print(outSprite)
