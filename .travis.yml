@@ -65,7 +65,9 @@ install:
   - python -m pip install -r requirements.txt
   - npm install
   - python extract.py ~/mullebil
-  - npx gulp build-full
+  - python assets.py 7
+  - npx gulp build-prod
+  - npx gulp data
 
 script:
   - python build_scripts/topography.py
