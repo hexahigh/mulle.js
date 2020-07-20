@@ -15,7 +15,7 @@ except ImportError:
 no_path = sys.argv[1]
 if not os.path.exists(no_path):
     raise FileNotFoundError(no_path)
-if len(sys.argv) >= 2:
+if len(sys.argv) >= 3:
     movie_filter = sys.argv[2]
 else:
     movie_filter = None
