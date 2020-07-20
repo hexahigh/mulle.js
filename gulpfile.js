@@ -96,28 +96,12 @@ gulp.task('data', function (done) {
 
 gulp.task('assets-dev', function () {
   console.log('do assets dev')
-
-  return exec('python assets.py 0', function (err, stdout, stderr) {
-    console.log(stdout)
-    console.log(stderr)
-  })
+  return spawn('python', ['assets.py', '0'])
 })
 
 gulp.task('assets-prod', function () {
   console.log('do assets prod')
-
-  /*
-  return exec('python assets.py 7', function (err, stdout, stderr) {
-    console.log(stdout)
-    console.log(stderr)
-  })
-  */
-
-  var cmd = spawn('python', ['assets.py', '7'], { stdio: 'inherit' })
-
-  cmd.stdout.on('data', function (data) {
-    console.log('stdout: ' + data.toString())
-  })
+  return spawn('python', ['assets.py', '7'])
 })
 
 gulp.task('js-dev', function () {
