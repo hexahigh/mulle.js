@@ -161,7 +161,7 @@ resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '21-27'})
 resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': 31})
 resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '39-40'})
 resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '66-71'})
-resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '81-87'}) #  Strings
+# resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '81-87'}) #  Strings
 MulleResources.append(resDiploma)
 
 resCutscenes = MulleResource('cutscenes')

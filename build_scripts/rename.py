@@ -4,7 +4,10 @@ Rename files from Norwegian game to Swedish cast numbers
 import json
 import os
 import sys
-from . import director_data
+try:
+    from data import director_data
+except ImportError:
+    from .data import director_data
 
 # \s+ls.+/([0-9]+)\..+\s+rm.+/([0-9]+)\..+
 # SW: $1 NO: $2
