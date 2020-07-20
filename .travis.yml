@@ -45,8 +45,6 @@ jobs:
 addons:
   apt:
     packages:
-      - nodejs
-      - npm
       - ffmpeg
       - optipng
   ssh_known_hosts: dedicated.datagutten.net
@@ -61,6 +59,7 @@ before_install:
   - scp -q mulle@dedicated.datagutten.net:/home/mulle/iso/mullebil_$BUILD_LANG.iso ~/mullebil.iso
   - mkdir ~/mullebil
   - sudo mount -o loop ~/mullebil.iso ~/mullebil
+  - nvm install 10
 
 install:
   - python -m pip install -r requirements.txt
