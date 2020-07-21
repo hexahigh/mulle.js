@@ -1,27 +1,26 @@
-var gulp = require('gulp')
-var webpack = require('webpack-stream')
-// var gutil = require('gulp-util')
-var exec = require('child_process').exec
-var spawn = require('child_process').spawn
-var sass = require('gulp-sass')
-const git = require('gulp-git');
-const install = require("gulp-install");
+const gulp = require('gulp')
+const child_process = require('child_process')
+const spawn = require('child_process').spawn
+const exec = require('gulp-exec');
+const texturePacker = require('gulp-free-tex-packer')
+const git = require('gulp-git')
+const install = require('gulp-install')
+const rename = require('gulp-rename')
+const sass = require('gulp-sass')
+const webpack = require('webpack-stream')
 
-// var WebpackDevServer = require("webpack-dev-server")
-
-var WebpackDev = require('./webpack.dev.js')
-
-var WebpackProd = require('./webpack.prod.js')
+const WebpackDev = require('./webpack.dev.js')
+const WebpackProd = require('./webpack.prod.js')
 
 gulp.task('phaser-clone', function (done) {
-  git.clone('https://github.com/photonstorm/phaser-ce.git', { 'args': './phaser-ce' }, function (error) {
+  git.clone('https://github.com/photonstorm/phaser-ce.git', { args: './phaser-ce' }, function (error) {
     if (error) throw error
     done()
   })
 })
 
 gulp.task('phaser-install', function (done) {
-  gulp.src('./phaser-ce/package.json').pipe(install({npm: '-f' }, function () {
+  gulp.src('./phaser-ce/package.json').pipe(install({ npm: '-f' }, function () {
     done()
   }))
 })
@@ -54,15 +53,7 @@ gulp.task('phaser-build', function (done) {
     '--sourcemap'
   ]
 
-  /*
-  var shl = spawn('grunt', cmd, { stdio: 'inherit' })
-
-  shl.stdout.on('data', function(data){
-    console.log('grunt stdout: ' + data.toString())
-  })
-  */
-
-  exec(cmd.join(' '), function (err, stdout, stderr) {
+  child_process.exec(cmd.join(' '), function (err, stdout, stderr) {
     console.log('phaser err: ' + err)
     console.log('phaser stdout: ' + stdout)
     console.log('phaser stderr: ' + stderr)
@@ -91,25 +82,77 @@ gulp.task('copy_data', function (done) {
   gulp.src('./ui/*').pipe(gulp.dest('dist/ui/'))
 
   gulp.src('./topography/topography*').pipe(gulp.dest('dist/assets/topography/'))
+
+  const cursors = {
+    109: 'default',
+    110: 'grab',
+    111: 'left',
+    112: 'point',
+    113: 'back',
+    114: 'right',
+    115: 'drag_left',
+    116: 'drag_right',
+    117: 'drag_forward'
+  }
+
+  for (const [number, name] of Object.entries(cursors)) {
+    gulp.src(`./cst_out_new/00.CXT/Standalone/${number}.png`).pipe(rename(name + '.png')).pipe(gulp.dest('dist/ui'))
+  }
   done()
 })
 
-gulp.task('topography', function () {
+gulp.task('pack_topography', function () {
+  return gulp.src('topography/30t*.png')
+    .pipe(texturePacker({
+      textureName: 'topography',
+      removeFileExtension: true,
+      prependFolderName: false,
+      exporter: 'JsonHash',
+      width: 2048,
+      height: 2048,
+      fixedSize: false,
+      padding: 1,
+      allowRotation: false,
+      allowTrim: true,
+      detectIdentical: true,
+      packer: 'MaxRectsBin',
+      packerMethod: 'BottomLeftRule'
+    }))
+    .pipe(gulp.dest('topography'))
+})
+
+gulp.task('build_topography', function () {
   const process = spawn('python', ['build_scripts/topography.py'])
+
+  process.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`)
+  })
   process.stderr.on('data', (data) => {
-      console.error(`ps stderr: ${data}`);
-    })
+    console.error(`stderr: ${data}`)
+  })
+
   return process
 })
 
-gulp.task('assets-dev', function () {
+gulp.task('assets', function () {
   console.log('do assets dev')
   return spawn('python', ['assets.py', '0'])
 })
 
-gulp.task('assets-prod', function () {
-  console.log('do assets prod')
-  return spawn('python', ['assets.py', '7'])
+gulp.task('optipng', function () {
+  const options = {
+    continueOnError: false, // default = false, true means don't emit error event
+    pipeStdout: false, // default = false, true means stdout is written to file.contents
+  };
+  const reportOptions = {
+    err: true, // default = true, false means don't write err
+    stderr: true, // default = true, false means don't write stderr
+    stdout: true // default = true, false means don't write stdout
+  };
+
+  return gulp.src('./dist/assets/*.png')
+    .pipe(exec(file => `optipng -o7 ${file.path}`, options))
+    .pipe(exec.reporter(reportOptions));
 })
 
 gulp.task('js-dev', function () {
@@ -128,12 +171,16 @@ gulp.task('js-prod', function () {
   )
 })
 
+gulp.task('rename', function () {
+  return spawn('python3', ['build_scripts/rename.py', 'cst_out_new'])
+})
+
 gulp.task('phaser', gulp.series('phaser-clone', 'phaser-install', 'phaser-build'))
-gulp.task('data', gulp.series('topography', 'copy_data'))
-gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
-gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
-gulp.task('build-prod', gulp.series( 'phaser', 'js-prod', 'html', 'css' ))
+gulp.task('data', gulp.series('build_topography', 'pack_topography', 'copy_data'))
+gulp.task('build-dev', gulp.series('phaser', 'js-dev', 'html', 'css'))
+gulp.task('build-dev', gulp.series('phaser', 'js-dev', 'html', 'css'))
+gulp.task('build-prod', gulp.series('phaser', 'js-prod', 'html', 'css'))
 
-gulp.task('build-full', gulp.series( 'phaser', 'js-prod', 'html', 'css', 'assets-prod', 'data' ))
+gulp.task('build-full', gulp.series('phaser', 'js-prod', 'html', 'css', 'assets', 'optipng', 'data'))
 
-gulp.task('default', gulp.series( 'build-dev', 'assets-dev', 'data' ))
+gulp.task('default', gulp.series('build-dev', 'assets', 'data'))
