@@ -95,7 +95,11 @@ gulp.task('copy_data', function (done) {
 })
 
 gulp.task('topography', function () {
-  return spawn('python', ['build_scripts/topography.py'])
+  const process = spawn('python', ['build_scripts/topography.py'])
+  process.stderr.on('data', (data) => {
+      console.error(`ps stderr: ${data}`);
+    })
+  return process
 })
 
 gulp.task('assets-dev', function () {
