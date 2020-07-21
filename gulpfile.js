@@ -76,7 +76,7 @@ gulp.task('css', function () {
 })
 
 gulp.task('copy_data', function (done) {
-  gulp.src('./loading.png').pipe(gulp.dest('dist/'))
+  gulp.src('./cst/out_new/Standalone/122.png').pipe(rename('loading.png')).pipe(gulp.dest('dist/'))
   gulp.src('./data/*.json').pipe(gulp.dest('dist/data/'))
 
   gulp.src('./ui/*').pipe(gulp.dest('dist/ui/'))
