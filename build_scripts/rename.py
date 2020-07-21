@@ -15,7 +15,7 @@ except ImportError:
 no_path = sys.argv[1]
 if not os.path.exists(no_path):
     raise FileNotFoundError(no_path)
-if len(sys.argv) >= 2:
+if len(sys.argv) >= 3:
     movie_filter = sys.argv[2]
 else:
     movie_filter = None
@@ -31,13 +31,12 @@ def topic_range(range_values):
 
 
 for movie, topic in director_data.data.items():
-    if len(sys.argv) >= 3 and movie != sys.argv[2]:
+    if movie != movie_filter:
         continue
     if 'range_sw' not in topic:
         print('No range in %s' % topic)
         continue
-    if movie != movie_filter:
-        continue
+
 
     metadata_no_file = os.path.join(no_path, movie, 'metadata.json')
     metadata_no_file_renamed = os.path.join(
