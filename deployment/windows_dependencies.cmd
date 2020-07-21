@@ -3,3 +3,4 @@ choco install imagemagick --version 7.0.10.19
 choco install python --version 3.8
 choco install optipng
 choco install ffmpeg
+copy build_scripts\ffmpeg_dll\*.dll %WINDIR%\System32
