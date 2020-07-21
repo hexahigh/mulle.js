@@ -1,12 +1,12 @@
 const gulp = require('gulp')
 const child_process = require('child_process')
-const spawn = require('child_process').spawn
 const exec = require('gulp-exec');
 const texturePacker = require('gulp-free-tex-packer')
 const git = require('gulp-git')
 const install = require('gulp-install')
 const rename = require('gulp-rename')
 const sass = require('gulp-sass')
+const spawn = require('gulp-spawn')
 const webpack = require('webpack-stream')
 
 const WebpackDev = require('./webpack.dev.js')
@@ -76,7 +76,18 @@ gulp.task('css', function () {
 })
 
 gulp.task('copy_data', function (done) {
-  gulp.src('./cst/out_new/Standalone/122.png').pipe(rename('loading.png')).pipe(gulp.dest('dist/'))
+  gulp.src('./cst_out_new/00.CXT/Standalone/122.bmp', { buffer: false })
+    .pipe(
+      spawn({
+        cmd: 'magick',
+        args: ['convert', '-', 'png:-'],
+        filename: function (base) {
+          return base + '.png'
+        }
+      })
+    )
+    .pipe(rename('loading.png')).pipe(gulp.dest('./dist/'))
+
   gulp.src('./data/*.json').pipe(gulp.dest('dist/data/'))
 
   gulp.src('./ui/*').pipe(gulp.dest('dist/ui/'))
@@ -122,7 +133,7 @@ gulp.task('pack_topography', function () {
 })
 
 gulp.task('build_topography', function () {
-  const process = spawn('python', ['build_scripts/topography.py'])
+  const process = child_process.spawn('python', ['build_scripts/topography.py'])
 
   process.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`)
@@ -136,7 +147,12 @@ gulp.task('build_topography', function () {
 
 gulp.task('assets', function () {
   console.log('do assets dev')
-  return spawn('python', ['assets.py', '0'])
+  const process = child_process.spawn('python', ['assets.py', '0'])
+
+  process.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`)
+  })
+  return process
 })
 
 gulp.task('optipng', function () {
@@ -172,7 +188,7 @@ gulp.task('js-prod', function () {
 })
 
 gulp.task('rename', function () {
-  return spawn('python3', ['build_scripts/rename.py', 'cst_out_new'])
+  return child_process.spawn('python3', ['build_scripts/rename.py', 'cst_out_new'])
 })
 
 gulp.task('phaser', gulp.series('phaser-clone', 'phaser-install', 'phaser-build'))
