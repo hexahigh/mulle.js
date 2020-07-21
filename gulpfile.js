@@ -4,6 +4,7 @@ var webpack = require('webpack-stream')
 var exec = require('child_process').exec
 var spawn = require('child_process').spawn
 const texturePacker = require('gulp-free-tex-packer');
+const rename = require('gulp-rename')
 var sass = require('gulp-sass')
 const git = require('gulp-git');
 const install = require("gulp-install");
@@ -92,6 +93,22 @@ gulp.task('copy_data', function (done) {
   gulp.src('./ui/*').pipe(gulp.dest('dist/ui/'))
 
   gulp.src('./topography/topography*').pipe(gulp.dest('dist/assets/topography/'))
+
+  const cursors = {
+    109: 'default',
+    110: 'grab',
+    111: 'left',
+    112: 'point',
+    113: 'back',
+    114: 'right',
+    115: 'drag_left',
+    116: 'drag_right',
+    117: 'drag_forward'
+  }
+
+  for (const [number, name] of Object.entries(cursors)) {
+    gulp.src(`./cst_out_new/00.CXT/Standalone/${number}.png`).pipe(rename(name + '.png')).pipe(gulp.dest('dist/ui'))
+  }
   done()
 })
 
