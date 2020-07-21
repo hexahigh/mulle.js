@@ -1,0 +1,4 @@
+pillow
+PyTexturePacker
+pydub
+bitstring
