@@ -84,14 +84,18 @@ gulp.task('css', function () {
   return gulp.src('./src/style.scss').pipe(sass({ /* outputStyle: 'compressed' */ }).on('error', sass.logError)).pipe(gulp.dest('dist/'))
 })
 
-gulp.task('data', function (done) {
+gulp.task('copy_data', function (done) {
   gulp.src('./loading.png').pipe(gulp.dest('dist/'))
   gulp.src('./data/*.json').pipe(gulp.dest('dist/data/'))
 
   gulp.src('./ui/*').pipe(gulp.dest('dist/ui/'))
 
-  gulp.src('./topography/*').pipe(gulp.dest('dist/assets/topography/'))
+  gulp.src('./topography/topography*').pipe(gulp.dest('dist/assets/topography/'))
   done()
+})
+
+gulp.task('topography', function () {
+  return spawn('python', ['build_scripts/topography.py'])
 })
 
 gulp.task('assets-dev', function () {
@@ -121,6 +125,7 @@ gulp.task('js-prod', function () {
 })
 
 gulp.task('phaser', gulp.series('phaser-clone', 'phaser-install', 'phaser-build'))
+gulp.task('data', gulp.series('topography', 'copy_data'))
 gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
 gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
 gulp.task('build-prod', gulp.series( 'phaser', 'js-prod', 'html', 'css' ))

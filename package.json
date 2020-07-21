@@ -21,6 +21,7 @@
 		"babel-loader": "^8.0.0",
 		"@babel/preset-env": "^7.10.4",
 		"expose-loader": "^0.7.3",
+		"free-tex-packer-cli": "^0.2.8",
 		"gulp": "^4",
 		"gulp-exec": "^5",
 		"gulp-sass": "^4",
