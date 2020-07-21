@@ -16,6 +16,7 @@ import GarageState from 'scenes/garage'
 import JunkState from 'scenes/junk'
 import YardState from 'scenes/yard'
 import AlbumState from 'scenes/album'
+import DiplomaState from 'scenes/diploma'
 
 import WorldState from 'scenes/world'
 
