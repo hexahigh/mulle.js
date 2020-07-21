@@ -1,29 +1,26 @@
-var gulp = require('gulp')
-var webpack = require('webpack-stream')
-// var gutil = require('gulp-util')
-var exec = require('child_process').exec
-var spawn = require('child_process').spawn
-const texturePacker = require('gulp-free-tex-packer');
+const gulp = require('gulp')
+const child_process = require('child_process')
+const spawn = require('child_process').spawn
+const exec = require('gulp-exec');
+const texturePacker = require('gulp-free-tex-packer')
+const git = require('gulp-git')
+const install = require('gulp-install')
 const rename = require('gulp-rename')
-var sass = require('gulp-sass')
-const git = require('gulp-git');
-const install = require("gulp-install");
+const sass = require('gulp-sass')
+const webpack = require('webpack-stream')
 
-// var WebpackDevServer = require("webpack-dev-server")
-
-var WebpackDev = require('./webpack.dev.js')
-
-var WebpackProd = require('./webpack.prod.js')
+const WebpackDev = require('./webpack.dev.js')
+const WebpackProd = require('./webpack.prod.js')
 
 gulp.task('phaser-clone', function (done) {
-  git.clone('https://github.com/photonstorm/phaser-ce.git', { 'args': './phaser-ce' }, function (error) {
+  git.clone('https://github.com/photonstorm/phaser-ce.git', { args: './phaser-ce' }, function (error) {
     if (error) throw error
     done()
   })
 })
 
 gulp.task('phaser-install', function (done) {
-  gulp.src('./phaser-ce/package.json').pipe(install({npm: '-f' }, function () {
+  gulp.src('./phaser-ce/package.json').pipe(install({ npm: '-f' }, function () {
     done()
   }))
 })
@@ -56,15 +53,7 @@ gulp.task('phaser-build', function (done) {
     '--sourcemap'
   ]
 
-  /*
-  var shl = spawn('grunt', cmd, { stdio: 'inherit' })
-
-  shl.stdout.on('data', function(data){
-    console.log('grunt stdout: ' + data.toString())
-  })
-  */
-
-  exec(cmd.join(' '), function (err, stdout, stderr) {
+  child_process.exec(cmd.join(' '), function (err, stdout, stderr) {
     console.log('phaser err: ' + err)
     console.log('phaser stdout: ' + stdout)
     console.log('phaser stderr: ' + stderr)
@@ -115,10 +104,10 @@ gulp.task('copy_data', function (done) {
 gulp.task('pack_topography', function () {
   return gulp.src('topography/30t*.png')
     .pipe(texturePacker({
-      textureName: "topography",
+      textureName: 'topography',
       removeFileExtension: true,
       prependFolderName: false,
-      exporter: "JsonHash",
+      exporter: 'JsonHash',
       width: 2048,
       height: 2048,
       fixedSize: false,
@@ -126,20 +115,20 @@ gulp.task('pack_topography', function () {
       allowRotation: false,
       allowTrim: true,
       detectIdentical: true,
-      packer: "MaxRectsBin",
-      packerMethod: "BottomLeftRule"
+      packer: 'MaxRectsBin',
+      packerMethod: 'BottomLeftRule'
     }))
-    .pipe(gulp.dest('topography'));
+    .pipe(gulp.dest('topography'))
 })
 
 gulp.task('build_topography', function () {
   const process = spawn('python', ['build_scripts/topography.py'])
 
   process.stdout.on('data', (data) => {
-    console.log(`stdout: ${data}`);
+    console.log(`stdout: ${data}`)
   })
   process.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
+    console.error(`stderr: ${data}`)
   })
 
   return process
