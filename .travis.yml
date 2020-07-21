@@ -34,10 +34,18 @@ jobs:
         - BUILD_LANG=NO
       before_script:
         python build_scripts/rename.py cst_out_new
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script: deployment/deploy.sh
 
     - os: linux
       env:
         - BUILD_LANG=SE
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script: deployment/deploy.sh
 
   allow_failures:
     - os: windows
@@ -71,10 +79,3 @@ script:
 
 before_deploy:
 - deployment/package.sh
-
-deploy:
-  provider: script
-  skip_cleanup: true
-  script: deployment/deploy.sh
-  on:
-    branch: travis
