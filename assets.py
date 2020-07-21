@@ -187,7 +187,10 @@ MulleResources.append(resCharacters)
 
 
 resShared = MulleResource('shared')
-resShared.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': '416-493' }) # misc audio
+resShared.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': '416-421' }) # misc audio
+resShared.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': '433-461' }) # misc audio
+resShared.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': '469-474' }) # misc audio
+resShared.addFile({ 'dir': '00.CXT', 'lib': 'Standalone', 'num': '485-493' }) # misc audio
 resShared.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '48-49' }) # mailbox audio
 MulleResources.append(resShared)
 
@@ -214,8 +217,13 @@ MulleResources.append(resRoadThing)
 
 
 resFiggeFerrum = MulleResource('figgeferrum')
-resFiggeFerrum.addFile({ 'dir': '92.DXR', 'lib': 'Internal', 'num': '1-205' })
-resFiggeFerrum.addFile({ 'dir': '92.DXR', 'lib': 'Internal', 'num': '40-44' }) # salka left
+resFiggeFerrum.addFile({ 'dir': '92.DXR', 'lib': 'Internal', 'num': 1})  # Background
+resFiggeFerrum.addFile({ 'dir': '92.DXR', 'lib': 'Internal', 'num': 11})  # Gas can
+resFiggeFerrum.addFile({ 'dir': '92.DXR', 'lib': 'Internal', 'num': '16-27'})
+resFiggeFerrum.addFile({ 'dir': '92.DXR', 'lib': 'Internal', 'num': 37})  # DogAnimChart
+resFiggeFerrum.addFile({ 'dir': '92.DXR', 'lib': 'Internal', 'num': '40-44'})  # Salka frames
+resFiggeFerrum.addFile({ 'dir': '92.DXR', 'lib': 'Internal', 'num': '181-182'})  # sound
+resFiggeFerrum.addFile({ 'dir': '92.DXR', 'lib': 'Internal', 'num': '199-205'})  # sound
 MulleResources.append(resFiggeFerrum)
 
 

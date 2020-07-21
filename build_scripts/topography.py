@@ -4,10 +4,18 @@ import subprocess
 
 from PIL import Image, ImageDraw
 
+try:
+    from palette import parse_palette
+except ImportError:
+    from build_scripts.palette import parse_palette
+
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 project_path = os.path.realpath(os.path.join(dir_path, '..'))
-topo_path = os.path.join(project_path, "dist", "assets", "topography")
+topo_path = os.path.join(project_path, "topography")
 topo_source = os.path.join(project_path, "cst_out_new", "CDDATA.CXT", "Standalone")
+
+palette, palette_index, colors, component_colors = parse_palette(os.path.join(dir_path, 'grayscale.pal'))
 
 if not os.path.exists(topo_path):
     os.mkdir(topo_path)
@@ -25,16 +33,16 @@ for num in range(693, 748 + 1, 2):
         data_string += fp.read()
 
     im = Image.new("P", [316, 198])
-    im.putpalette([0xF0, 0xF0, 0xF0, 0x00, 0x00, 0x00])
+    im.putpalette(palette)
 
     draw = ImageDraw.Draw(im)
-    draw.rectangle([(0, 0), (315, 197)], 0)
+    draw.rectangle([(0, 0), (315, 197)], 0xF0)
 
     y = 0
     x = 0
     for byte in data_string:
-        if byte != 0xF0:
-            draw.point([x, y], 1)
+        draw.point([x, y], byte)
+
         x += 1
         if x >= 316:
             y += 1
