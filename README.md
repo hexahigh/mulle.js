@@ -18,7 +18,7 @@ mkdir ~/mullebil
 sudo mount -o loop mullebil.iso ~/mullebil
 ```
 
-Set mounted game directory in extract.sh (if other than ~/mullebil) and run `./extract.sh` to extract assets.
+Set mounted game directory in extract.sh (if other than ~/mullebil) and run `python3 extract.py` to extract assets.
 
 You can then generate and start the Mulle.js website, and access it at http://localhost:8080/
 ```
@@ -35,7 +35,7 @@ Download and install imagemagick from https://www.imagemagick.org/script/downloa
 `pip3 install PyTexturePacker pydub bitstring`
 
 Mount Mulle Meck Bygger Bilar ISO  
-`extract.bat <mounted dir>`
+`python3 extract.py <mounted dir>`
 
 You can then generate and start the Mulle.js website, and access it at http://localhost:8080/
 ```
