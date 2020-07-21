@@ -134,14 +134,25 @@ gulp.task('build_topography', function () {
   return process
 })
 
-gulp.task('assets-dev', function () {
+gulp.task('assets', function () {
   console.log('do assets dev')
   return spawn('python', ['assets.py', '0'])
 })
 
-gulp.task('assets-prod', function () {
-  console.log('do assets prod')
-  return spawn('python', ['assets.py', '7'])
+gulp.task('optipng', function () {
+  const options = {
+    continueOnError: false, // default = false, true means don't emit error event
+    pipeStdout: false, // default = false, true means stdout is written to file.contents
+  };
+  const reportOptions = {
+    err: true, // default = true, false means don't write err
+    stderr: true, // default = true, false means don't write stderr
+    stdout: true // default = true, false means don't write stdout
+  };
+
+  return gulp.src('./dist/assets/*.png')
+    .pipe(exec(file => `optipng -o7 ${file.path}`, options))
+    .pipe(exec.reporter(reportOptions));
 })
 
 gulp.task('js-dev', function () {
@@ -160,12 +171,16 @@ gulp.task('js-prod', function () {
   )
 })
 
+gulp.task('rename', function () {
+  return spawn('python3', ['build_scripts/rename.py', 'cst_out_new'])
+})
+
 gulp.task('phaser', gulp.series('phaser-clone', 'phaser-install', 'phaser-build'))
-gulp.task('data', gulp.series('topography', 'copy_data'))
-gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
-gulp.task('build-dev', gulp.series( 'phaser', 'js-dev', 'html', 'css' ))
-gulp.task('build-prod', gulp.series( 'phaser', 'js-prod', 'html', 'css' ))
+gulp.task('data', gulp.series('build_topography', 'pack_topography', 'copy_data'))
+gulp.task('build-dev', gulp.series('phaser', 'js-dev', 'html', 'css'))
+gulp.task('build-dev', gulp.series('phaser', 'js-dev', 'html', 'css'))
+gulp.task('build-prod', gulp.series('phaser', 'js-prod', 'html', 'css'))
 
-gulp.task('build-full', gulp.series( 'phaser', 'js-prod', 'html', 'css', 'assets-prod', 'data' ))
+gulp.task('build-full', gulp.series('phaser', 'js-prod', 'html', 'css', 'assets', 'optipng', 'data'))
 
-gulp.task('default', gulp.series( 'build-dev', 'assets-dev', 'data' ))
+gulp.task('default', gulp.series('build-dev', 'assets', 'data'))
