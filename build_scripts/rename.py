@@ -31,7 +31,7 @@ def topic_range(range_values):
 
 
 for movie, topic in director_data.data.items():
-    if movie != movie_filter:
+    if movie_filter and movie != movie_filter:
         continue
     if 'range_sw' not in topic:
         print('No range in %s' % topic)
