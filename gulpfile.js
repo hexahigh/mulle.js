@@ -3,6 +3,7 @@ var webpack = require('webpack-stream')
 // var gutil = require('gulp-util')
 var exec = require('child_process').exec
 var spawn = require('child_process').spawn
+const texturePacker = require('gulp-free-tex-packer');
 var sass = require('gulp-sass')
 const git = require('gulp-git');
 const install = require("gulp-install");
@@ -94,8 +95,37 @@ gulp.task('copy_data', function (done) {
   done()
 })
 
-gulp.task('topography', function () {
-  return spawn('python', ['build_scripts/topography.py'])
+gulp.task('pack_topography', function () {
+  return gulp.src('topography/30t*.png')
+    .pipe(texturePacker({
+      textureName: "topography",
+      removeFileExtension: true,
+      prependFolderName: false,
+      exporter: "JsonHash",
+      width: 2048,
+      height: 2048,
+      fixedSize: false,
+      padding: 1,
+      allowRotation: false,
+      allowTrim: true,
+      detectIdentical: true,
+      packer: "MaxRectsBin",
+      packerMethod: "BottomLeftRule"
+    }))
+    .pipe(gulp.dest('topography'));
+})
+
+gulp.task('build_topography', function () {
+  const process = spawn('python', ['build_scripts/topography.py'])
+
+  process.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+  })
+  process.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  })
+
+  return process
 })
 
 gulp.task('assets-dev', function () {

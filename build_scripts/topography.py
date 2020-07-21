@@ -49,6 +49,3 @@ for num in range(693, 748 + 1, 2):
             x = 0
 
     im.save(os.path.join(topo_path, data["name"] + ".png"))
-
-project_file = os.path.join(dir_path, 'topography.ftpp')
-subprocess.call(['npx', 'free-tex-packer-cli', '--project', project_file, '--output', topo_path])
