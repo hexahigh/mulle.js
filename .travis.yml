@@ -72,7 +72,6 @@ install:
   - python -m pip install -r requirements.txt
   - python extract_iso.py ~/mullebil.iso
   - npm install
-  - python extract.py ~/mullebil
 
 script:
   - npx gulp build-full
