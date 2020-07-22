@@ -13,8 +13,6 @@ jobs:
       before_install:
         - deployment/windows_dependencies.cmd
         - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PWD/bin:/c/ProgramData/chocolatey/lib/ffmpeg/tools:c/ProgramData/chocolatey/lib/OptiPNG/tools:$PATH"
-        - wget -O ~/mullebil.iso $ISO
-        - powershell -ExecutionPolicy bypass deployment/mount.ps1
       before_script:
         python build_scripts/rename.py cst_out_new
 
@@ -69,8 +67,8 @@ before_install:
   - nvm install 10
 
 install:
-  - python extract_iso.py ~/mullebil.iso
   - python -m pip install -r requirements.txt
+  - python extract_iso.py ~/mullebil.iso
   - npm install
   - python extract.py ~/mullebil
 
