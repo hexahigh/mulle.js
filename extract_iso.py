@@ -1,8 +1,11 @@
 import os
 import sys
-from ShockwaveExtractor import main
-from pycdlib.dr import DirectoryRecord
+
 import pycdlib
+from pycdlib.dr import DirectoryRecord
+from pycdlib.pycdlibexception import PyCdlibInvalidInput
+
+from ShockwaveExtractor import main
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 movies_path = os.path.realpath(os.path.join(dir_path, 'Movies'))
@@ -21,7 +24,12 @@ if not os.path.exists(iso_path):
 iso = pycdlib.PyCdlib()
 iso.open(iso_path)
 
-for child in iso.list_children(iso_path='/Movies'):
+try:
+    children = iso.list_children(iso_path='/Movies')
+except PyCdlibInvalidInput:
+    children = iso.list_children(iso_path='/MOVIES')
+
+for child in children:
     assert isinstance(child, DirectoryRecord)
     if child is None or child.is_dot() or child.is_dotdot():
         continue
