@@ -13,10 +13,13 @@ if not os.path.exists(movies_path):
 if len(sys.argv) != 2:
     print('Usage: %s [iso image]' % sys.argv[0])
     sys.exit(1)
+iso_path = os.path.realpath(sys.argv[1])
 
+if not os.path.exists(iso_path):
+    raise FileNotFoundError(iso_path)
 
 iso = pycdlib.PyCdlib()
-iso.open(sys.argv[1])
+iso.open(iso_path)
 
 for child in iso.list_children(iso_path='/Movies'):
     assert isinstance(child, DirectoryRecord)
