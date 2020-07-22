@@ -124,9 +124,11 @@ class ShockwaveParser:
 		self.textContents = {}
 
 		self.forceLittle = False
+		self.debug = False
 
 	def log(self, t):
-		print(t.encode('iso8859-1'))
+		if self.debug:
+			print(t.encode('iso8859-1'))
 
 	def readByte(self, big):
 		return struct.unpack( ('b' if big else '>b'), self.f.read(1) )[0]
@@ -915,7 +917,7 @@ class ShockwaveParser:
 
 			bitmapValues = [[0 for x in range( width )] for y in range( height )]
 
-		print("W: " + str(width) + ", H: " + str(height))
+		self.log("W: " + str(width) + ", H: " + str(height))
 
 		self.f.seek( offset, 0 )
 		self.f.seek(8, 1) # fourcc, length
@@ -1118,9 +1120,9 @@ class ShockwaveParser:
 				entry = c['members'][num]
 
 				# print(entry)
-				print( " Name: " + str( entry['name'] ) )
-				print( " Type: " + str( entry['castType'] ) )
-				print( " Base: " + str( self.baseName ) )
+				self.log( " Name: " + str( entry['name'] ) )
+				self.log( " Type: " + str( entry['castType'] ) )
+				self.log( " Base: " + str( self.baseName ) )
 
 				outFileName = str(num)
 
