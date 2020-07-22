@@ -2,3 +2,5 @@ pillow
 PyTexturePacker
 pydub
 bitstring
+
+pycdlib~=1.10.0
