@@ -26,8 +26,6 @@ jobs:
       before_install:
         - deployment/windows_dependencies.cmd
         - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PWD/bin:/c/ProgramData/chocolatey/lib/ffmpeg/tools:c/ProgramData/chocolatey/lib/OptiPNG/tools:$PATH"
-        - wget -O ~/mullebil.iso $ISO
-        - powershell -ExecutionPolicy bypass deployment/mount.ps1
 
     - os: linux
       env:
@@ -65,11 +63,10 @@ before_install:
   - chmod 600 /tmp/deploy_rsa
   - ssh-add /tmp/deploy_rsa
   - scp -q mulle@dedicated.datagutten.net:/home/mulle/iso/mullebil_$BUILD_LANG.iso ~/mullebil.iso
-  - mkdir ~/mullebil
-  - sudo mount -o loop ~/mullebil.iso ~/mullebil
   - nvm install 10
 
 install:
+  - python build_scripts/extract_iso.py ~/mullebil.iso
   - python -m pip install -r requirements.txt
   - npm install
   - python extract.py ~/mullebil
