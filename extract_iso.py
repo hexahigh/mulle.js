@@ -26,8 +26,10 @@ iso.open(iso_path)
 
 try:
     children = iso.list_children(iso_path='/Movies')
+    iso.get_record(iso_path='/Movies')
 except PyCdlibInvalidInput:
     children = iso.list_children(iso_path='/MOVIES')
+    iso.get_record(iso_path='/MOVIES')
 
 for child in children:
     assert isinstance(child, DirectoryRecord)
