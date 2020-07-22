@@ -1409,10 +1409,9 @@ class ShockwaveParser:
 							del dr
 
 					if writeRaw:
-						fExt = {"snd ": "snd_", "sndH": "sndH", "BITD": "BITD", "THUM": "THUM", "CLUT": "CLUT", "sndS": "sndS"}
 						self.f.seek( le['dataOffset'], 0 )
 						self.f.seek(8, 1) # fourcc, length
-						outRaw = open( outPath + "/" + outFileName + "." + fExt[ le['type'] ], "wb")
+						outRaw = open( outPath + "/" + outFileName + "." + le['type'], "wb")
 						outRaw.write( self.f.read( le['dataLength'] ) )
 						outRaw.close()
 				
