@@ -13,6 +13,14 @@ from PyTexturePacker import ImageRect
 
 from PyTexturePacker import Utils as PyTexturePackerUtils
 
+debug = False
+
+
+def debug_print(msg):
+	if debug:
+		print(msg)
+
+
 def main(argv):
 	
 	#print("")
@@ -86,57 +94,57 @@ def main(argv):
 					raise Exception("Cast member not found")
 					return
 
-				print("")
-				print("[" + str(member) + "]")
-				print(" Source: " + str( rd.baseName ) )
-				print(" Type: " + str( CastType( e["castType"] ) ) )
-				print(" Name: " + str( e["name"] ) )
-				print(" Cast offset: " + str( e["dataOffset"] ) )
-				print(" Cast length: " + str( e["dataLength"] ) )
+				debug_print("")
+				debug_print("[" + str(member) + "]")
+				debug_print(" Source: " + str( rd.baseName ) )
+				debug_print(" Type: " + str( CastType( e["castType"] ) ) )
+				debug_print(" Name: " + str( e["name"] ) )
+				debug_print(" Cast offset: " + str( e["dataOffset"] ) )
+				debug_print(" Cast length: " + str( e["dataLength"] ) )
 
 				if e["castType"] == CastType.SOUND.value:
 					print(" Looped: " + str( e["soundLooped"] ) )
 
-				print("")
-				print(" Linked files (" + str( len( e["linkedEntries"] ) ) + "):" )
+				debug_print("")
+				debug_print(" Linked files (" + str( len( e["linkedEntries"] ) ) + "):" )
 				for l in e["linkedEntries"]:
 					lf = rd.fileEntries[l]
-					print("  [" + str(l) + "] " + lf["type"] + " (len " + str(lf["dataLength"]) + ", off " + str(lf["dataOffset"]) + ")")
+					debug_print("  [" + str(l) + "] " + lf["type"] + " (len " + str(lf["dataLength"]) + ", off " + str(lf["dataOffset"]) + ")")
 
-				print("")
-				print("Metadata")
-				print( e )
+				debug_print("")
+				debug_print("Metadata")
+				debug_print( e )
 
 			else:
 				
-				print("")
+				debug_print("")
 
 				for l in rd.castLibraries:
 
-					print("[Cast library]")
-					print("Name: " + l["name"])
-					print("Member count: " + str(l["memberCount"]))
+					debug_print("[Cast library]")
+					debug_print("Name: " + l["name"])
+					debug_print("Member count: " + str(l["memberCount"]))
 
 					if not 'members' in l:
-						print("(no member table)")
-						print("")
+						debug_print("(no member table)")
+						debug_print("")
 						continue
 
-					print("Members (" + str( len( l['members'] ) ) + "):")
+					debug_print("Members (" + str( len( l['members'] ) ) + "):")
 					for c in l['members']:
 						e = l['members'][c]
-						print(" [" + str(c) + "]")
-						print(" Type: " + str( CastType( e["castType"] ) ) )
-						print(" Name: " + str( e["name"] ) )
-						print(" Cast offset: " + str( e["dataOffset"] ) )
-						print(" Cast length: " + str( e["dataLength"] ) )
-						print(" Linked files: " + str( len( e["linkedEntries"] ) ) )
+						debug_print(" [" + str(c) + "]")
+						debug_print(" Type: " + str( CastType( e["castType"] ) ) )
+						debug_print(" Name: " + str( e["name"] ) )
+						debug_print(" Cast offset: " + str( e["dataOffset"] ) )
+						debug_print(" Cast length: " + str( e["dataLength"] ) )
+						debug_print(" Linked files: " + str( len( e["linkedEntries"] ) ) )
 						for lk in e["linkedEntries"]:
 							lf = rd.fileEntries[lk]
-							print("  [" + str(lk) + "] " + lf["type"] + " (len " + str(lf["dataLength"]) + ", off " + str(lf["dataOffset"]) + ")")
-						print("")
+							debug_print("  [" + str(lk) + "] " + lf["type"] + " (len " + str(lf["dataLength"]) + ", off " + str(lf["dataOffset"]) + ")")
+						debug_print("")
 
-					print("")
+					debug_print("")
 
 		if extract:
 
@@ -167,7 +175,7 @@ def main(argv):
 
 				# loop through cast libraries
 				
-				print("Extract files")
+				debug_print("Extract files")
 
 				pack_files[ dirName ] = []
 
