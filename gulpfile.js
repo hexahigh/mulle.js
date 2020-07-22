@@ -3,7 +3,6 @@ const child_process = require('child_process')
 const exec = require('gulp-exec');
 const texturePacker = require('gulp-free-tex-packer')
 const git = require('gulp-git')
-const install = require('gulp-install')
 const rename = require('gulp-rename')
 const sass = require('gulp-sass')
 const spawn = require('gulp-spawn')
@@ -111,6 +110,11 @@ gulp.task('copy_data', function (done) {
   for (const [number, name] of Object.entries(cursors)) {
     gulp.src(`./cst_out_new/00.CXT/Standalone/${number}.png`).pipe(rename(name + '.png')).pipe(gulp.dest('dist/ui'))
   }
+
+  /*for (let i=161; i<=191; i++) {
+    gulp.src(`./cst_out_new/05.DXR/Internal/${i}.png`).pipe(gulp.dest)
+  }*/
+
   done()
 })
 
@@ -193,12 +197,20 @@ gulp.task('rename', function () {
   return child_process.spawn('python3', ['build_scripts/rename.py', 'cst_out_new'])
 })
 
+/*gulp.task('package', function () {
+  gulp.src('./dist').pipe(exec(file=>`tar -czfO ${file.path}`))
+  child_process.spawn('tar', ['-czf', '-', process.env.BUILD_LANG, ])
+//  tar -czf ~/Mulle_${BUILD_LANG}.tgz -C ${TRAVIS_BUILD_DIR}/dist .
+//tar -czf ~/Mulle_cst_${BUILD_LANG}.tgz -C ${TRAVIS_BUILD_DIR}/cst_out_new .
+
+})*/
+
 gulp.task('phaser', gulp.series('phaser-clone', 'phaser-install', 'phaser-build'))
 gulp.task('data', gulp.series('build_topography', 'pack_topography', 'copy_data'))
-gulp.task('build-dev', gulp.series('phaser', 'js-dev', 'html', 'css'))
 gulp.task('build-dev', gulp.series('phaser', 'js-dev', 'html', 'css'))
 gulp.task('build-prod', gulp.series('phaser', 'js-prod', 'html', 'css'))
 
 gulp.task('build-full', gulp.series('phaser', 'js-prod', 'html', 'css', 'assets', 'optipng', 'data'))
+gulp.task('build-full-no', gulp.series('rename', 'build-full'))
 
 gulp.task('default', gulp.series('build-dev', 'assets', 'data'))
