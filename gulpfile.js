@@ -169,6 +169,10 @@ gulp.task('assets', function () {
   console.log('do assets dev')
   const process = child_process.spawn(python, ['assets.py', '0'])
 
+  process.stdout.on('data', (data) => {
+    console.log(`assets stdout: ${data}`)
+  })
+
   process.stderr.on('data', (data) => {
     console.error(`stderr: ${data}`)
   })
@@ -183,7 +187,7 @@ gulp.task('optipng', function () {
   const reportOptions = {
     err: true, // default = true, false means don't write err
     stderr: true, // default = true, false means don't write stderr
-    stdout: true // default = true, false means don't write stdout
+    stdout: false // default = true, false means don't write stdout
   };
 
   return gulp.src('./dist/assets/*.png')
