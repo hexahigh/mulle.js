@@ -13,16 +13,19 @@ const WebpackDev = require('./webpack.dev.js')
 const WebpackProd = require('./webpack.prod.js')
 
 gulp.task('phaser-clone', function (done) {
-  git.clone('https://github.com/photonstorm/phaser-ce.git', { args: './phaser-ce' }, function (error) {
+  return git.clone('https://github.com/photonstorm/phaser-ce.git', { args: './phaser-ce' }, function (error) {
     if (error) throw error
+    git.checkout('v2.16.0', {'cwd': './phaser-ce'})
     done()
   })
 })
 
 gulp.task('phaser-install', function (done) {
-  gulp.src('./phaser-ce/package.json').pipe(install({ npm: '-f' }, function () {
-    done()
-  }))
+  child_process.exec('npm uninstall fsevents', {'cwd': './phaser-ce'}, function () {
+    child_process.exec('npm install', {'cwd': './phaser-ce'}, function () {
+      done()
+    })
+  })
 })
 
 gulp.task('phaser-build', function (done) {
@@ -47,13 +50,12 @@ gulp.task('phaser-build', function (done) {
     'npx',
     'grunt',
     'custom',
-    '--gruntfile ./phaser-ce/Gruntfile.js',
     '--exclude=' + exclude.join(','),
     '--uglify',
     '--sourcemap'
   ]
 
-  child_process.exec(cmd.join(' '), function (err, stdout, stderr) {
+  child_process.exec(cmd.join(' '), {'cwd': './phaser-ce'}, function (err, stdout, stderr) {
     console.log('phaser err: ' + err)
     console.log('phaser stdout: ' + stdout)
     console.log('phaser stderr: ' + stderr)
