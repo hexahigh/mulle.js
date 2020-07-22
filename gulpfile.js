@@ -11,6 +11,20 @@ const webpack = require('webpack-stream')
 const WebpackDev = require('./webpack.dev.js')
 const WebpackProd = require('./webpack.prod.js')
 
+function detectPython () {
+  const processPy = child_process.spawnSync('python', ['-V'])
+  if (processPy.output[1].toString().search('Python 3') === 0) {
+    return 'python'
+  }
+
+  const processPy3 = child_process.spawnSync('python3', ['-V'])
+  if (processPy3.output[1].toString().search('Python 3') === 0) {
+    return 'python3'
+  }
+}
+
+const python = detectPython()
+
 gulp.task('phaser-clone', function (done) {
   return git.clone('https://github.com/photonstorm/phaser-ce.git', { args: './phaser-ce' }, function (error) {
     if (error) throw error
@@ -139,7 +153,7 @@ gulp.task('pack_topography', function () {
 })
 
 gulp.task('build_topography', function () {
-  const process = child_process.spawn('python', ['build_scripts/topography.py'])
+  const process = child_process.spawn(python, ['build_scripts/topography.py'])
 
   process.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`)
@@ -153,7 +167,7 @@ gulp.task('build_topography', function () {
 
 gulp.task('assets', function () {
   console.log('do assets dev')
-  const process = child_process.spawn('python', ['assets.py', '0'])
+  const process = child_process.spawn(python, ['assets.py', '0'])
 
   process.stderr.on('data', (data) => {
     console.error(`stderr: ${data}`)
@@ -194,7 +208,7 @@ gulp.task('js-prod', function () {
 })
 
 gulp.task('rename', function () {
-  return child_process.spawn('python3', ['build_scripts/rename.py', 'cst_out_new'])
+  return child_process.spawn(python, ['build_scripts/rename.py', 'cst_out_new'])
 })
 
 /*gulp.task('package', function () {
