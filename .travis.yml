@@ -36,6 +36,9 @@ jobs:
         provider: script
         skip_cleanup: true
         script: deployment/deploy.sh
+        on:
+          branch: travis
+
 
     - os: linux
       env:
