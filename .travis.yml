@@ -29,13 +29,13 @@ jobs:
       env:
         - BUILD_LANG=NO
         - ISO=$ISO_NO
+      script:
+        - npx gulp build-full-no
 
     - os: linux
       env:
         - BUILD_LANG=SE
         - ISO=$ISO_SE
-      script:
-        - npx gulp build-full-no
 
 addons:
   apt:
