@@ -13,14 +13,14 @@ MapObject.onCreate = function () {
   const animations = new ObjectAnimation(this, 'CDDATA.CXT')
   animations.load(this.def.FrameList)
 
-  animations.add('idle', 'normal', 4, true)
+  animations.add('idle', 'normal', 1, 4, true)
 
   const parting = animations.add('parting', 'Parting')
   parting.onComplete.add(() => {
     this.animations.play('parted')
   })
 
-  animations.add('parted', 'Outer', 4, true)
+  animations.add('parted', 'Outer', 1, 4, true)
 
   const gathering = animations.add('gathering', 'Gathering')
   gathering.onComplete.add(() => {
