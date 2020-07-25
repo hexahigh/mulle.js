@@ -19,8 +19,8 @@ data = {
             'menu_sound': [454, 459],
         },
         'opaque': [[64, 76], [81, 86]],  # Identical for both languages
-        'opaque_no': [451],
-        'opaque_sw': [84],
+        'opaque_no': [451, 452, 453],
+        'opaque_sw': [84, 122, 123],
         'identical': [[3, 119], [129, 371]],
     },
     '02.DXR': {  # Junk yard
