@@ -161,6 +161,21 @@ class YardState extends MulleState {
 
     this.game.mulle.playAudio('02e010v0')
 
+    if (this.game.mulle.cheats) {
+      document.getElementById('cheats').innerHTML = ''
+      for (const scene of Object.values(this.game.mulle.scenes))   {
+        const b = document.createElement('button')
+        b.innerHTML = scene
+        b.className = 'button'
+
+        b.addEventListener('click', (e) => {
+          this.game.state.start(scene, true, false, this.key)
+        })
+
+        document.getElementById('cheats').appendChild(b)
+      }
+    }
+
     console.log('Yard', 'through door')
   }
 
