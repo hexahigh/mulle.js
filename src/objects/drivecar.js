@@ -460,14 +460,14 @@ class MulleDriveCar extends MulleSprite {
           if (altitude > 2) {
             altitude = 2
 
-            if (this.getQuickProperty('strength') <= this.game.mulle.user.Car.criteria.BigHill) {
+            if (!this.game.mulle.user.Car.criteria.BigHill) {
               console.log('big hill check')
               setOk = false
               this.speed = 0
               // this.position.set( this.lastPosition.x, this.lastPosition.y );
             }
           } else if (altitude > 1) {
-            if (this.getQuickProperty('strength') <= this.game.mulle.user.Car.criteria.SmallHill) {
+            if (!this.game.mulle.user.Car.criteria.SmallHill) {
               console.log('small hill check')
               setOk = false
               this.speed = 0
@@ -477,7 +477,7 @@ class MulleDriveCar extends MulleSprite {
 
           // mud
           if (checkNext === 32) {
-            if (this.game.mulle.user.Car.criteria.MudGrip === 0) {
+            if (!this.game.mulle.user.Car.criteria.MudGrip) {
               console.log('mud')
 
               setOk = false
@@ -503,7 +503,7 @@ class MulleDriveCar extends MulleSprite {
 
           // rocks
           if (checkNext === 16) {
-            if (this.game.mulle.user.Car.criteria.HolesDurability === 0) {
+            if (!this.game.mulle.user.Car.criteria.HolesDurability) {
               console.log('rocks')
 
               setOk = false

@@ -187,13 +187,13 @@ class MulleCar {
     // Evaluate properties to boolean criteria
     this.criteria = { MudGrip: 8, HolesDurability: 3, BigHill: 3, SmallHill: 2 }
 
-    this.criteria.MudGrip = this.getProperty('grip', 0) > this.criteria.MudGrip ? 1 : 0
+    this.criteria.MudGrip = this.getProperty('grip', 0) > this.criteria.MudGrip
 
-    this.criteria.HolesDurability = this.getProperty('durability', 0) > this.criteria.HolesDurability ? 1 : 0
+    this.criteria.HolesDurability = this.getProperty('durability', 0) > this.criteria.HolesDurability
 
-    this.criteria.BigHill = this.getProperty('strength', 0) > this.criteria.BigHill ? 1 : 0
+    this.criteria.BigHill = this.getProperty('strength', 0) > this.criteria.BigHill
 
-    this.criteria.SmallHill = this.getProperty('strength', 0) > this.criteria.SmallHill ? 1 : 0
+    this.criteria.SmallHill = this.getProperty('strength', 0) > this.criteria.SmallHill
 
     console.debug('[props]', 'updated', this.properties)
     console.debug('[quickprops]', 'updated', this.quickProperties)
