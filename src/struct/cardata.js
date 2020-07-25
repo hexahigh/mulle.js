@@ -36,11 +36,13 @@ class MulleCar {
   }
 
   hasMedal(id) {
-    return id in this.Medals
+    return this.Medals.includes(id)
   }
 
   addMedal(id) {
-    this.Medals.append(id)
+    this.Medals.push(id)
+    console.log(`Added medal ${id}`)
+    console.log('Medals', this.Medals)
   }
 
   hasCache (name) {

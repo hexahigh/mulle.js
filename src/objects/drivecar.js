@@ -5,6 +5,7 @@
 'use strict'
 
 import MulleSprite from 'objects/sprite'
+import DirectorHelper from './DirectorHelper'
 
 /**
  * Overworld car
@@ -14,6 +15,7 @@ class MulleDriveCar extends MulleSprite {
   constructor (game) {
     super(game)
 
+    this.DirResource = '05.DXR'
     this.setDirectorMember('05.DXR', 121)
 
     this.spriteFrames = {
@@ -489,6 +491,13 @@ class MulleDriveCar extends MulleSprite {
 
                 this.SoundMud = true
               }
+            } else {
+              if (!this.game.mulle.user.Car.hasMedal(3)) {
+                this.game.mulle.user.Car.addMedal(3)
+                const medal_sprite = DirectorHelper.sprite(this.game, 16, 420, this.DirResource, 71)
+                this.game.add.existing(medal_sprite)
+              }
+
             }
           }
 
