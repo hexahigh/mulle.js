@@ -11,3 +11,5 @@ topography
 *.swp
 *.pyc
 /Movies
+/Plugins
+/phaser-ce
