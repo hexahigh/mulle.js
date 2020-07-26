@@ -3,6 +3,7 @@ import MulleState from './base'
 import MulleSprite from '../objects/sprite'
 // import MulleBuildCar from '../objects/buildcar'
 import MulleActor from '../objects/actor'
+import blinkThing from '../util/blinkThing'
 
 class FiggeFerrumState extends MulleState {
   preload () {
@@ -109,7 +110,7 @@ class FiggeFerrumState extends MulleState {
 
               this.game.mulle.lastSession.carFuel = this.game.mulle.lastSession.carMaxFuel
 
-              this.game.state.start('world')
+              new blinkThing(this.game, gas, () => {this.game.state.start('world')}, this)
             })
           })
         })

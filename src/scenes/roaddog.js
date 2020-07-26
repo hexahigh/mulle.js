@@ -3,6 +3,7 @@ import MulleState from './base'
 import MulleSprite from '../objects/sprite'
 import MulleBuildCar from '../objects/buildcar'
 import MulleActor from '../objects/actor'
+import blinkThing from '../util/blinkThing'
 
 class RoadDogState extends MulleState {
   preload () {
@@ -51,7 +52,7 @@ class RoadDogState extends MulleState {
       this.game.mulle.user.Car.addCache('#GotDogOnce')
       this.game.mulle.user.Car.addCache('#Dog')
 
-      this.game.state.start('world')
+      new blinkThing(this.game, salka, () => {this.game.state.start('world')}, this)
     })
   }
 
