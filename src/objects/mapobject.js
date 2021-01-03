@@ -65,11 +65,11 @@ class MulleMapObject extends MulleSprite {
 
     this.FrameList = this.def.FrameList
 
-    // this.SetWhenDone = this.def.SetWhenDone;
+    this.SetWhenDone = this.def.SetWhenDone
 
-    // this.CheckFor = this.def.CheckFor;
+    this.CheckFor = this.def.CheckFor;
 
-    // this.IfFound = this.def.IfFound;
+    this.IfFound = this.def.IfFound;
 
     this.SpriteInfo = this.def.SpriteInfo ? this.def.SpriteInfo : {}
 
