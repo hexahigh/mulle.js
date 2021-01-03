@@ -104,19 +104,20 @@ const partNames = {
   113: 'tractor tires',
   116: 'wheelbarrow tires',
   120: 'pinnstol',
+  121: 'MC tank',
   129: 'green striped couch',
 
   130: 'horse carriage lights',
-
+  131: 'lights',
   132: 'bike frame',
-
   133: 'gray gearbox',
-
   134: 'wine barrel',
 
   137: 'tub',
 
   146: 'telephone kiosk',
+
+  161: 'train plow',
 
   172: 'tank',
 
@@ -142,6 +143,9 @@ const partNames = {
   192: 'toothpaste front',
   193: 'toothpaste back',
 
+  207: 'small tank',
+
+  287: 'megaphone',
   303: 'tires',
 
   306: 'jet engine',
