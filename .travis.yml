@@ -11,6 +11,7 @@ jobs:
         - BUILD_LANG=NO
         - ISO=$ISO_NO
       before_install:
+        - choco config set cacheLocation $HOME/choco_cache
         - deployment/windows_dependencies.cmd
         - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PWD/bin:/c/ProgramData/chocolatey/lib/ffmpeg/tools:c/ProgramData/chocolatey/lib/OptiPNG/tools:$PATH"
       script:
@@ -22,6 +23,7 @@ jobs:
         - BUILD_LANG=SE
         - ISO=$ISO_SE
       before_install:
+        - choco config set cacheLocation $HOME/choco_cache
         - deployment/windows_dependencies.cmd
         - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PWD/bin:/c/ProgramData/chocolatey/lib/ffmpeg/tools:c/ProgramData/chocolatey/lib/OptiPNG/tools:$PATH"
 
@@ -42,6 +44,7 @@ cache:
   pip: true
   directories:
     - $HOME/iso
+    - $HOME/choco_cache
 
 addons:
   apt:
