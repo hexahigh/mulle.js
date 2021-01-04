@@ -58,7 +58,7 @@ before_install:
   - nvm install 10
 
 install:
-  - wget -nc -O ~/iso/mullebil.iso $ISO
+  - wget -nc -O ~/iso/mullebil.iso $ISO || true
   - python -m pip install -r requirements.txt
   - python extract_iso.py ~/iso/mullebil.iso
   - npm install
