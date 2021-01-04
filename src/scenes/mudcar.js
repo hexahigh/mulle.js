@@ -12,8 +12,8 @@ class MudCarState extends MulleState {
 
     this.game.load.pack('mudcar', 'assets/mudcar.json', null, this)
     this.dirResource = '82.DXR'
-    this.game.load.json('JustDoIt_car', 'score/82.DXR_JustDoIt_4.json')
-    this.game.load.json('JustDoIt_rope', 'score/82.DXR_JustDoIt_5.json')
+    this.game.load.json('JustDoIt_car', 'data/score/82.DXR_JustDoIt_4.json')
+    this.game.load.json('JustDoIt_rope', 'data/score/82.DXR_JustDoIt_5.json')
   }
 
   /**
