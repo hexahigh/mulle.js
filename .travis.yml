@@ -45,6 +45,7 @@ cache:
   directories:
     - $HOME/iso
     - $HOME/choco_cache
+    - bin
 
 addons:
   apt:
