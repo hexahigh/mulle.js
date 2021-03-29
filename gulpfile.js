@@ -25,6 +25,10 @@ function detectPython () {
 
 const python = detectPython()
 
+gulp.task('drxtract-clone', function() {
+  return git.clone('https://github.com/System25/drxtract.git', { args: './build_scripts/drxtract' })
+})
+
 gulp.task('phaser-clone', function (done) {
   return git.clone('https://github.com/photonstorm/phaser-ce.git', { args: './phaser-ce' }, function (error) {
     if (error) throw error
@@ -166,7 +170,7 @@ gulp.task('build_topography', function () {
 })
 
 gulp.task('assets', function () {
-  console.log('do assets dev')
+  console.log('do assets')
   const process = child_process.spawn(python, ['assets.py', '0'])
 
   process.stdout.on('data', (data) => {
@@ -193,6 +197,22 @@ gulp.task('optipng', function () {
   return gulp.src('./dist/assets/*.png')
     .pipe(exec(file => `optipng -o7 ${file.path}`, options))
     .pipe(exec.reporter(reportOptions));
+})
+
+gulp.task('scores', function () {
+const options = {
+  continueOnError: false, // default = false, true means don't emit error event
+  pipeStdout: false, // default = false, true means stdout is written to file.contents
+};
+const reportOptions = {
+  err: true, // default = true, false means don't write err
+  stderr: true, // default = true, false means don't write stderr
+  stdout: false // default = true, false means don't write stdout
+};
+
+return gulp.src('./Movies/8*')
+  .pipe(exec(file => `${python} ./build_scripts/extract_score.py ${file.path}`, options))
+  .pipe(exec.reporter(reportOptions));
 })
 
 gulp.task('js-dev', function () {
@@ -225,10 +245,11 @@ gulp.task('rename', function () {
 
 gulp.task('phaser', gulp.series('phaser-clone', 'phaser-install', 'phaser-build'))
 gulp.task('data', gulp.series('build_topography', 'pack_topography', 'copy_data'))
+gulp.task('data-score', gulp.series('drxtract-clone', 'scores'))
 gulp.task('build-dev', gulp.series('phaser', 'js-dev', 'html', 'css'))
 gulp.task('build-prod', gulp.series('phaser', 'js-prod', 'html', 'css'))
 
-gulp.task('build-full', gulp.series('phaser', 'js-prod', 'html', 'css', 'assets', 'optipng', 'data'))
+gulp.task('build-full', gulp.series('phaser', 'js-prod', 'html', 'css', 'data-score', 'assets', 'optipng', 'data'))
 gulp.task('build-full-no', gulp.series('rename', 'build-full'))
 
 gulp.task('default', gulp.series('build-dev', 'assets', 'data'))
