@@ -30,9 +30,8 @@ gulp.task('drxtract-clone', function() {
 })
 
 gulp.task('phaser-clone', function (done) {
-  return git.clone('https://github.com/photonstorm/phaser-ce.git', { args: './phaser-ce' }, function (error) {
+  return git.clone('https://github.com/photonstorm/phaser-ce.git', { args: './phaser-ce --branch v2.16.0 --single-branch' }, function (error) {
     if (error) throw error
-    git.checkout('v2.16.0', {'cwd': './phaser-ce'})
     done()
   })
 })
