@@ -25,8 +25,12 @@ function detectPython () {
 
 const python = detectPython()
 
-gulp.task('drxtract-clone', function() {
-  return git.clone('https://github.com/System25/drxtract.git', { args: './build_scripts/drxtract' })
+gulp.task('drxtract-clone', function (done) {
+  return git.clone('https://github.com/System25/drxtract.git', { args: './build_scripts/drxtract -n' }, function (error) {
+    if (error) throw error
+    git.checkout('be17978bb9dcf220f2c97c1b0f7a19022a95c001', { 'cwd': './build_scripts/drxtract' })
+    done()
+  })
 })
 
 gulp.task('phaser-clone', function (done) {
@@ -205,13 +209,30 @@ const options = {
 };
 const reportOptions = {
   err: true, // default = true, false means don't write err
-  stderr: true, // default = true, false means don't write stderr
+  stderr: false, // default = true, false means don't write stderr
   stdout: false // default = true, false means don't write stdout
 };
 
 return gulp.src('./Movies/8*')
   .pipe(exec(file => `${python} ./build_scripts/extract_score.py ${file.path}`, options))
   .pipe(exec.reporter(reportOptions));
+})
+
+gulp.task('scores-parse', function () {
+  const reportOptions = {
+    err: true, // default = true, false means don't write err
+    stderr: true, // default = true, false means don't write stderr
+    stdout: false // default = true, false means don't write stdout
+  };
+
+  return gulp.src('./Movies/drxtract/8*.DXR/score.json')
+    .pipe(exec(file => `${python} ./build_scripts/score/score.py ${file.path}`))
+    .pipe(exec.reporter(reportOptions));
+})
+
+gulp.task('scores-build', function () {
+  child_process.spawn(python, ['build_scripts/score/build_score_manual.py', 'Movies/drxtract/82.DXR/score_tracks_82.DXR.json', '4', 'JustDoIt'])
+  return child_process.spawn(python, ['build_scripts/score/build_score_manual.py', 'Movies/drxtract/82.DXR/score_tracks_82.DXR.json', '5', 'JustDoIt'])
 })
 
 gulp.task('js-dev', function () {
@@ -244,11 +265,12 @@ gulp.task('rename', function () {
 
 gulp.task('phaser', gulp.series('phaser-clone', 'phaser-install', 'phaser-build'))
 gulp.task('data', gulp.series('build_topography', 'pack_topography', 'copy_data'))
-gulp.task('data-score', gulp.series('drxtract-clone', 'scores'))
+gulp.task('data-score', gulp.series('drxtract-clone', 'scores', 'scores-parse', 'scores-build'))
 gulp.task('build-dev', gulp.series('phaser', 'js-dev', 'html', 'css'))
 gulp.task('build-prod', gulp.series('phaser', 'js-prod', 'html', 'css'))
 
-gulp.task('build-full', gulp.series('phaser', 'js-prod', 'html', 'css', 'data-score', 'assets', 'optipng', 'data'))
+gulp.task('build-full', gulp.series('phaser', 'js-prod', 'html', 'css', 'data-score', 'assets', 'optipng', 'data',
+  'data-score'))
 gulp.task('build-full-no', gulp.series('rename', 'build-full'))
 
 gulp.task('default', gulp.series('build-dev', 'assets', 'data'))
