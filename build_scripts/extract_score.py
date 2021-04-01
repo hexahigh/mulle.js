@@ -12,9 +12,9 @@ movie_dir = os.path.dirname(movie_file)
 extract_folder = os.path.join(movie_dir, 'drxtract', movie_name)
 
 script_dir = os.path.realpath(os.path.dirname(__file__))
-drextract_script = os.path.join(script_dir, 'drxtract', 'drxtract')
+drextract_folder = os.path.join(script_dir, 'drxtract')
 
-os.makedirs(extract_folder)
-script = os.path.join('drxtract', 'drxtract')
+os.makedirs(extract_folder, exist_ok=True)
 
-subprocess.run([sys.executable, drextract_script, 'pc', sys.argv[1], extract_folder])
+# drextract does not work with absolute path on windows
+subprocess.run([sys.executable, 'drxtract', 'pc', sys.argv[1], extract_folder], cwd=drextract_folder)
