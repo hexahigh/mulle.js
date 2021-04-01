@@ -157,6 +157,7 @@ const partNames = {
 /**
  * GarageState
  * @extends MulleState
+ * @property {array} enterParts Part on the car when entering the garage
  */
 class GarageState extends MulleState {
   preload () {
@@ -164,6 +165,23 @@ class GarageState extends MulleState {
     super.preload()
 
     this.game.load.pack('garage', 'assets/garage.json', null, this)
+  }
+
+  /**
+   * Has the car changed in the garage?
+   * @returns {boolean}
+   */
+  hasCarChanged () {
+    const currentParts = this.game.mulle.user.Car.Parts
+    if (currentParts.length !== this.enterParts.length)
+      return true
+
+    for (var i = 0, l = currentParts.length; i < l; i++)
+      if (currentParts[i] !== this.enterParts[i]) {
+        console.log('Car has changed, different parts', i, currentParts[i], this.enterParts[i])
+        return true
+      }
+    return false
   }
 
   figge () {
@@ -184,6 +202,10 @@ class GarageState extends MulleState {
     this.game.mulle.playAudio('03e009v0', () => {
       // narrator
       this.game.mulle.playAudio('03d043v0', () => {
+        /**
+         * Actor "figgeDoor"
+         * @type {MulleActor}
+         */
         const figge = new MulleActor(this.game, 320, 240, 'figgeDoor')
 
         this.game.add.existing(figge)
@@ -312,6 +334,7 @@ class GarageState extends MulleState {
     this.game.mulle.addAudio('garage')
 
     // this.game.mulle.user.calculateParts();
+    this.enterParts = [...this.game.mulle.user.Car.Parts]
 
     const background = new MulleSprite(this.game, 320, 240)
     // background.setFrameId('03b001v0');
@@ -362,6 +385,17 @@ class GarageState extends MulleState {
         this.game.mulle.activeCutscene = 67
         this.game.mulle.user.toYardThroughDoor = false
         this.game.state.start('yard')
+
+        if (this.hasCarChanged()) {
+          if (isNaN(this.game.mulle.user.NrOfBuiltCars)) {
+            this.game.mulle.user.NrOfBuiltCars = 0
+          }
+
+          this.game.mulle.user.NrOfBuiltCars += 1
+          this.game.mulle.user.figgeIsComing = true
+          this.game.mulle.user.missionIsComing = true
+          console.log('Increase NrOfBuiltCars to ', this.game.mulle.user.NrOfBuiltCars)
+        }
       }
     })
 
@@ -452,6 +486,16 @@ class GarageState extends MulleState {
       this.makePart(partId, pos.x, pos.y)
     }
 
+    console.log('Built cars', this.game.mulle.user.NrOfBuiltCars)
+    console.log('Built cars mod', this.game.mulle.user.NrOfBuiltCars % 3)
+    if (this.game.mulle.user.NrOfBuiltCars % 3 === 0 && this.game.mulle.user.figgeIsComing)
+    {
+      console.log('Figge is coming!')
+      this.game.mulle.user.figgeIsComing = 0
+      this.game.mulle.user.figgeBeenHere = 1
+      this.figge()
+    }
+
     // toolbox, manual
     this.toolbox = new MulleToolbox(this.game, 657, 432)
     this.game.add.existing(this.toolbox)
@@ -539,6 +583,14 @@ class GarageState extends MulleState {
 
     if (this.game.mulle.cheats) {
       document.getElementById('cheats').innerHTML = ''
+
+      const b_figge = document.createElement('button')
+      b_figge.innerHTML = 'Figge'
+      b_figge.className = 'button'
+      b_figge.addEventListener('click', (e) => {
+        this.figge()
+      })
+      document.getElementById('cheats').appendChild(b_figge)
 
       for (const partId in this.game.mulle.PartsDB) {
         const partData = this.game.mulle.PartsDB[partId]
