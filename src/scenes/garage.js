@@ -209,12 +209,13 @@ class GarageState extends MulleState {
 
                 // jajamänsan
                 this.game.mulle.actors.figge.talk('03d046v0', () => {
-                  figge.animations.play('exit').onComplete.addOnce(() => {
+                  //figge.animations.play('exit').onComplete.addOnce(() => {
+                    figge.destroy()
                     this.door_junk.onInputOutHandler()
 
                     // door
                     this.game.mulle.playAudio('02e015v0', () => {
-                      figge.destroy()
+                      //figge.destroy()
 
                       this.game.mulle.actors.figge = null
 
@@ -223,7 +224,7 @@ class GarageState extends MulleState {
                         console.log('figge done')
                       })
                     })
-                  })
+                  //})
                 })
               })
             })
