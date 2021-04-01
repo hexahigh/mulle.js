@@ -264,13 +264,12 @@ gulp.task('rename', function () {
 })*/
 
 gulp.task('phaser', gulp.series('phaser-clone', 'phaser-install', 'phaser-build'))
-gulp.task('data', gulp.series('build_topography', 'pack_topography', 'copy_data'))
+gulp.task('data', gulp.series('build_topography', 'pack_topography', 'data-score', 'copy_data'))
 gulp.task('data-score', gulp.series('drxtract-clone', 'scores', 'scores-parse', 'scores-build'))
 gulp.task('build-dev', gulp.series('phaser', 'js-dev', 'html', 'css'))
 gulp.task('build-prod', gulp.series('phaser', 'js-prod', 'html', 'css'))
 
-gulp.task('build-full', gulp.series('phaser', 'js-prod', 'html', 'css', 'data-score', 'assets', 'optipng', 'data',
-  'data-score'))
+gulp.task('build-full', gulp.series('phaser', 'js-prod', 'html', 'css', 'assets', 'optipng', 'data'))
 gulp.task('build-full-no', gulp.series('rename', 'build-full'))
 
 gulp.task('default', gulp.series('build-dev', 'assets', 'data'))
