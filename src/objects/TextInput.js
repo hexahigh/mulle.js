@@ -37,6 +37,10 @@ class TextInput {
   onChange (listener) {
     this.input.addEventListener('change', listener)
   }
+
+  remove() {
+    document.getElementById('player').removeChild(this.input)
+  }
 }
 
 export default TextInput

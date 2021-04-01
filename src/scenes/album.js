@@ -115,6 +115,7 @@ class AlbumState extends MulleState {
     this.imageFrame.displaySprite.visible = false
     this.pasting_car.destroy()
     this.albumCar()
+    this.game.mulle.user.Car.Name = this.carName.value()
 
     this.loadSave.saveCurrentCar(this.selectedPage)
   }
@@ -151,9 +152,13 @@ class AlbumState extends MulleState {
    */
   showSavedCar (page) {
     if (this.loadSave.isSaved(page)) {
-      const [parts, medals] = this.loadSave.loadCar(page)
+      const [parts, medals, name] = this.loadSave.loadCar(page)
       this.albumCar(parts)
       this.parts = parts
+      if (this.carName) {
+        this.carName.text(name)
+        // TODO: Read only
+      }
       this.showMedals(medals)
       if (this.mode === 'load') this.fetchButton.show()
     } else {
@@ -233,6 +238,12 @@ class AlbumState extends MulleState {
       this.name_input = new Phaser.Sprite(this.game, 215, 434, key, frame.name)
       this.album_ui.add(this.name_input)
 
+      this.carName = new TextInput(this.game, this.name_input.x + 5, this.name_input.y + 5, 203, 20)
+      this.carName.id('car_name')
+      this.carName.onChange((event) => {
+        console.log('Value set to ' + this.carName.value())
+      })
+
       this.export_button = new MulleButton(this.game, 487, 413, {
         imageDefault: ['06.DXR', 164],
         click: () => {
@@ -280,6 +291,8 @@ class AlbumState extends MulleState {
 
   shutdown (game) {
     this.cutscene = 83
+    if (this.mode === 'save')
+      this.carName.remove()
     super.shutdown(game)
   }
 }
