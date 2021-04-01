@@ -231,8 +231,8 @@ gulp.task('scores-parse', function () {
 })
 
 gulp.task('scores-build', function () {
-  child_process.spawn(python, ['build_scripts/score/build_score_manual.py', 'Movies/drxtract/82.DXR/score_tracks_82.DXR.json', '4', 'JustDoIt'])
-  return child_process.spawn(python, ['build_scripts/score/build_score_manual.py', 'Movies/drxtract/82.DXR/score_tracks_82.DXR.json', '5', 'JustDoIt'])
+  child_process.spawn(python, ['build_scripts/score/build_score_manual.py', 'Movies/drxtract/82.DXR/score_tracks_82.DXR.json', '4', 'JustDoIt'], {'stdio': 'inherit'})
+  return child_process.spawn(python, ['build_scripts/score/build_score_manual.py', 'Movies/drxtract/82.DXR/score_tracks_82.DXR.json', '5', 'JustDoIt'], {'stdio': 'inherit'})
 })
 
 gulp.task('js-dev', function () {
