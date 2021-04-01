@@ -69,6 +69,7 @@ install:
   - npm install
 
 script:
+  - npx gulp copy-info-images
   - npx gulp build-full
 
 after_success:

@@ -139,6 +139,20 @@ gulp.task('copy_data', function (done) {
   done()
 })
 
+gulp.task('copy-info-images', function () {
+  const plugin_parts = [
+    22, 25, 29, 33, 36, 39, 43
+  ]
+
+  for (const [key, number] of Object.entries(plugin_parts)) {
+    gulp.src(`./cst_out_new/PLUGIN.CST/Standalone/${number}.bmp`).pipe(gulp.dest('info/img'))
+  }
+
+  return gulp.src('./info/img/*.bmp')
+    .pipe(exec(file => `magick convert ${file.path} ${file.path.replace('bmp', 'png')}`))
+    .pipe(exec.reporter())
+})
+
 gulp.task('pack_topography', function () {
   return gulp.src('topography/30t*.png')
     .pipe(texturePacker({
