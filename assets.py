@@ -136,6 +136,10 @@ resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 27 })
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 30 })
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': 37 }) # Background
 resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '40-44' })
+resYard.addFile({'dir': '04.DXR', 'lib': 'Internal', 'num': 261})  # No mail
+resYard.addFile({'dir': '04.DXR', 'lib': 'Internal', 'num': '272-277'})  # Package and garage full
+resYard.addFile({'dir': '04.DXR', 'lib': 'Internal', 'num': '279-280'})  # Mail/figge
+
 MulleResources.append(resYard)
 
 resAlbum = MulleResource('album')
