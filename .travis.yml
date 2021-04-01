@@ -52,6 +52,7 @@ addons:
     packages:
       - ffmpeg
       - optipng
+      - sshpass
 
 before_install:
   - deployment/imagemagick.sh
