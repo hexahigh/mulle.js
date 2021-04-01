@@ -61,8 +61,11 @@ before_install:
 
 install:
   - wget -nc -O ~/iso/mullebil.iso $ISO || true
+  - wget -nc -O ~/iso/plugin.exe https://web.archive.org/web/20011006153539if_/http://www.levende.no:80/mulle/plugin.exe || true
+  - unzip ~/iso/plugin.exe -d Movies
   - python -m pip install -r requirements.txt
   - python extract_iso.py ~/iso/mullebil.iso
+  - python ShockwaveExtractor.py -e -i Movies/66.dxr
   - npm install
 
 script:
