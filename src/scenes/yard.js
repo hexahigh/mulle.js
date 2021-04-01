@@ -7,6 +7,7 @@ import MulleBuildCar from '../objects/buildcar'
 // import MulleActor from '../objects/actor'
 import MulleButton from '../objects/button'
 import MulleCarPart from '../objects/carpart'
+import MulleActor from '../objects/actor'
 
 class YardState extends MulleState {
   preload () {
@@ -41,7 +42,7 @@ class YardState extends MulleState {
       soundDefault: '04e009v0',
       soundHover: '04e010v0',
       click: (a) => {
-        alert('mailbox')
+        this.mulleActor.talk('04d001v0')
       }
     })
     this.game.add.existing(mailbox)
@@ -76,6 +77,22 @@ class YardState extends MulleState {
       this.door_side.cursor = 'Right'
       this.door_side.cursorHover = 'Right'
       this.door_side.cursorDrag = 'MoveRight'
+
+      this.mulleActor = new MulleActor(this.game, 67, 173, 'mulleDefault')
+      this.game.add.existing(this.mulleActor)
+      this.buffaActor = new MulleActor(this.game, 320, 222, 'buffa')
+      this.game.add.existing(this.buffaActor)
+
+      if(this.game.mulle.user.figgeBeenHere === 1)
+      {
+        this.game.mulle.user.figgeBeenHere = 0
+        this.mulleActor.talk('04d021v0')
+      }
+      if(this.game.mulle.user.mail === 1)
+      {
+        this.mulleActor.talk('04d020v0')
+      }
+
     } else {
       // with car
 
@@ -174,6 +191,15 @@ class YardState extends MulleState {
 
         document.getElementById('cheats').appendChild(b)
       }
+
+      const b_mail = document.createElement('button')
+      b_mail.innerHTML = 'Mail'
+      b_mail.className = 'button'
+      b_mail.addEventListener('click', () => {
+        this.game.mulle.user.mail = 1
+        console.log('Set mail to 1')
+      })
+      document.getElementById('cheats').appendChild(b_mail)
     }
 
     console.log('Yard', 'through door')
