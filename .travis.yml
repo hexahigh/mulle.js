@@ -66,3 +66,9 @@ install:
 
 script:
   - npx gulp build-full
+
+after_success:
+  - mkdir deploy
+  - tar -czf deploy/cst_${BUILD_LANG}_${TRAVIS_OS_NAME}.tgz cst_out_new
+  - tar -czf deploy/Mulle_${BUILD_LANG}_${TRAVIS_OS_NAME}.tgz -C dist .
+  - sshpass -p "$RSYNC_PASSWORD" rsync -r -e "ssh -o StrictHostKeyChecking=no" "deploy/" mulle@dedicated.datagutten.net:/home/mulle
