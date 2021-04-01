@@ -216,6 +216,45 @@ resRoadDog.addFile({ 'dir': '85.DXR', 'lib': 'Internal', 'num': '26-34' }) # sal
 MulleResources.append(resRoadDog)
 
 
+if os.path.exists(os.path.join('cst_out_new', '66.DXR')):
+	resPlugin = MulleResource('plugin')
+	# [25,27, , [38, 42], 45, [51, 56], [57,59], [68,78], [81, 94], [97, 115]]
+	resPlugin.addFile({'dir': '66.DXR','lib': 'Internal', 'num': 25})  # Background
+	resPlugin.addFile({'dir': '66.DXR','lib': 'Internal', 'num': [33, 37]})  # Junk
+	resPlugin.addFile({'dir': '66.DXR','lib': 'Internal', 'num': [38, 42]})  # Sounds
+	resPlugin.addFile({'dir': '66.DXR','lib': 'Internal', 'num': [51, 56]})  #
+	resPlugin.addFile({'dir': '66.DXR','lib': 'Internal', 'num': [57, 59]})  # Crane
+	resPlugin.addFile({'dir': '66.DXR','lib': 'Internal', 'num': [69, 78]})  # Figge
+	resPlugin.addFile({'dir': '06.DXR','lib': 'Internal', 'num': 153})  # Close button
+	MulleResources.append(resPlugin)
+
+
+resMudCar = MulleResource('mudcar')
+resMudCar.addFile({'dir': '82.DXR', 'lib': 'Internal', 'num': 1})  # background
+resMudCar.addFile({'dir': '82.DXR', 'lib': 'Internal', 'num': '17-19'})  # moose
+resMudCar.addFile({'dir': '82.DXR', 'lib': 'Internal', 'num': '25-39'})  # driver and rope
+resMudCar.addFile({'dir': '82.DXR', 'lib': 'Internal', 'num': '41-44'})  # stuck car
+resMudCar.addFile({'dir': '82.DXR', 'lib': 'Internal', 'num': '49-57'})  # buffa
+resMudCar.addFile({'dir': '82.DXR', 'lib': 'Internal', 'num': 83})
+resMudCar.addFile({'dir': '82.DXR', 'lib': 'Internal', 'num': '173-174'})
+resMudCar.addFile({'dir': '82.DXR', 'lib': 'Internal', 'num': '200-202'})
+MulleResources.append(resMudCar)
+
+
+resRoadTree = MulleResource('roadtree')
+resRoadTree.addFile({'dir': '83.DXR', 'lib': 'Internal', 'num': '1-3'})  # background and car
+resRoadTree.addFile({'dir': '83.DXR', 'lib': 'Internal', 'num': '13-15'})  # driver animation
+resRoadTree.addFile({'dir': '83.DXR', 'lib': 'Internal', 'num': '21-28'})  # tree
+resRoadTree.addFile({'dir': '83.DXR', 'lib': 'Internal', 'num': '33-38'})  # boffa
+resRoadTree.addFile({'dir': '83.DXR', 'lib': 'Internal', 'num': '45-91'})  # mulle
+resRoadTree.addFile({'dir': '83.DXR', 'lib': 'Internal', 'num': '93-97'})  # driver talk animation frames
+resRoadTree.addFile({'dir': '83.DXR', 'lib': 'Internal', 'num': 99})  # driver talk animation
+resRoadTree.addFile({'dir': '83.DXR', 'lib': 'Internal', 'num': 113})
+resRoadTree.addFile({'dir': '83.DXR', 'lib': 'Internal', 'num': '181-183'})  # sounds
+resRoadTree.addFile({'dir': '83.DXR', 'lib': 'Internal', 'num': '200-204'})  # sounds
+MulleResources.append(resRoadTree)
+
+
 resRoadThing = MulleResource('roadthing')
 resRoadThing.addFile({ 'dir': '84.DXR', 'lib': 'Internal', 'num': 25 }) # images
 resRoadThing.addFile({ 'dir': '84.DXR', 'lib': 'Internal', 'num': 201 }) # audio
