@@ -20,6 +20,7 @@ class YardState extends MulleState {
 
   create () {
     super.create()
+    this.game.mulle.addAudio('yard')
 
     this.car = null
     this.junkParts = null
@@ -36,15 +37,27 @@ class YardState extends MulleState {
 
     // var this.door_side, door_garage;
 
-    var mailbox = new MulleButton(this.game, 320, 240, {
-      imageDefault: ['04.DXR', 42],
-      imageHover: ['04.DXR', 43],
-      soundDefault: '04e009v0',
-      soundHover: '04e010v0',
-      click: (a) => {
-        this.mulleActor.talk('04d001v0')
-      }
-    })
+    let mailbox
+    if (this.game.mulle.user.mail === 1) {
+      mailbox = new MulleButton(this.game, 320, 240, {
+        imageDefault: ['04.DXR', 44],
+        click: (a) => {
+          this.game.mulle.user.mail = 0
+          alert('Mission')
+        }
+      })
+    }
+    else {
+      mailbox = new MulleButton(this.game, 320, 240, {
+        imageDefault: ['04.DXR', 42],
+        imageHover: ['04.DXR', 43],
+        soundDefault: '04e009v0',
+        soundHover: '04e010v0',
+        click: (a) => {
+          this.mulleActor.talk('04d001v0')
+        }
+      })
+    }
     this.game.add.existing(mailbox)
 
     if (this.game.mulle.user.toYardThroughDoor) {
