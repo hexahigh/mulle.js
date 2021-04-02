@@ -73,7 +73,8 @@ MulleResources.append(resMenu)
 
 
 resParts = MulleResource('carparts')
-resParts.addFile({ 'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '239-496' })
+resParts.addFile({'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '239-312'})
+resParts.addFile({'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '316-496'})
 resParts.addFile({ 'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '838-917' })
 resParts.addFile({ 'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '966-1018' })
 resParts.addFile({ 'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '1213-1390' }) # audio
@@ -87,6 +88,7 @@ MulleResources.append(resMap)
 
 
 resDriving = MulleResource('driving')
+# resDriving.addFile({'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '34-238'})  # PartsDB
 resDriving.addFile({ 'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '497-514' }) # images
 resDriving.addFile({ 'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '565-598' }) # audio
 resDriving.addFile({ 'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '599-624' }) # images
@@ -128,9 +130,10 @@ resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '107-108' }) # fi
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '101-105' }) # phone and hover
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '181-183' }) # ui sounds
 resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '208-223' }) # voices
-resGarage.addFile({ 'dir': '03.DXR', 'lib': 'Internal', 'num': '226-264' }) # voices
-resGarage.addFile({'dir': '00.CXT', 'lib': 'Standalone', 'num': 23})  # Phone audio roaddog
-resGarage.addFile({'dir': '00.CXT', 'lib': 'Standalone', 'num': '26-28'})  # Phone audio doris/mia/lasse
+resGarage.addFile({'dir': '03.DXR', 'lib': 'Internal', 'num': '226-258'})  # voices
+resGarage.addFile({'dir': '03.DXR', 'lib': 'Internal', 'num': '262-264'})  # voice remarks
+resGarage.addFile({'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': 23})  # Phone audio roaddog
+resGarage.addFile({'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '26-28'})  # Phone audio doris/mia/lasse
 MulleResources.append(resGarage)
 
 
@@ -144,9 +147,9 @@ resYard.addFile({ 'dir': '04.DXR', 'lib': 'Internal', 'num': '40-44' })
 resYard.addFile({'dir': '04.DXR', 'lib': 'Internal', 'num': 261})  # No mail
 resYard.addFile({'dir': '04.DXR', 'lib': 'Internal', 'num': '272-277'})  # Package and garage full
 resYard.addFile({'dir': '04.DXR', 'lib': 'Internal', 'num': '279-280'})  # Mail/figge
-resYard.addFile({'dir': '00.CXT', 'lib': 'Standalone', 'num': '19-22'})  # Letters
-resYard.addFile({'dir': '00.CXT', 'lib': 'Standalone', 'num': '24-25'})  # Letter audio carshow/sturestortand
-resYard.addFile({'dir': '00.CXT', 'lib': 'Standalone', 'num': '29-30'})  # Letter audio pia/race
+resYard.addFile({'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '19-22'})  # Letters
+resYard.addFile({'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '24-25'})  # Letter audio carshow/sturestortand
+resYard.addFile({'dir': 'CDDATA.CXT', 'lib': 'Standalone', 'num': '29-30'})  # Letter audio pia/race
 
 MulleResources.append(resYard)
 
@@ -206,19 +209,21 @@ MulleResources.append(resShared)
 
 
 resJunk = MulleResource('junk')
-resJunk.addFile({ 'dir': '02.DXR', 'lib': 'Internal', 'num': '66-72' }) # bg
+resJunk.addFile({ 'dir': '02.DXR', 'lib': 'Internal', 'num': 66 }) # bg
+resJunk.addFile({ 'dir': '02.DXR', 'lib': 'Internal', 'num': '68-72' }) # bg
 resJunk.addFile({ 'dir': '02.DXR', 'lib': 'Internal', 'num': '85-96' }) # doors
 resJunk.addFile({ 'dir': '02.DXR', 'lib': 'Internal', 'num': '162-185' }) # arrows
 resJunk.addFile({'dir': '02.DXR', 'lib': 'Internal', 'num': '122-137'})  # sounds
-resJunk.addFile({'dir': '02.DXR', 'lib': 'Internal', 'num': '141-142'})  # body
-resJunk.addFile({'dir': '02.DXR', 'lib': 'Internal', 'num': '150-157'})  # head right
-resJunk.addFile({'dir': '02.DXR', 'lib': 'Internal', 'num': '170-187'})  # head left
+resJunk.addFile({'dir': '02.DXR', 'lib': 'Internal', 'num': '209-210'})  # body
+resJunk.addFile({'dir': '02.DXR', 'lib': 'Internal', 'num': '226-243'})  # head right
+resJunk.addFile({'dir': '02.DXR', 'lib': 'Internal', 'num': '246-263'})  # head left
 MulleResources.append(resJunk)
 
 
 resRoadDog = MulleResource('roaddog')
 resRoadDog.addFile({ 'dir': '85.DXR', 'lib': 'Internal', 'num': 25 }) # images
-resRoadDog.addFile({ 'dir': '85.DXR', 'lib': 'Internal', 'num': '190-201' }) # audio
+resRoadDog.addFile({'dir': '85.DXR', 'lib': 'Internal', 'num': '190'})  # audio
+resRoadDog.addFile({'dir': '85.DXR', 'lib': 'Internal', 'num': '200-201'})  # audio
 resRoadDog.addFile({ 'dir': '85.DXR', 'lib': 'Internal', 'num': '26-34' }) # salka right
 MulleResources.append(resRoadDog)
 
