@@ -1,34 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, sys, getopt, struct
-
+import json
+import os
+import sys
 from subprocess import call
 
-from enum import Enum
+from PyTexturePacker import ImageRect
+from PyTexturePacker import Packer
+from PyTexturePacker import Utils as PyTexturePackerUtils
 
-import json
+from audiosprite import AudioSprite
+from build_scripts.parse_animation_chart import parse_animation_chart
 
-import wave, aifc, sunau
-
-import glob
-
-from PIL import Image, ImageDraw, ImagePalette, ImageChops
 try:
     from build_scripts.data import director_data
 except ImportError:
     from .build_scripts.data import director_data
-
-
-from PyTexturePacker import Packer
-from PyTexturePacker import ImageRect
-from PyTexturePacker import Utils as PyTexturePackerUtils
-
-# import ImageChops
-
-from audiosprite import AudioSprite
-
-from build_scripts.parse_animation_chart import parse_animation_chart
 
 
 class MulleResource:
