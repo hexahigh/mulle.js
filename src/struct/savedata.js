@@ -202,7 +202,7 @@ class MulleSave {
       UserId: this.UserId,
       Car: this.Car,
       Junk: this.Junk,
-      // NrOfBuiltCars: this.NrOfBuiltCars,
+      NrOfBuiltCars: this.NrOfBuiltCars,
       CompletedMissions: this.CompletedMissions,
       OwnStuff: this.OwnStuff,
       givenMissions: this.givenMissions,
