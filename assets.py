@@ -28,6 +28,9 @@ from PyTexturePacker import Utils as PyTexturePackerUtils
 
 from audiosprite import AudioSprite
 
+from build_scripts.parse_animation_chart import parse_animation_chart
+
+
 class MulleResource:
 
 	def __init__(self, name):
@@ -345,6 +348,7 @@ for res in MulleResources:
 	atlasData = {}
 	soundSprite = {}
 	textString = {}
+	animations = {}
 
 	imageRects = []
 
@@ -506,18 +510,29 @@ for res in MulleResources:
 				fp = open(filePath, 'rb')
 				string = fp.read()
 				string = string.decode('iso8859-1')
-				if f['dir'] not in textString:
-					textString[f['dir']] = {}
-				textString[f['dir']][f['num']] = string
+				if mem['castType'] == 12:
+					if f['dir'] not in textString:
+						textString[f['dir']] = {}
+					textString[f['dir']][f['num']] = string
+				elif mem['castType'] == 3:
+					if f['dir'] not in animations:
+						animations[f['dir']] = {}
+					animations[f['dir']][f['num']] = parse_animation_chart(string)
 
 	if len(textString) > 0:
 		file = '%s/%s-strings.json' % (assetOutPath, resName)
 		fp = open(file, 'w')
 		json.dump(textString, fp)
 
+	if len(animations) > 0:
+		file = '%s/%s-animations.json' % (assetOutPath, resName)
+		fp = open(file, 'w')
+		json.dump(animations, fp)
+
 	print("Images: " + str( len(imageRects) ) )
 	print("Sounds: " + str( len(soundSprite) ) )
 	print("Strings: " + str(len(textString)))
+	print("Animations: " + str(len(animations)))
 
 	if len(imageRects) > 0:
 
