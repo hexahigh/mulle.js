@@ -7,6 +7,7 @@ import MulleBuildCar from '../objects/buildcar'
 import MulleButton from '../objects/button'
 import MulleFileBrowser from '../objects/MulleFileBrowser'
 import LoadSaveCar from '../util/LoadSaveCar'
+import DirectorHelper from '../objects/DirectorHelper'
 
 /**
  * Album UI
@@ -158,10 +159,7 @@ class AlbumState extends MulleState {
       const [parts, medals, name] = this.loadSave.loadCar(page)
       this.albumCar(parts)
       this.parts = parts
-      if (this.carName) {
-        this.carName.text(name)
-        // TODO: Read only
-      }
+      this.carName.text(name)
       this.showMedals(medals)
       if (this.mode === 'load') this.fetchButton.show()
     } else {
@@ -212,7 +210,6 @@ class AlbumState extends MulleState {
     let count = 1
     for (const medal of medals) {
       const { key, frame } = this.game.mulle.getDirectorImage(this.DirResource, 20 + medal)
-      console.log(frame)
       const sprite = new Phaser.Sprite(this.game, 550, 55 * count, key, frame.name)
       this.medals.add(sprite)
       count++
@@ -230,22 +227,18 @@ class AlbumState extends MulleState {
     this.background.setDirectorMember(this.DirResource, 93)
     this.background_layer.add(this.background)
 
+    // Car name
+    this.name_input = DirectorHelper.sprite(this.game, 210, 427, this.DirResource, 101)
+    this.album_ui.add(this.name_input)
+    this.carName = new TextInput(this.game, this.name_input.x + 5, this.name_input.y + 5, 203, 20)
+    this.carName.id('car_name')
+
     if (this.mode === 'save') {
       this.game.mulle.playAudio('06e002v0', () => {
         this.game.mulle.playAudio('06d001v0')
       })
 
       this.showPasteFrame()
-
-      const { key, frame } = this.game.mulle.getDirectorImage(this.DirResource, 101)
-      this.name_input = new Phaser.Sprite(this.game, 215, 434, key, frame.name)
-      this.album_ui.add(this.name_input)
-
-      this.carName = new TextInput(this.game, this.name_input.x + 5, this.name_input.y + 5, 203, 20)
-      this.carName.id('car_name')
-      this.carName.onChange((event) => {
-        console.log('Value set to ' + this.carName.value())
-      })
 
       this.export_button = new MulleButton(this.game, 487, 413, {
         imageDefault: ['06.DXR', 164],
@@ -266,6 +259,7 @@ class AlbumState extends MulleState {
       })
 
       this.album_ui.add(this.fetchButton)
+      this.carName.input.readOnly = true
 
       this.importButton = new MulleButton(this.game, 487, 413, {
         imageDefault: ['06.DXR', 161],
@@ -294,8 +288,7 @@ class AlbumState extends MulleState {
 
   shutdown (game) {
     this.cutscene = 83
-    if (this.mode === 'save')
-      this.carName.remove()
+    this.carName.remove()
     super.shutdown(game)
   }
 }
