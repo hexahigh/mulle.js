@@ -381,8 +381,15 @@ class MulleActor extends MulleSprite {
    */
   onAudioStop () {
     // console.log('audio stop');
-
-    this.animations.play(this.silenceAnimation)
+    const idle = this.animations.getAnimation('idle')
+    if (idle)
+      idle.play()
+    else if(!this.silenceAnimation)
+      console.warn('No silence animation for actor', this.actorName)
+    else {
+      console.debug('Audio stop, start silenceAnimation', this.silenceAnimation)
+      this.animations.play(this.silenceAnimation)
+    }
 
     this.resetTalk()
 
