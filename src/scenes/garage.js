@@ -13,6 +13,7 @@ import MulleActor from '../objects/actor'
 import MulleButton from '../objects/button'
 import MulleCarPart from '../objects/carpart'
 import MulleToolbox from '../objects/toolbox'
+import SubtitleLoader from '../objects/SubtitleLoader'
 
 
 /**
@@ -27,6 +28,9 @@ class GarageState extends MulleState {
 
     this.game.load.pack('garage', 'assets/garage.json', null, this)
     this.game.load.json('partNames', 'data/part_names.json')
+    this.subtitles = new SubtitleLoader(this.game, 'garage', ['english'])
+    this.subtitles.preload()
+    this.subtitles.preload('carparts')
   }
 
   /**
@@ -194,6 +198,8 @@ class GarageState extends MulleState {
     this.game.physics.arcade.gravity.y = 800
 
     this.game.mulle.addAudio('garage')
+    this.subtitles.load()
+    this.subtitles.load('carparts')
 
     // this.game.mulle.user.calculateParts();
     this.enterParts = [...this.game.mulle.user.Car.Parts]

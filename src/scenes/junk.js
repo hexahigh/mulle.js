@@ -7,6 +7,7 @@ import MulleButton from '../objects/button'
 import MulleCarPart from '../objects/carpart'
 import MulleJunkActor from '../objects/JunkActor'
 import DirectorHelper from '../objects/DirectorHelper'
+import SubtitleLoader from '../objects/SubtitleLoader'
 
 /* rects = [
 
@@ -54,6 +55,9 @@ class JunkState extends MulleState {
     super.preload()
 
     this.game.load.pack('junk', 'assets/junk.json', null, this)
+    this.subtitles = new SubtitleLoader(this.game, 'junk', ['english'])
+    //this.subtitles.preload()
+    this.subtitles.preload('carparts')
 
     // this.game.load.pack('partdesc', 'assets_new/partdesc.json', null, this);
   }
@@ -264,6 +268,10 @@ class JunkState extends MulleState {
     this.junkParts = null
 
     this.setPile(1)
+
+    this.game.mulle.addAudio('junk')
+    //this.subtitles.load()
+    this.subtitles.load('carparts')
 
     this.game.mulle.playAudio('02e010v0')
 

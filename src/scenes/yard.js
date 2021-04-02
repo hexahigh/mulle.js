@@ -8,6 +8,7 @@ import MulleBuildCar from '../objects/buildcar'
 import MulleButton from '../objects/button'
 import MulleCarPart from '../objects/carpart'
 import MulleActor from '../objects/actor'
+import SubtitleLoader from '../objects/SubtitleLoader'
 
 class YardState extends MulleState {
   preload () {
@@ -16,11 +17,14 @@ class YardState extends MulleState {
     // game.load.pack('04.DXR', 'assets/04.DXR/pack.json', null, this);
 
     this.game.load.pack('yard', 'assets/yard.json', null, this)
+    this.subtitles = new SubtitleLoader(this.game, 'yard', ['english'])
+    this.subtitles.preload()
   }
 
   create () {
     super.create()
     this.game.mulle.addAudio('yard')
+    this.subtitles.load()
 
     this.car = null
     this.junkParts = null
