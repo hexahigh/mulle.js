@@ -2,6 +2,10 @@
 
 // import MulleSprite from 'objects/sprite';
 
+/**
+ * map 28
+ * @type {{}}
+ */
 var MapObject = {}
 
 MapObject.onCreate = function () {

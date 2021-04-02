@@ -1,3 +1,6 @@
+/**
+ * @property {array} Parts Parts currently on the car
+ */
 class MulleCar {
   constructor (game, data) {
     this.game = game

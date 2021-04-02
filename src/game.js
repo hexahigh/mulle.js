@@ -160,6 +160,7 @@ class MulleGame extends Phaser.Game {
     /**
      * Play audio by member name
      * @param  {string} id
+     * @param {function} onStop
      * @return {Phaser.Sound} sound object
      */
     this.mulle.playAudio = function (id, onStop = null) {

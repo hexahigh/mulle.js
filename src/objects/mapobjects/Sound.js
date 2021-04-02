@@ -1,5 +1,9 @@
 'use strict'
 
+/**
+ * Racing (map 28)
+ * @type {{}}
+ */
 var MapObject = {}
 
 MapObject.onCreate = function () {

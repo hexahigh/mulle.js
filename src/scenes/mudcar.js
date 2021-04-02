@@ -100,6 +100,7 @@ class MudCarState extends MulleState {
     const JustDoItRopeAnimation = new movingAnimation(this.game, this.dirResource, JustDoItRope, 12, 320, -43)
     this.game.add.existing(JustDoItRopeAnimation.sprite)
     JustDoItRopeAnimation.play()
+    // TODO: Medal
   }
 
   weakCar () {

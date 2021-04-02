@@ -103,8 +103,8 @@ class MulleSave {
 
   hasPart (partId) {
     // junk piles
-    for (var p in this.Junk) {
-      if (Object.keys(this.Junk[p]).indexOf(partId) !== -1 || Object.keys(this.Junk[p]).indexOf(partId.toString()) !== -1) return true
+    for (var junkKey in this.Junk) {
+      if (Object.keys(this.Junk[junkKey]).indexOf(partId) !== -1 || Object.keys(this.Junk[junkKey]).indexOf(partId.toString()) !== -1) return true
     }
 
     // regular car parts
@@ -120,10 +120,10 @@ class MulleSave {
   }
 
   /**
-   * @param {string}       Pile name
-   * @param {number}       Part ID
-   * @param {Phaser.Point} Position in pile
-   * @param {Boolean}      Don't save user data
+   * @param {string}       pile   Pile name
+   * @param {number}       partId Part ID
+   * @param {Phaser.Point} pos    Position in pile
+   * @param {Boolean}      noSave Don't save user data
    */
   addPart (pile, partId, pos, noSave = false) {
     if (!this.Junk[pile]) return false
