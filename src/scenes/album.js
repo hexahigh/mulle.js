@@ -140,7 +140,10 @@ class AlbumState extends MulleState {
     }
 
     this.removeParts(parts) // Remove the parts from wherever they are
-    this.game.mulle.user.Car.Parts = parts
+    this.game.mulle.user.Car.Parts = []
+    for (partId of parts) {
+      this.game.mulle.user.Car.Parts.push(partId)
+    }
     this.game.mulle.user.Car.Medals = medals
     this.game.mulle.user.Car.Name = name
     this.close()
