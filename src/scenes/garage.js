@@ -451,7 +451,7 @@ class GarageState extends MulleState {
       const b_figge = document.createElement('button')
       b_figge.innerHTML = 'Figge'
       b_figge.className = 'button'
-      b_figge.addEventListener('click', (e) => {
+      b_figge.addEventListener('click', () => {
         this.figge()
       })
       document.getElementById('cheats').appendChild(b_figge)
@@ -467,12 +467,16 @@ class GarageState extends MulleState {
         b.innerHTML = (partNames && partNames[partId]) ? '(' + partId + ') ' + partNames[partId] : partId
         b.className = 'button'
 
-        if (has) b.disabled = true
+        if (has) b.setAttribute('style', 'background: #222')
 
-        b.addEventListener('click', (e) => {
+        b.addEventListener('click', () => {
           if (has) {
-            alert('has part already')
-            return
+            for (const pile in this.game.mulle.user.Junk) {
+              if (partId in this.game.mulle.user.Junk[pile]) {
+                console.log(`Remove part ${partId} from ${pile}`)
+                delete this.game.mulle.user.Junk[pile][partId]
+              }
+            }
           }
 
           this.makePart(partId, 320, 240)
