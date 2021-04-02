@@ -293,6 +293,8 @@ class MulleBuildCar extends Phaser.Group {
     }
 
     this.parts = [1]
+    this.game.mulle.user.Car.Medals = []
+    this.game.mulle.user.Car.Name = ''
     this.refresh()
     this.save()
   }
