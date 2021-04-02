@@ -14,145 +14,6 @@ import MulleButton from '../objects/button'
 import MulleCarPart from '../objects/carpart'
 import MulleToolbox from '../objects/toolbox'
 
-const partNames = {
-
-  1: 'chassi',
-
-  2: 'moped engine',
-
-  5: 'balcony',
-
-  6: 'med engine',
-  9: 'v8 engine',
-
-  12: 'red seat',
-
-  13: 'truck thing',
-
-  14: 'wooden box',
-
-  17: 'plane-front',
-  18: 'plane-middle',
-
-  19: 'chevy-front',
-  20: 'chevy-middle',
-  21: 'chevy-back',
-
-  22: 'tractor front',
-
-  30: 'yellow front',
-  29: 'yellow middle',
-  23: 'yellow back',
-
-  24: 'vw blue front',
-
-  26: 'greenhouse',
-
-  25: 'racer front',
-  27: 'racer middle',
-  28: 'racer back',
-
-  31: 'shack',
-  32: 'heli front',
-  33: 'tractor shovel',
-  35: 'ticket',
-  38: 'green engine',
-
-  41: 'handlebars',
-
-  42: 'desk lamp',
-
-  43: 'lawnmower',
-
-  47: 'lamp tires',
-
-  48: 'med battery',
-
-  53: 'drum tires',
-
-  54: 'ship steering wheel',
-
-  55: 'big gas tank',
-
-  64: 'dashboard',
-
-  65: 'bell',
-
-  66: 'fender',
-
-  69: 'wine bucket',
-  74: 'vacuum',
-  75: 'plane steering wheel',
-  76: 'watering can',
-  81: 'small battery',
-  89: 'signal horn',
-  91: 'solar panel',
-  92: 'F1 steering wheel',
-  93: 'cogwheels',
-
-  96: 'wood wheels',
-
-  99: 'horse carriage',
-
-  100: 'wooden chair',
-
-  101: 'electric engine',
-
-  104: 'brakes',
-
-  107: 'black battery',
-  113: 'tractor tires',
-  116: 'wheelbarrow tires',
-  120: 'pinnstol',
-  121: 'MC tank',
-  129: 'green striped couch',
-
-  130: 'horse carriage lights',
-  131: 'lights',
-  132: 'bike frame',
-  133: 'gray gearbox',
-  134: 'wine barrel',
-
-  137: 'tub',
-
-  146: 'telephone kiosk',
-
-  161: 'train plow',
-
-  172: 'tank',
-
-  176: 'electric horn',
-
-  149: 'caterpillar',
-
-  150: 'brakes',
-
-  154: 'red front',
-
-  155: 'tent',
-
-  162: 'milk jar',
-
-  167: 'toilet',
-
-  177: 'ambulance middle',
-
-  181: 'boat engine',
-
-  191: 'toothpaste mid',
-  192: 'toothpaste front',
-  193: 'toothpaste back',
-
-  207: 'small tank',
-
-  287: 'megaphone',
-  303: 'tires',
-
-  306: 'jet engine',
-
-  307: 'steering wheel'
-
-}
 
 /**
  * GarageState
@@ -165,6 +26,7 @@ class GarageState extends MulleState {
     super.preload()
 
     this.game.load.pack('garage', 'assets/garage.json', null, this)
+    this.game.load.json('partNames', 'data/part_names.json')
   }
 
   /**
@@ -332,6 +194,7 @@ class GarageState extends MulleState {
     this.game.physics.arcade.gravity.y = 800
 
     this.game.mulle.addAudio('garage')
+    new GarageSubtitles(this.game)
 
     // this.game.mulle.user.calculateParts();
     this.enterParts = [...this.game.mulle.user.Car.Parts]
@@ -582,6 +445,7 @@ class GarageState extends MulleState {
     // spawn parts cheat
 
     if (this.game.mulle.cheats) {
+      const partNames = this.game.cache.getJSON('partNames')
       document.getElementById('cheats').innerHTML = ''
 
       const b_figge = document.createElement('button')
