@@ -3,9 +3,10 @@
 import MulleState from './base'
 
 import MulleSprite from '../objects/sprite'
-// import MulleActor from '../objects/actor'
 import MulleButton from '../objects/button'
 import MulleCarPart from '../objects/carpart'
+import MulleJunkActor from '../objects/JunkActor'
+import DirectorHelper from '../objects/DirectorHelper'
 
 /* rects = [
 
@@ -33,6 +34,20 @@ class JunkState extends MulleState {
       5: { bg: '02b005v0', door: 93, right: 170, left: 182, rect: [ [6, 268, 450, 412], [5, 180, 411, 275], [0, 100, 303, 189] ] },
       6: { bg: '02b006v0', door: 95, right: 172, left: 184, rect: [ [0, 275, 400, 390], [1, 201, 368, 283], [4, 135, 270, 203] ] }
     }
+
+    this.pile_actors = {
+      1: { mulle: { pos: [90, 309] } },
+      2: { mulle: { pos: [86, 290] } },
+      3: { mulle: { pos: [90, 309] } },
+      4: { mulle: { pos: [561, 229] } },
+      5: { mulle: { pos: [570, 270] } },
+      6: { mulle: { pos: [520, 297] } }
+    }
+
+    this.thoughtSounds = ["02d001v0", "02d002v0", "02d003v0", "02d004v0", "02d005v0"]
+    this.sortSounds = ["02d006v0", "02d007v0", "02d008v0"]
+    this.shopFullSounds = ["02d009v0", "02d010v0", "02d011v0"]
+    this.pileFullSounds = ["02d013v0", "02d014v0", "02d015v0"]
   }
 
   preload () {
@@ -129,6 +144,27 @@ class JunkState extends MulleState {
       this.dropRects.push(rect)
       // game.debug.geom(rect,'rgba(255,0,0,.6)')
     }
+
+    const actor = this.pile_actors[this.currentPile]
+
+    this.game.mulle.actors.mulle = new MulleJunkActor(this.game, actor['mulle']['pos'][0], actor['mulle']['pos'][1], this.currentPile > 3 )
+    this.game.add.existing(this.game.mulle.actors.mulle)
+
+    let member
+    if (this.currentPile > 3)
+      member = 210
+    else
+      member = 209
+
+    const [key, frame] = DirectorHelper.getDirectorImage(this.game, '02.DXR', member)
+    //const mulle_body = this.game.add.sprite(actor['mulle']['pos'][0], actor['mulle']['pos'][1], key, frame)
+    const mulle_body = new MulleSprite(this.game, actor['mulle']['pos'][0], actor['mulle']['pos'][1], key, frame)
+    mulle_body.setDirectorMember('02.DXR', member)
+    this.game.add.existing(mulle_body)
+
+
+    /*this.buffaActor = new MulleActor(this.game, 320, 222, 'buffa')
+    this.game.add.existing(this.buffaActor)*/
 
     /*
     this.junkPile = this.game.mulle.user.Junk['Pile' + this.currentPile]

@@ -27,6 +27,11 @@ class directorAnimation {
    * @return {array}
    */
   static resolveDirectorFrames (game, movie, frames) {
+    if (!movie) {
+      console.error('Movie not set')
+      return []
+    }
+
     const DirectorFrames = []
     let key, frame
     for (const frameName of frames) {
@@ -39,6 +44,19 @@ class directorAnimation {
     return [key, DirectorFrames]
   }
 
+  /**
+   * Offset and resolve frames from a director animation
+   * @param {MulleGame|Phaser.Game} game
+   * @param {string} movie Move file name
+   * @param {int} firstFrame First frame number
+   * @param {array} frames Frames relative to first frame
+   * @return {array} Resolved frames
+   */
+  static createAnimation(game, movie, firstFrame, frames)
+  {
+    const offset_frames = directorAnimation.offset(frames, firstFrame - 1)
+    return this.resolveDirectorFrames(game, movie, offset_frames)
+  }
 }
 
 export default directorAnimation

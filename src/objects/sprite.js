@@ -4,6 +4,8 @@
  */
 'use strict'
 
+import directorAnimation from '../util/directorAnimation'
+
 var spriteLookup = {}
 
 /**
@@ -16,14 +18,20 @@ class MulleSprite extends Phaser.Sprite {
    * @param	{Phaser.Game} game  Main game
    * @param	{number}      x     x coordinate
    * @param	{number}      y     y coordinate
-   * @param	{string}      key   texture atlas key
-   * @param	{string}      frame frame name/number
+   * @param	{string|null}      key   texture atlas key
+   * @param	{string|null}      frame frame name/number
    * @return	{void}
    */
-  constructor (game, x, y, key, frame) {
+  constructor (game, x, y, key = null, frame = null) {
     super(game, x, y, key, frame)
 
     this.regPoint = new PIXI.Point(0, 0)
+
+    /**
+     * Director movie
+     * @type {string}
+     */
+    this.movie = ''
 
     // console.log('MulleSprite', this)
 
@@ -166,8 +174,8 @@ class MulleSprite extends Phaser.Sprite {
    * @param {string}  name           [description]
    * @param {array}   members        [description]
    * @param {number}  fps            [description]
-   * @param {bool}    loop           [description]
-   * @param {bool}    killOnComplete [description]
+   * @param {boolean}    loop           [description]
+   * @param {boolean}    killOnComplete [description]
    * @return {Phaser.Animation}
    */
   addAnimation (name, members, fps, loop, killOnComplete = false) {
@@ -180,6 +188,26 @@ class MulleSprite extends Phaser.Sprite {
     console.debug('[sprite-anim]', 'animation added', name, frames)
 
     return this.animations.add(name, frames, fps, loop, killOnComplete)
+  }
+
+  /**
+   * Add animation with director offset frames
+   * @param {string} name Animation name
+   * @param {int} firstFrame First frame number
+   * @param {array} frames Frames relative to first frame
+   * @param {boolean} loop Loop the animation
+   * @returns {Phaser.Animation}
+   */
+  addDirectorAnimation (name, firstFrame, frames, loop = false) {
+    const [key, frames_offset] = directorAnimation.createAnimation(this.game, this.movie, firstFrame, frames)
+    if (!this.key) {
+      console.debug('Set sprite key to', key)
+      this.key = key
+    } else if (this.key !== key) {
+      console.error('Tried to add animation using frames from a different sprite sheet')
+    }
+
+    return this.animations.add(name, frames_offset, 10, loop)
   }
 }
 

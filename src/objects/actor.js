@@ -17,9 +17,10 @@ class MulleActor extends MulleSprite {
    * @param  {number}      x     x coordinate
    * @param  {number}      y     y coordinate
    * @param  {string}      name  Hardcoded actor name
+   * @param  {boolean}     ignore Ignore invalid actor name
    * @return {void}
    */
-  constructor (game, x, y, name) {
+  constructor (game, x, y, name, ignore=false) {
     super(game, x, y)
 
     this.actorName = name
@@ -219,7 +220,7 @@ class MulleActor extends MulleSprite {
       var f = []
       for (var i = 0; i < 4; i++) f.push([b, 42 + i])
       this.addAnimation('jump2', f, 10, false)
-    } else {
+    } else if(!ignore) {
       console.error('invalid actor', this.actorName)
     }
 
