@@ -194,7 +194,6 @@ class GarageState extends MulleState {
     this.game.physics.arcade.gravity.y = 800
 
     this.game.mulle.addAudio('garage')
-    new GarageSubtitles(this.game)
 
     // this.game.mulle.user.calculateParts();
     this.enterParts = [...this.game.mulle.user.Car.Parts]
@@ -289,12 +288,6 @@ class GarageState extends MulleState {
     // door_side.moveJunk = 'yard';
 
     this.game.add.existing(this.door_side)
-
-    /*this.car_camera = DirectorHelper.rectangleButton(this.game, 589, 62-50, 41, 117, () => {
-      this.game.mulle.activeCutscene = 86
-      this.game.mulle.user.takePicture = true
-      this.game.state.start('album')
-    }, this.DirResource, 104, null)  */
 
     this.car_camera = MulleButton.fromRectangle(this.game, 589, 62, 41, 117, {
       imageHover: ['03.DXR', 104],
