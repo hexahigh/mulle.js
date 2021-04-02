@@ -7,18 +7,15 @@ You need to own the original release of Mulle Meck Bygger Bilar to use Mulle.js.
 ## Linux
 Install dependencies
 * **Arch Linux:** `sudo pacman -S python python-pip ffmpeg imagemagick nodejs npm`
-* **Debian/Ubuntu:** `sudo apt install python3 python3-pip ffmpeg imagemagick nodejs npm`
+* **Debian/Ubuntu:** `sudo apt install python3 python3-pip ffmpeg imagemagick nodejs npm optipng`
 
 Python
-`sudo pip3 install PyTexturePacker pydub bitstring`
+`sudo pip3 install -r requirements.txt`
 
-Mount Mulle Meck Bygger Bilar ISO
+Extract assets
 ```
-mkdir ~/mullebil
-sudo mount -o loop mullebil.iso ~/mullebil
+python3 extract_iso.py [path to iso]
 ```
-
-Set mounted game directory in extract.sh (if other than ~/mullebil) and run `python3 extract.py` to extract assets.
 
 You can then generate and start the Mulle.js website, and access it at http://localhost:8080/
 ```
