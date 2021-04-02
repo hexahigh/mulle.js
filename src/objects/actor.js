@@ -234,9 +234,10 @@ class MulleActor extends MulleSprite {
    * Make actor talk
    * @param  {string}   id    Sound name/ID
    * @param  {function} onEnd End callback
+   * @param {function} onCue
    * @return {void}
    */
-  talk (id, onEnd, onCue) {
+  talk (id, onEnd = null, onCue = null) {
     // console.log('talk', id, onEnd);
 
     this.isTalking = true
