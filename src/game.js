@@ -37,6 +37,9 @@ import MulleSubtitle from 'objects/subtitle'
 import MulleAudio from 'objects/audio'
 
 import MulleSave from 'struct/savedata'
+// import PluginState from './scenes/plugin'
+// import TreeCarState from './scenes/treecar'
+import MudCarState from './scenes/mudcar'
 
 // import * as MulleScenes from 'scenes/*';
 
@@ -46,6 +49,7 @@ var directorImageLookup = {}
 /**
  * Main game object
  * @extends Phaser.Game
+ * @property {self} MulleGame
  */
 class MulleGame extends Phaser.Game {
   constructor () {
@@ -97,6 +101,8 @@ class MulleGame extends Phaser.Game {
 
       10: 'menu',
 
+      66: 'plugin',
+
       82: 'mudcar',
       83: 'treecar',
       84: 'roadthing',
@@ -129,6 +135,10 @@ class MulleGame extends Phaser.Game {
       album: AlbumState, // 06
       diploma: DiplomaState, // 08
 
+      //plugin: PluginState, // 66
+
+      mudcar: MudCarState, // 82
+      //treecar: TreeCarState, // 83
       roadthing: RoadThingState, // 84
       roaddog: RoadDogState, // 85
       solhem: SolhemState, // 86
