@@ -14,7 +14,7 @@ jobs:
         - choco config set cacheLocation $HOME/choco_cache
         - choco install --no-progress deployment/packages.config
         - deployment/windows_dependencies.cmd
-        - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PWD/bin:/c/ProgramData/chocolatey/lib/ffmpeg/tools:c/ProgramData/chocolatey/lib/OptiPNG/tools:$PATH"
+        - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.11-Q16-HDRI:$PWD/bin:/c/ProgramData/chocolatey/lib/ffmpeg/tools:c/ProgramData/chocolatey/lib/OptiPNG/tools:$PATH"
       script:
         - npx gulp build-full-no
 
@@ -27,7 +27,7 @@ jobs:
         - choco config set cacheLocation $HOME/choco_cache
         - choco install --no-progress deployment/packages.config
         - deployment/windows_dependencies.cmd
-        - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.10-Q16:$PWD/bin:/c/ProgramData/chocolatey/lib/ffmpeg/tools:c/ProgramData/chocolatey/lib/OptiPNG/tools:$PATH"
+        - export PATH="/c/Python38:/c/Python38/Scripts:/c/Program Files/nodejs:/c/Program Files/ImageMagick-7.0.11-Q16-HDRI:$PWD/bin:/c/ProgramData/chocolatey/lib/ffmpeg/tools:c/ProgramData/chocolatey/lib/OptiPNG/tools:$PATH"
 
     - os: linux
       env:
