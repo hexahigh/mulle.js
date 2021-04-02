@@ -66,6 +66,7 @@ install:
   - python -m pip install -r requirements.txt
   - python extract_iso.py ~/iso/mullebil.iso
   - python ShockwaveExtractor.py -e -i Movies/66.dxr
+  - python ShockwaveExtractor.py -e -i Movies/Plugin.cst
   - npm install
 
 script:
