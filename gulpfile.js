@@ -111,6 +111,7 @@ gulp.task('copy_data', function (done) {
     .pipe(rename('loading.png')).pipe(gulp.dest('./dist/'))
 
   gulp.src('./data/*.json').pipe(gulp.dest('dist/data/'))
+  gulp.src('./data/subtitles/**').pipe(gulp.dest('dist/data/subtitles'))
 
   gulp.src('./ui/*').pipe(gulp.dest('dist/ui/'))
 
