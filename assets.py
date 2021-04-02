@@ -278,11 +278,8 @@ MulleResources.append(resFiggeFerrum)
 
 
 resStureStortand = MulleResource('sturestortand')
-resStureStortand.addFile({ 'dir': '88.DXR', 'lib': 'Internal', 'num': '16-24' }) # tube
-resStureStortand.addFile({ 'dir': '88.DXR', 'lib': 'Internal', 'num': 32 }) # bg 1
-resStureStortand.addFile({ 'dir': '88.DXR', 'lib': 'Internal', 'num': 40 }) # bg 2
-resStureStortand.addFile({ 'dir': '88.DXR', 'lib': 'Internal', 'num': '33-39' }) # sture 1
-resStureStortand.addFile({ 'dir': '88.DXR', 'lib': 'Internal', 'num': '41-47' }) # sture 2
+resStureStortand.addFile({'dir': '88.DXR', 'lib': 'Internal', 'num': '16-25'})  # tube
+resStureStortand.addFile({'dir': '88.DXR', 'lib': 'Internal', 'num': '32-46'})  # sture and bg
 resStureStortand.addFile({ 'dir': '88.DXR', 'lib': 'Internal', 'num': '92-93' }) # kids 1
 resStureStortand.addFile({ 'dir': '88.DXR', 'lib': 'Internal', 'num': '96-97' }) # kids 2
 resStureStortand.addFile({ 'dir': '88.DXR', 'lib': 'Internal', 'num': '100-101' }) # kids 3
