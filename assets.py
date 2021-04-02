@@ -206,6 +206,10 @@ resJunk = MulleResource('junk')
 resJunk.addFile({ 'dir': '02.DXR', 'lib': 'Internal', 'num': '66-72' }) # bg
 resJunk.addFile({ 'dir': '02.DXR', 'lib': 'Internal', 'num': '85-96' }) # doors
 resJunk.addFile({ 'dir': '02.DXR', 'lib': 'Internal', 'num': '162-185' }) # arrows
+resJunk.addFile({'dir': '02.DXR', 'lib': 'Internal', 'num': '122-137'})  # sounds
+resJunk.addFile({'dir': '02.DXR', 'lib': 'Internal', 'num': '141-142'})  # body
+resJunk.addFile({'dir': '02.DXR', 'lib': 'Internal', 'num': '150-157'})  # head right
+resJunk.addFile({'dir': '02.DXR', 'lib': 'Internal', 'num': '170-187'})  # head left
 MulleResources.append(resJunk)
 
 
