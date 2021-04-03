@@ -40,6 +40,7 @@ import MulleSave from 'struct/savedata'
 // import PluginState from './scenes/plugin'
 // import TreeCarState from './scenes/treecar'
 import MudCarState from './scenes/mudcar'
+import DirectorHelper from './objects/DirectorHelper'
 
 // import * as MulleScenes from 'scenes/*';
 
@@ -89,6 +90,11 @@ class MulleGame extends Phaser.Game {
 
     this.mulle.defaultLanguage = 'english'
     // this.mulle.defaultLanguage = 'swedish';
+    /**
+     * Helper class for director assets
+     * @type {DirectorHelper}
+     */
+    this.director = new DirectorHelper(this)
 
     this.mulle.scenes = {
 

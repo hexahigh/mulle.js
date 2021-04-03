@@ -2,6 +2,16 @@
 
 class DirectorHelper {
   /**
+   *
+   * @param {MulleGame} game
+   */
+  constructor (game) {
+    this.game = game
+    this.name_cache = {}
+    this.movie_cache = {}
+  }
+
+  /**
    * Get key and frame for a director image
    * @param {Phaser.Game} game
    * @param {string} movie
@@ -12,6 +22,34 @@ class DirectorHelper {
     // noinspection JSUnresolvedVariable
     const { key, frame } = game.mulle.getDirectorImage(movie, member)
     return [key, frame]
+  }
+
+  /**
+   * Get director image by name
+   * @param {string} name Cast name
+   * @returns {(*|string)[]|boolean[]}
+   */
+  getNamedImage (name) {
+    if(this.name_cache[name])
+      return this.name_cache[name]
+
+    var keys = this.game.cache.getKeys(Phaser.Cache.IMAGE)
+
+    for (var k in keys) {
+      var img = game.cache.getImage(keys[k], true)
+
+      var frames = img.frameData.getFrames()
+
+      for (var f in frames) {
+        if (frames[f].dirName === name) {
+          console.log('match', frames[f])
+          this.name_cache[name] = [img.key, frames[f].name]
+          return [img.key, frames[f].name]
+        }
+      }
+    }
+    console.error('Unable to find image', name)
+    return [false, false]
   }
 
   /**
