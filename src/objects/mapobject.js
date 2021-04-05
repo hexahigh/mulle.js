@@ -5,6 +5,7 @@
 'use strict'
 
 import MulleSprite from 'objects/sprite'
+import ObjectAnimation from './mapobjects/animation'
 
 var toLoad = [
   'Cows',
@@ -73,6 +74,12 @@ class MulleMapObject extends MulleSprite {
 
     this.SpriteInfo = this.def.SpriteInfo ? this.def.SpriteInfo : {}
 
+    /**
+     * Animation helper class
+     * @type {ObjectAnimation}
+     */
+    this.animationHelper = new ObjectAnimation(this)
+
     // debug
     this.outer = new Phaser.Circle(this.x, this.y, this.OuterRadius)
     this.inner = new Phaser.Circle(this.x, this.y, this.InnerRadius)
@@ -94,6 +101,11 @@ class MulleMapObject extends MulleSprite {
 
   }
 
+  /**
+   * Set static default texture
+   * @param name
+   * @param direction
+   */
   setFrameList (name, direction) {
     if (this.def.FrameList['1']) {
       if (!direction) direction = '1'

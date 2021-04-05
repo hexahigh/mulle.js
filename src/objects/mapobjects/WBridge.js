@@ -9,15 +9,12 @@ import ObjectAnimation from './animation'
 const MapObject = {}
 
 MapObject.onCreate = function () {
-  const animations = new ObjectAnimation(this, 'CDDATA.CXT')
-  animations.load(this.def.FrameList)
-  animations.static('normal', this.opt.Direction)
+  this.animationHelper.static('normal', this.opt.Direction)
 
-  const splash = animations.add('splash', 'Splash', this.opt.Direction)
+  this.animationSplash = this.animationHelper.add('splash', 'Splash', this.opt.Direction)
   splash.onComplete.add(() => {
     this.visible = false
   }, this)
-  console.log(this.opt)
 }
 
 MapObject.onEnterInner = function (car) {

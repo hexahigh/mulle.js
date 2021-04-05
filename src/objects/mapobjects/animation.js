@@ -1,52 +1,112 @@
-import DirectorHelper from '../DirectorHelper'
-
 class ObjectAnimation {
   /**
-   *
-   * @param {Phaser.Sprite} sprite
+   * Helpers for object animations
+   * @param {MulleMapObject} sprite MapObject class instance
    * @param {string} movie Director movie
    */
-  constructor (sprite, movie) {
+  constructor (sprite, movie = 'CDDATA.CXT') {
     this.sprite = sprite
+    // noinspection JSValidateTypes
+    /**
+     * @type {MulleGame}
+     */
     this.game = sprite.game
     this.movie = movie
   }
 
   /**
-   * Load animations from a FrameList
-   * @param {object} FrameList
-   * @returns {(*|{})[]}
+   * Check if the object has frames
+   * @returns {boolean}
    */
-  load (FrameList) {
-    const animations = {}
-    let frame
-    let key
+  hasFrames() {
+    return (typeof this.sprite.def.FrameList === 'object' && this.sprite.FrameList.length > 0)
+  }
 
-    if (FrameList[1] === undefined) {
-      const FrameListTemp = {}
-      FrameListTemp[1] = FrameList
-      FrameList = FrameListTemp
+  /**
+   * Check if the FrameList has named animations
+   * @returns {boolean}
+   */
+  hasNamedAnimations() {
+    if (this.hasDirections()) {
+      return !Array.isArray(this.sprite.FrameList[1])
+    } else {
+      const keys = Object.keys(this.sprite.FrameList)
+      return typeof (this.sprite.FrameList[keys[0]]) === "object";
     }
+  }
 
-    console.log(FrameList)
-    console.log(Object.keys(FrameList))
+  /**
+   * Check if the FrameList has directions
+   * @return {boolean}
+   */
+  hasDirections() {
+    return this.sprite.FrameList[1] !== undefined
+  }
 
-    for (const direction of Object.keys(FrameList)) {
-      console.log('Direction', direction)
-      animations[direction] = {}
-      for (const animation of Object.keys(FrameList[direction])) {
-        console.log(animation)
-        animations[direction][animation] = []
-        for (const frameName of FrameList[direction][animation]) {
-          if (frameName === 'Dummy') { continue }
-          [key, frame] = DirectorHelper.getDirectorImage(this.game, this.movie, frameName)
-          animations[direction][animation].push(frame.name)
-        }
+  /**
+   * Get frames for specified direction and animation
+   * @param {int} direction Direction
+   * @param {string} animation Animation name
+   * @return {Array}
+   */
+  getFrames (animation, direction = 1) {
+    let frames = this.sprite.FrameList
+
+    if(this.hasDirections()) {
+      if (frames[direction] === undefined) {
+        console.error(`Invalid direction ${direction} for MapObject ${this.sprite.id}`)
+        return []
       }
+      if(!this.hasNamedAnimations())
+        return frames[direction]
+      else
+        frames = frames[direction]
     }
-    this.sprite.loadTexture(key)
-    this.animations = animations
-    return animations
+
+    if(this.hasNamedAnimations()) {
+      if (frames[animation] === undefined) {
+        console.error(`Invalid animation ${animation} for MapObject ${this.sprite.id}`)
+        return []
+      }
+
+      return frames[animation]
+    }
+    throw Error('No frames found for animation ' + animation + ' direction ' + direction + 'in map object ' + this.sprite.id)
+  }
+
+  /**
+   *
+   * @param frames
+   * @returns {string[]}
+   */
+  resolveDirectorFrames (frames) {
+    console.log('resolve frames', frames)
+    const DirectorFrames = []
+    let key, frame
+    for (const frameName of frames) {
+      if (frameName === 'Dummy')
+        continue
+      //
+      if(isNaN(+frameName)) {
+        [key, frame] = this.game.director.getNamedImage(frameName)
+      }
+      else
+        [key, frame] = this.game.director.getImageByCastNumber(this.movie, frameName)
+
+      if (!frame)
+        throw Error('Unable to resolve frame ' + frameName)
+
+      console.log('Frame matched as', key, frame)
+      DirectorFrames.push(frame)
+    }
+
+    if (this.sprite.key !== key)
+      this.sprite.loadTexture(key)
+    /*console.debug('Set sprite key to', key)
+    this.sprite.key = key*/
+    console.log('Frames resolved to', DirectorFrames)
+
+    return DirectorFrames
   }
 
   /**
@@ -60,24 +120,45 @@ class ObjectAnimation {
    * @returns {Phaser.Animation} The Animation object that was created.
    */
   add (name, frameListName, direction = 1, frameRate = 12, loop = false, reverse = false) {
-    if (this.animations[direction][frameListName] === undefined) {
-      console.error(`Invalid frameList: ${frameListName}`)
-    }
-    let frames
+    let frames = this.getFrames(frameListName, direction)
+    console.log('Director frames', frames)
+    frames = this.resolveDirectorFrames(frames)
+
     if (reverse) {
-      const framesForward = this.animations[direction][frameListName]
-      const framesReverse = [...this.animations[direction][frameListName]].reverse()
+      const framesForward = frames
+      const framesReverse = [...frames].reverse()
       frames = framesReverse.concat(framesForward)
-    } else {
-      frames = this.animations[direction][frameListName]
     }
 
     console.log('Frames', frames)
     return this.sprite.animations.add(name, frames, frameRate, loop)
   }
 
+  /**
+   * Use a static image as the texture for the sprite
+   * @param {string} frameListName The name of the frame list to use
+   * @param {int} direction Direction of the object
+   */
   static (frameListName, direction = 1) {
-    this.sprite.loadTexture(this.sprite.key, this.animations[direction][frameListName][0])
+    let frames = this.getFrames(frameListName, direction)
+    if (frames[0] === 'Dummy')
+      return
+
+    frames = this.resolveDirectorFrames(frames)
+    /*console.log('Frames static', frames)
+    console.log('Frames static', frames[0])
+    console.log('key', this.sprite.key)*/
+    this.sprite.loadTexture(this.sprite.key, frames[0])
+  }
+
+  /**
+   * Play audio by key
+   * @param {int} key
+   * @param {function} onStop
+   */
+  playAudio(key, onStop = null)
+  {
+    return this.game.mulle.playAudio(this.sprite.Sounds[key], onStop)
   }
 }
 

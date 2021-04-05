@@ -5,13 +5,12 @@ import ObjectAnimation from './animation'
 /**
  *
  * @type {{MapObject}}
+ * Map 5
  */
 const MapObject = {}
 
-// map 5
 MapObject.onCreate = function () {
   const animations = new ObjectAnimation(this, 'CDDATA.CXT')
-  animations.load(this.def.FrameList)
 
   animations.add('idle', 'normal', 1, 4, true)
 
