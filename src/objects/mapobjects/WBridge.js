@@ -1,29 +1,30 @@
 'use strict'
 
-import ObjectAnimation from './animation'
-
+// noinspection JSValidateTypes
 /**
  * Weak bridge (map 8)
- * @type {{MapObject}}
+ * @type {MulleMapObject}
  */
 const MapObject = {}
 
 MapObject.onCreate = function () {
   this.animationHelper.static('normal', this.opt.Direction)
-
-  this.animationSplash = this.animationHelper.add('splash', 'Splash', this.opt.Direction)
-  splash.onComplete.add(() => {
-    this.visible = false
-  }, this)
+  this.animationHelper.add('splash', 'Splash', this.opt.Direction)
 }
 
 MapObject.onEnterInner = function (car) {
   const weight = this.game.mulle.user.Car.getProperty('weight')
   if (weight >= 20) {
-    // TODO: Check sound and cutscene
     console.log('Car weight ', weight)
     console.log('Car too heavy, bridge broken')
-    this.animations.play('splash')
+
+    car.visible = false
+    this.animations.play('splash', undefined, undefined, true)
+    this.animationHelper.playAudio(0, () => {
+      car.visible = true
+      this.animationHelper.playAudio(1)
+    })
+
     car.speed = 0
     car.stepback(9)
   } else {
@@ -32,6 +33,13 @@ MapObject.onEnterInner = function (car) {
     if (!hasMedal) {
       this.game.mulle.user.Car.addMedal(6)
     }
+  }
+}
+
+MapObject.onEnterOuter = function (car) {
+  if (!this.alive) {
+    car.speed = 0
+    car.stepback(9)
   }
 }
 
