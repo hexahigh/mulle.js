@@ -305,6 +305,12 @@ class MulleGame extends Phaser.Game {
       return false
     }
 
+    /**
+     *
+     * @param name
+     * @returns {*|Phaser.Frame}
+     * @deprecated Use getImageByCastNumber or getNamedImage
+     */
     this.mulle.findDirectorMember = function (name) {
       if (memberLookup[name]) {
         return memberLookup[name]
@@ -329,6 +335,13 @@ class MulleGame extends Phaser.Game {
       console.error('get member fail', name)
     }
 
+    /**
+     *
+     * @param dir
+     * @param num
+     * @returns {{name: *, key: *, frame: *}|boolean|*}
+     * @deprecated Use getImageByCastNumber or getNamedImage
+     */
     this.mulle.getDirectorImage = function (dir, num) {
       if (!dir || !num) {
         // console.error('invalid parameters', dir, num);

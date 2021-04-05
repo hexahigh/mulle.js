@@ -16,7 +16,8 @@ class DirectorHelper {
    * @param {Phaser.Game} game
    * @param {string} movie
    * @param {int|string} member
-   * @returns {(*)[]}
+   * @returns string[] Array with sprite sheet key and frame number
+   * @deprecated Use getImageByCastNumber or getNamedImage
    */
   static getDirectorImage (game, movie, member) {
     // noinspection JSUnresolvedVariable
@@ -25,9 +26,40 @@ class DirectorHelper {
   }
 
   /**
-   * Get director image by name
-   * @param {string} name Cast name
-   * @returns {(*|string)[]|boolean[]}
+   * Get sprite by director movie and cast number
+   * @param {string} movie Director movie
+   * @param {string} member Director cast member
+   * @returns string[] Array with sprite sheet key and frame number
+   */
+  getImageByCastNumber (movie, member) {
+    if(this.movie_cache[movie] && this.movie_cache[movie][member]) {
+      return this.movie_cache[movie][member]
+    }
+
+    var keys = this.game.cache.getKeys(Phaser.Cache.IMAGE)
+
+    for (const k in keys) {
+      var spriteSheet = game.cache.getImage(keys[k], true)
+      var frames = spriteSheet.frameData.getFrames()
+
+      for (const f in frames) {
+        const frame = frames[f]
+
+        if (frame.dirFile === movie && (frame.dirNum === member)) {
+          console.log('match', frame)
+          this.movie_cache[frame.dirFile][frame.dirNum] = [spriteSheet.key, frames[f].name]
+          return [spriteSheet.key, frames[f].name]
+        }
+      }
+    }
+    console.error('Unable to find image', name)
+    return [false, false]
+  }
+
+  /**
+   * Get sprite by director cast name
+   * @param {string} name Director cast name
+   * @returns string[] Array with sprite sheet key and frame number
    */
   getNamedImage (name) {
     if(this.name_cache[name])
