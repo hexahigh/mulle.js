@@ -158,6 +158,11 @@ class ObjectAnimation {
    */
   playAudio(key, onStop = null)
   {
+    if (!this.sprite.Sounds[key]) {
+      console.error(`No sound with key ${key}`)
+      return
+    }
+
     return this.game.mulle.playAudio(this.sprite.Sounds[key], onStop)
   }
 }
