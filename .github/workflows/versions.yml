@@ -34,4 +34,7 @@ jobs:
 
     - run: npm install
     - run: pip install -r requirements.txt
-    - run: python build_scripts/build.py dev
+    - name: Build phaser
+      run: python build_scripts/build.py phaser
+    - name: Build HTML and CSS
+      run: python build_scripts/build.py html_css

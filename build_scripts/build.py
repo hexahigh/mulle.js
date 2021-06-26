@@ -17,13 +17,13 @@ class Build:
         repo.git.checkout('be17978bb9dcf220f2c97c1b0f7a19022a95c001')
         return repo
 
-    def phaser_clone(self, folder):
-        return Repo.clone_from('https://github.com/photonstorm/phaser-ce.git', folder, branch='v2.16.0',
-                               single_branch=None)
+    def phaser(self, folder):
+        if not os.path.exists(phaser_folder):
+            Repo.clone_from('https://github.com/photonstorm/phaser-ce.git', folder, branch='v2.16.0',
+                            single_branch=None)
 
-    def phaser_build(self, folder):
-        subprocess.call(['npm', 'uninstall', 'fsevents'], cwd=folder)
-        subprocess.call(['npm', 'install'], cwd=folder)
+        subprocess.run(['npm', 'uninstall', 'fsevents'], cwd=folder).check_returncode()
+        subprocess.run(['npm', 'install'], cwd=folder).check_returncode()
 
         exclude = ['gamepad',
                    'bitmaptext',
@@ -40,14 +40,17 @@ class Build:
                    'video'
                    ]
 
-        subprocess.call([
+        subprocess.run([
             'npx',
             'grunt',
             'custom',
             '--exclude=' + ','.join(exclude),
             '--uglify',
             '--sourcemap'
-        ], cwd=folder)
+        ], cwd=folder).check_returncode()
+
+        shutil.copy(os.path.join(phaser_folder, 'dist', 'phaser.min.js'), self.dist_folder)
+        shutil.copy(os.path.join(phaser_folder, 'dist', 'phaser.map'), self.dist_folder)
 
     def webpack(self, prod=False):
         if not prod:
@@ -75,16 +78,16 @@ if __name__ == '__main__':
     build = Build()
     build_prod = sys.argv[1] == 'prod'
     build.webpack(build_prod)
-    drxtract_folder = os.path.join(build.script_folder, 'drxtract')
-    if not os.path.exists(drxtract_folder):
-        build.drxtract_clone(drxtract_folder)
 
-    phaser_folder = os.path.join(build.project_folder, 'phaser-ce')
-    if not os.path.exists(phaser_folder):
-        build.phaser_clone(phaser_folder)
-        build.phaser_build(phaser_folder)
-        shutil.copy(os.path.join(phaser_folder, 'dist', 'phaser.min.js'), build.dist_folder)
-        shutil.copy(os.path.join(phaser_folder, 'dist', 'phaser.map'), build.dist_folder)
+    if 'scores' in sys.argv:
+        drxtract_folder = os.path.join(build.script_folder, 'drxtract')
+        if not os.path.exists(drxtract_folder):
+            build.drxtract_clone(drxtract_folder)
 
-    build.html()
-    build.css()
+    if 'phaser' in sys.argv:
+        phaser_folder = os.path.join(build.project_folder, 'phaser-ce')
+        build.phaser(phaser_folder)
+
+    if 'html_css' in sys.argv:
+        build.html()
+        build.css()
