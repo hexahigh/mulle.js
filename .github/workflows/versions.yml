@@ -32,13 +32,6 @@ jobs:
       with:
         python-version: 3.9
 
-    - name: Cache data
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/build_scripts/iso
-        key: data
-
     - name: Get npm cache directory
       id: npm-cache-dir
       run: |
@@ -61,5 +54,3 @@ jobs:
       run: python build_scripts/build.py phaser
     - name: Build HTML and CSS
       run: python build_scripts/build.py html_css
-    - name: Download game
-      run: python build_scripts/build.py download-se

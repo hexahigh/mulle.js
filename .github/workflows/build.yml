@@ -1,0 +1,70 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ no, se ]
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Cache data
+        uses: actions/cache@v2
+        id: iso
+        with:
+          path: |
+            ~/build_scripts/iso
+          key: iso-${{ hashFiles('build_scripts/iso/*.iso') }}
+          restore-keys: iso-
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v2
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install SASS
+        run: sudo apt-get install sass
+
+      - run: npm install
+
+      - run: pip install -r requirements.txt
+
+      - name: Build webpack
+        run: python build_scripts/build.py webpack-prod
+
+      - name: Build phaser
+        run: python build_scripts/build.py phaser
+
+      - name: Build HTML and CSS
+        run: python build_scripts/build.py html_css
+
+      - name: Download game
+        run: python build_scripts/build.py download-${{ matrix.language }}
