@@ -74,6 +74,7 @@ class Build:
 if __name__ == '__main__':
     build = Build()
     build_prod = sys.argv[1] == 'prod'
+    build.webpack(build_prod)
     drxtract_folder = os.path.join(build.script_folder, 'drxtract')
     if not os.path.exists(drxtract_folder):
         build.drxtract_clone(drxtract_folder)
@@ -85,6 +86,5 @@ if __name__ == '__main__':
         shutil.copy(os.path.join(phaser_folder, 'dist', 'phaser.min.js'), build.dist_folder)
         shutil.copy(os.path.join(phaser_folder, 'dist', 'phaser.map'), build.dist_folder)
 
-    build.webpack(build_prod)
     build.html()
     build.css()
