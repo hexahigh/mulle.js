@@ -3,6 +3,7 @@ import subprocess
 import shutil
 import sys
 
+import requests
 from git import Repo
 
 
@@ -73,6 +74,30 @@ class Build:
              os.path.join(self.dist_folder, 'style.css')])
         process.check_returncode()
 
+    def download_game(self, language='se'):
+        if language == 'no':
+            url = 'https://archive.org/download/bygg-biler-med-mulle-mekk/Bygg%20biler%20med%20Mulle%20Mekk.iso'
+        elif language == 'se':
+            url = 'https://archive.org/download/byggbilarmedmullemeck/byggbilarmedmullemeck.iso'
+        elif language == 'da':
+            url = 'https://archive.org/download/byg-bil-med-mulle-meck/Byg-bil-med-Mulle-Meck.iso'
+        else:
+            raise AttributeError('Invalid language')
+        iso_folder = os.path.join(self.script_folder, 'iso')
+        if not os.path.exists(iso_folder):
+            os.mkdir(iso_folder)
+
+        local_file = os.path.join(iso_folder, 'mullebil_%s.iso' % language)
+        if os.path.exists(local_file):
+            return local_file
+
+        with requests.get(url, stream=True) as r:
+            r.raise_for_status()
+            with open(local_file, 'wb') as fp:
+                for chunk in r.iter_content(chunk_size=None):
+                    fp.write(chunk)
+        return local_file
+
 
 if __name__ == '__main__':
     build = Build()
@@ -94,3 +119,8 @@ if __name__ == '__main__':
     if 'html_css' in sys.argv:
         build.html()
         build.css()
+
+    if 'download-no' in sys.argv:
+        build.download_game('no')
+    elif 'download-se' in sys.argv:
+        build.download_game('se')
