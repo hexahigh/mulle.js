@@ -58,6 +58,7 @@ class Build:
 
     def html(self):
         for folder in ['progress', 'info']:
+            os.mkdir(os.path.join(self.dist_folder, folder))
             shutil.copytree(os.path.join(self.project_folder, folder),
                             os.path.join(self.dist_folder, folder), dirs_exist_ok=True)
         shutil.copy(os.path.join(self.project_folder, 'src', 'index.html'), self.dist_folder)
