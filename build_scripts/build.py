@@ -54,7 +54,8 @@ class Build:
             config = os.path.join(self.project_folder, 'webpack.dev.js')
         else:
             config = os.path.join(self.project_folder, 'webpack.prod.js')
-        subprocess.call(['npx', 'webpack-cli', '-c', config])
+        process = subprocess.run(['npx', 'webpack-cli', '-c', config])
+        process.check_returncode()
 
     def html(self):
         for folder in ['progress', 'info']:
@@ -62,6 +63,12 @@ class Build:
             shutil.copytree(os.path.join(self.project_folder, folder),
                             os.path.join(self.dist_folder, folder), dirs_exist_ok=True)
         shutil.copy(os.path.join(self.project_folder, 'src', 'index.html'), self.dist_folder)
+
+    def css(self):
+        process = subprocess.run(
+            ['sass', os.path.join(self.project_folder, 'src', 'style.scss'),
+             os.path.join(self.dist_folder, 'style.css')])
+        process.check_returncode()
 
 
 if __name__ == '__main__':
@@ -80,5 +87,4 @@ if __name__ == '__main__':
 
     build.webpack(build_prod)
     build.html()
-    subprocess.call(
-        ['sass', os.path.join(build.project_folder, 'style.scss'), os.path.join(build.dist_folder, 'style.css')])
+    build.css()
