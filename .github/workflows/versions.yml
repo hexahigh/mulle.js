@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [12.x, 14.x]
         python-version: [3.9]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
@@ -35,4 +35,3 @@ jobs:
     - run: npm install
     - run: pip install -r requirements.txt
     - run: python build_scripts/build.py dev
-    - run: npx gulp build-prod

@@ -80,3 +80,5 @@ if __name__ == '__main__':
 
     build.webpack(build_prod)
     build.html()
+    subprocess.call(
+        ['sass', os.path.join(build.project_folder, 'style.scss'), os.path.join(build.dist_folder, 'style.css')])

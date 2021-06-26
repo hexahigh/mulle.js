@@ -27,10 +27,6 @@ gulp.task('html', function (done) {
   done()
 })
 
-gulp.task('css', function () {
-  return gulp.src('./src/style.scss').pipe(sass({ /* outputStyle: 'compressed' */ }).on('error', sass.logError)).pipe(gulp.dest('dist/'))
-})
-
 gulp.task('copy_data', function (done) {
   gulp.src('./cst_out_new/00.CXT/Standalone/122.bmp', { buffer: false })
     .pipe(
@@ -198,10 +194,8 @@ gulp.task('rename', function () {
 
 gulp.task('data-score', gulp.series('scores', 'scores-parse', 'scores-build'))
 gulp.task('data', gulp.series('build_topography', 'pack_topography', 'data-score', 'copy_data'))
-gulp.task('build-dev', gulp.series('css'))
-gulp.task('build-prod', gulp.series('css'))
 
-gulp.task('build-full', gulp.series('html', 'css', 'assets', 'optipng', 'data'))
+gulp.task('build-full', gulp.series('assets', 'optipng', 'data'))
 gulp.task('build-full-no', gulp.series('rename', 'build-full'))
 
 gulp.task('default', gulp.series('build-dev', 'assets', 'data'))
