@@ -9,7 +9,7 @@ from git import Repo
 class Build:
     def __init__(self):
         self.script_folder = os.path.dirname(__file__)
-        self.project_folder = os.path.join(self.script_folder, '..')
+        self.project_folder = os.path.realpath(os.path.join(self.script_folder, '..'))
         self.dist_folder = os.path.join(self.project_folder, 'dist')
 
     def drxtract_clone(self, folder):
@@ -54,7 +54,8 @@ class Build:
             config = os.path.join(self.project_folder, 'webpack.dev.js')
         else:
             config = os.path.join(self.project_folder, 'webpack.prod.js')
-        subprocess.call(['npx', 'webpack-cli', '-c', config, '-o', self.dist_folder])
+        entry = os.path.join(self.project_folder, 'src', 'index.js')
+        subprocess.call(['npx', 'webpack-cli', '-c', config, '-o', self.dist_folder, '--entry', entry])
 
 
 if __name__ == '__main__':
