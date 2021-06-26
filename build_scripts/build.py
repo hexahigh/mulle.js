@@ -54,8 +54,7 @@ class Build:
             config = os.path.join(self.project_folder, 'webpack.dev.js')
         else:
             config = os.path.join(self.project_folder, 'webpack.prod.js')
-        entry = os.path.join(self.project_folder, 'src', 'index.js')
-        subprocess.call(['npx', 'webpack-cli', '-c', config, '-o', self.dist_folder, '--entry', entry])
+        subprocess.call(['npx', 'webpack-cli', '-c', config])
 
     def html(self):
         for folder in ['progress', 'info']:
