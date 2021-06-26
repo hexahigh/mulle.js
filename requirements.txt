@@ -4,3 +4,4 @@ pydub
 bitstring
 
 pycdlib~=1.10.0
+GitPython

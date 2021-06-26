@@ -25,67 +25,6 @@ function detectPython () {
 
 const python = detectPython()
 
-gulp.task('drxtract-clone', function (done) {
-  return git.clone('https://github.com/System25/drxtract.git', { args: './build_scripts/drxtract -n' }, function (error) {
-    if (error) throw error
-    git.checkout('be17978bb9dcf220f2c97c1b0f7a19022a95c001', { 'cwd': './build_scripts/drxtract' })
-    done()
-  })
-})
-
-gulp.task('phaser-clone', function (done) {
-  return git.clone('https://github.com/photonstorm/phaser-ce.git', { args: './phaser-ce --branch v2.16.0 --single-branch' }, function (error) {
-    if (error) throw error
-    done()
-  })
-})
-
-gulp.task('phaser-install', function (done) {
-  child_process.exec('npm uninstall fsevents', {'cwd': './phaser-ce'}, function () {
-    child_process.exec('npm install', {'cwd': './phaser-ce'}, function () {
-      done()
-    })
-  })
-})
-
-gulp.task('phaser-build', function (done) {
-  var exclude = [
-    'gamepad',
-    // 'rendertexture',
-    'bitmaptext',
-    'retrofont',
-    'rope',
-    'tilesprite',
-    'flexgrid',
-    'ninja',
-    'p2',
-    'tilemaps',
-    'particles',
-    'weapon',
-    'creature',
-    'video'
-  ]
-
-  var cmd = [
-    'npx',
-    'grunt',
-    'custom',
-    '--exclude=' + exclude.join(','),
-    '--uglify',
-    '--sourcemap'
-  ]
-
-  child_process.exec(cmd.join(' '), {'cwd': './phaser-ce'}, function (err, stdout, stderr) {
-    console.log('phaser err: ' + err)
-    console.log('phaser stdout: ' + stdout)
-    console.log('phaser stderr: ' + stderr)
-
-    gulp.src('./phaser-ce/dist/phaser.min.js').pipe(gulp.dest('dist/'))
-    gulp.src('./phaser-ce/dist/phaser.map').pipe(gulp.dest('dist/'))
-    done()
-  })
-})
-
 gulp.task('html', function (done) {
   gulp.src('./progress/**').pipe(gulp.dest('dist/progress/'))
   gulp.src('./info/**').pipe(gulp.dest('dist/info/'))
