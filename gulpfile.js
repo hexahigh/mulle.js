@@ -2,14 +2,9 @@ const gulp = require('gulp')
 const child_process = require('child_process')
 const exec = require('gulp-exec');
 const texturePacker = require('gulp-free-tex-packer')
-const git = require('gulp-git')
 const rename = require('gulp-rename')
 const sass = require('gulp-sass')
 const spawn = require('gulp-spawn')
-const webpack = require('webpack-stream')
-
-const WebpackDev = require('./webpack.dev.js')
-const WebpackProd = require('./webpack.prod.js')
 
 function detectPython () {
   const processPy = child_process.spawnSync('python', ['-V'])
@@ -189,22 +184,6 @@ gulp.task('scores-build', function () {
   return child_process.spawn(python, ['build_scripts/score/build_score_manual.py', 'Movies/drxtract/82.DXR/score_tracks_82.DXR.json', '5', 'JustDoIt'], {'stdio': 'inherit'})
 })
 
-gulp.task('js-dev', function () {
-  return gulp.src('src/index.js').pipe(
-    webpack(WebpackDev)
-  ).pipe(
-    gulp.dest('dist/')
-  )
-})
-
-gulp.task('js-prod', function () {
-  return gulp.src('src/index.js').pipe(
-    webpack(WebpackProd)
-  ).pipe(
-    gulp.dest('dist/')
-  )
-})
-
 gulp.task('rename', function () {
   return child_process.spawn(python, ['build_scripts/rename.py', 'cst_out_new'])
 })
@@ -219,10 +198,10 @@ gulp.task('rename', function () {
 
 gulp.task('data-score', gulp.series('scores', 'scores-parse', 'scores-build'))
 gulp.task('data', gulp.series('build_topography', 'pack_topography', 'data-score', 'copy_data'))
-gulp.task('build-dev', gulp.series('js-dev', 'html', 'css'))
-gulp.task('build-prod', gulp.series( 'js-prod', 'html', 'css'))
+gulp.task('build-dev', gulp.series('css'))
+gulp.task('build-prod', gulp.series('css'))
 
-gulp.task('build-full', gulp.series('js-prod', 'html', 'css', 'assets', 'optipng', 'data'))
+gulp.task('build-full', gulp.series('html', 'css', 'assets', 'optipng', 'data'))
 gulp.task('build-full-no', gulp.series('rename', 'build-full'))
 
 gulp.task('default', gulp.series('build-dev', 'assets', 'data'))

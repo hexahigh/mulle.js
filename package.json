@@ -24,7 +24,6 @@
 		"gulp": "^4",
 		"gulp-exec": "^5",
 		"gulp-free-tex-packer": "^0.5.2",
-		"gulp-git": "^2.10.1",
 		"gulp-rename": "^2.0.0",
 		"gulp-sass": "^4",
 		"gulp-spawn": "^0.4.5",
@@ -34,7 +33,6 @@
 		"webpack": "^4",
 		"webpack-cli": "^4.6.0",
 		"webpack-merge": "^5.7.3",
-		"webpack-stream": "^6.1.2",
 		"ws": "^3.2.0"
 	},
 	"dependencies": {

@@ -57,6 +57,12 @@ class Build:
         entry = os.path.join(self.project_folder, 'src', 'index.js')
         subprocess.call(['npx', 'webpack-cli', '-c', config, '-o', self.dist_folder, '--entry', entry])
 
+    def html(self):
+        for folder in ['progress', 'info']:
+            shutil.copytree(os.path.join(self.project_folder, folder),
+                            os.path.join(self.dist_folder, folder), dirs_exist_ok=True)
+        shutil.copy(os.path.join(self.project_folder, 'src', 'index.html'), self.dist_folder)
+
 
 if __name__ == '__main__':
     build = Build()
@@ -73,3 +79,4 @@ if __name__ == '__main__':
         shutil.copy(os.path.join(phaser_folder, 'dist', 'phaser.map'), build.dist_folder)
 
     build.webpack(build_prod)
+    build.html()
