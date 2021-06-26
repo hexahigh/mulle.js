@@ -27,5 +27,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: pip install -r requirements.txt
-    - run: python build_scripts/build.py
+    - run: python build_scripts/build.py dev
     - run: npx gulp build-prod
