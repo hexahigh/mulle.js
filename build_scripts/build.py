@@ -76,8 +76,11 @@ class Build:
 
 if __name__ == '__main__':
     build = Build()
-    build_prod = sys.argv[1] == 'prod'
-    build.webpack(build_prod)
+
+    if 'webpack-dev' in sys.argv:
+        build.webpack()
+    elif 'webpack-prod' in sys.argv:
+        build.webpack(True)
 
     if 'scores' in sys.argv:
         drxtract_folder = os.path.join(build.script_folder, 'drxtract')
