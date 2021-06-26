@@ -37,6 +37,7 @@ jobs:
       with:
         path: |
           ~/build_scripts/iso
+        key: data
 
     - name: Get npm cache directory
       id: npm-cache-dir
