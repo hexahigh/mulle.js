@@ -94,7 +94,9 @@ class Build:
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
             with open(local_file, 'wb') as fp:
-                for chunk in r.iter_content(chunk_size=None):
+                print('Download to', local_file)
+                for chunk in r.iter_content(chunk_size=8192):
+                    print(fp.tell(), end='\r')
                     fp.write(chunk)
         return local_file
 
@@ -124,3 +126,5 @@ if __name__ == '__main__':
         build.download_game('no')
     elif 'download-se' in sys.argv:
         build.download_game('se')
+    elif 'download-da' in sys.argv:
+        build.download_game('da')
