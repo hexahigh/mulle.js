@@ -95,6 +95,8 @@ class Build:
             url = 'https://archive.org/download/byggbilarmedmullemeck/byggbilarmedmullemeck.iso'
         elif language == 'da':
             url = 'https://archive.org/download/byg-bil-med-mulle-meck/Byg-bil-med-Mulle-Meck.iso'
+        elif language == 'nl':
+            url = 'https://archive.org/download/1.mielmonteurbouwtautosiso/1.Miel%20Monteur%20Bouwt%20Auto%27s%20ISO.iso'
         else:
             raise AttributeError('Invalid language')
         iso_folder = os.path.join(self.script_folder, 'iso')
