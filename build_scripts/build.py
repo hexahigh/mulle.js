@@ -1,3 +1,4 @@
+import glob
 import os
 import shutil
 import subprocess
@@ -8,10 +9,8 @@ import pycdlib
 import requests
 import sass
 from git import Repo
-import glob
 
 import ShockwaveExtractor
-from PyTexturePacker import Packer
 from topography import build_topography
 
 
@@ -229,6 +228,10 @@ class Build:
             print(e.stderr.decode('utf-8'))
             raise e
 
+    def assets(self, optipng=0):
+        subprocess.run([sys.executable, os.path.join(self.project_folder, 'assets.py'), str(optipng)],
+                       cwd=self.project_folder).check_returncode()
+
 
 if __name__ == '__main__':
     if len(sys.argv) > 1 and len(sys.argv[1]) == 2:
@@ -237,7 +240,10 @@ if __name__ == '__main__':
         build = Build()
 
     if 'build-prod' in sys.argv:
-        sys.argv = ['webpack-prod', 'phaser', 'download', 'scores', 'html_css']
+        sys.argv = ['webpack-prod', 'phaser', 'download', 'scores', 'html_css', 'topography', 'assets-prod']
+
+    if 'build' in sys.argv:
+        sys.argv = ['webpack-dev', 'phaser', 'download', 'scores', 'html_css', 'topography', 'assets']
 
     if 'webpack-dev' in sys.argv:
         build.webpack()
@@ -262,3 +268,9 @@ if __name__ == '__main__':
 
     if 'topography' in sys.argv:
         build.topography()
+
+    if 'assets' in sys.argv:
+        build.assets()
+
+    if 'assets-prod' in sys.argv:
+        build.assets(7)
