@@ -251,10 +251,10 @@ if __name__ == '__main__':
         build = Build()
 
     if 'build-prod' in sys.argv:
-        sys.argv = ['webpack-prod', 'phaser', 'download', 'scores', 'html_css', 'topography', 'assets-prod']
+        sys.argv = ['webpack-prod', 'phaser', 'download', 'scores', 'html_css', 'data', 'topography', 'assets-prod']
 
     if 'build' in sys.argv:
-        sys.argv = ['webpack-dev', 'phaser', 'download', 'scores', 'html_css', 'topography', 'assets']
+        sys.argv = ['webpack-dev', 'phaser', 'download', 'scores', 'html_css', 'data', 'topography', 'assets']
 
     if 'webpack-dev' in sys.argv:
         build.webpack()
@@ -274,8 +274,10 @@ if __name__ == '__main__':
 
     if 'html_css' in sys.argv:
         build.html()
-        build.copy_images()
         build.css()
+
+    if 'data' in sys.argv:
+        build.copy_images()
         build.copy_data()
 
     if 'topography' in sys.argv:
