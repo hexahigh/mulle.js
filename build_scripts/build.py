@@ -45,7 +45,16 @@ class Build:
             movie_dir = os.path.dirname(movie_file)
             extract_folder = os.path.join(movie_dir, 'drxtract', movie_name)
             os.makedirs(extract_folder, exist_ok=True)
-            subprocess.run([sys.executable, 'drxtract', 'pc', movie_file, extract_folder], cwd=drxtract_folder)
+            subprocess.run([sys.executable, 'drxtract', 'pc', movie_file, extract_folder],
+                           cwd=drxtract_folder, capture_output=True).check_returncode()
+            score_script = os.path.join(self.script_folder, 'score', 'score.py')
+            subprocess.run([sys.executable, score_script, os.path.join(extract_folder, 'score.json')],
+                           capture_output=True).check_returncode()
+
+            score_script2 = os.path.join(self.script_folder, 'score', 'build_score_manual.py')
+            score_file = os.path.join(self.movie_folder, 'drxtract', '82.DXR', 'score_tracks_82.DXR.json')
+            subprocess.run([score_script2, score_file, '4', 'JustDoIt'])
+            subprocess.run([score_script2, score_file, '5', 'JustDoIt'])
 
     def phaser(self, folder):
         if not os.path.exists(phaser_folder):
