@@ -261,6 +261,11 @@ resRoadThing.addFile({ 'dir': '84.DXR', 'lib': 'Internal', 'num': 201 }) # audio
 resRoadThing.addFile({ 'dir': '00.CXT', 'lib': 'Internal', 'num': 446 }) # audio ding
 MulleResources.append(resRoadThing)
 
+resLuddeLabb = MulleResource('luddelabb')
+resLuddeLabb.addFile({'dir': '91.DXR', 'lib': 'Internal', 'num': 1})
+resLuddeLabb.addFile({'dir': '91.DXR', 'lib': 'Internal', 'num': 174})
+resLuddeLabb.addFile({'dir': '91.DXR', 'lib': 'Internal', 'num': '200-202'})
+MulleResources.append(resLuddeLabb)
 
 resFiggeFerrum = MulleResource('figgeferrum')
 resFiggeFerrum.addFile({ 'dir': '92.DXR', 'lib': 'Internal', 'num': 1})  # Background
