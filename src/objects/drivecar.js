@@ -108,6 +108,11 @@ class MulleDriveCar extends MulleSprite {
 
     // input
     this.cursors = this.game.input.keyboard.createCursorKeys()
+    this.wasd = this.game.input.keyboard.addKeys( {
+      'up': Phaser.KeyCode.W,
+      'down': Phaser.KeyCode.S,
+      'left': Phaser.KeyCode.A,
+      'right': Phaser.KeyCode.D } );
 
     this.logicLoop = this.game.time.events.loop(Phaser.Timer.SECOND / 30, this.drive, this)
 
@@ -354,18 +359,18 @@ class MulleDriveCar extends MulleSprite {
     // keyboard steering
     if (this.keySteer) {
       // acceleration
-      if (this.cursors.up.isDown) {
+      if (this.cursors.up.isDown || this.wasd.up.isDown) {
         this.changeSpeed(1)
-      } else if (this.cursors.down.isDown) {
+      } else if (this.cursors.down.isDown || this.wasd.down.isDown) {
         this.changeSpeed(-1)
       } else {
         this.changeSpeed(0)
       }
 
       // steering
-      if (this.cursors.left.isDown) {
+      if (this.cursors.left.isDown || this.wasd.left.isDown) {
         this.Steering = -1
-      } else if (this.cursors.right.isDown) {
+      } else if (this.cursors.right.isDown || this.wasd.right.isDown) {
         this.Steering = 1
       } else {
         this.Steering = 0
