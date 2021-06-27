@@ -1,8 +1,9 @@
 import os
-import subprocess
 import shutil
+import subprocess
 import sys
 
+import pycdlib
 import requests
 from git import Repo
 
@@ -100,6 +101,32 @@ class Build:
                     fp.write(chunk)
         return local_file
 
+    def extract_iso(self, language):
+        iso_path = self.download_game(language)
+
+        iso = pycdlib.PyCdlib()
+        iso.open(iso_path)
+        movies_path = os.path.join(self.project_folder, 'Movies')
+        if not os.path.exists(movies_path):
+            os.mkdir(movies_path)
+
+        try:
+            children = iso.list_children(iso_path='/Movies')
+            iso.get_record(iso_path='/Movies')
+        except pycdlib.pycdlib.pycdlibexception.PyCdlibInvalidInput:
+            children = iso.list_children(iso_path='/MOVIES')
+            iso.get_record(iso_path='/MOVIES')
+
+        for child in children:
+            assert isinstance(child, pycdlib.pycdlib.dr.DirectoryRecord)
+            if child is None or child.is_dot() or child.is_dotdot():
+                continue
+
+            file = iso.full_path_from_dirrecord(child)
+            extracted_file = os.path.join(movies_path, os.path.basename(file).upper())
+            iso.get_file_from_iso(extracted_file, iso_path=file)
+        return movies_path
+
 
 if __name__ == '__main__':
     build = Build()
@@ -123,8 +150,8 @@ if __name__ == '__main__':
         build.css()
 
     if 'download-no' in sys.argv:
-        build.download_game('no')
+        build.extract_iso('no')
     elif 'download-se' in sys.argv:
-        build.download_game('se')
+        build.extract_iso('se')
     elif 'download-da' in sys.argv:
-        build.download_game('da')
+        build.extract_iso('da')
