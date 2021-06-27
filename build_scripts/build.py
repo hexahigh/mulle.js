@@ -254,22 +254,22 @@ if __name__ == '__main__':
     elif 'webpack-prod' in sys.argv:
         build.webpack(True)
 
-    if 'scores' in sys.argv:
-        build.scores()
+    if 'download' in sys.argv:
+        build.extract_iso()
+        build.download_plugin()
 
     if 'phaser' in sys.argv:
         phaser_folder = os.path.join(build.project_folder, 'phaser-ce')
         build.phaser(phaser_folder)
+
+    if 'scores' in sys.argv:
+        build.scores()
 
     if 'html_css' in sys.argv:
         build.html()
         build.copy_images()
         build.css()
         build.copy_data()
-
-    if 'download' in sys.argv:
-        build.extract_iso()
-        build.download_plugin()
 
     if 'topography' in sys.argv:
         build.topography()
