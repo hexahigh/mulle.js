@@ -193,7 +193,12 @@ class Build:
             extracted_file = os.path.join(self.movie_folder, os.path.basename(file).upper())
             iso.get_file_from_iso(extracted_file, iso_path=file)
             if extract_content:
-                ShockwaveExtractor.main(['-e', '-i', extracted_file])
+                try:
+                    ShockwaveExtractor.main(['-e', '-i', extracted_file])
+                except Exception as e:
+                    print('%s: %s' % (file, str(e)))
+                    continue
+
         if self.language != 'sv':
             self.rename()
 
