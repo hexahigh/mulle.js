@@ -49,13 +49,20 @@ class Build:
             subprocess.run([sys.executable, 'drxtract', 'pc', movie_file, extract_folder],
                            cwd=drxtract_folder, capture_output=True).check_returncode()
             score_script = os.path.join(self.script_folder, 'score', 'score.py')
-            subprocess.run([sys.executable, score_script, os.path.join(extract_folder, 'score.json')],
-                           capture_output=True).check_returncode()
 
             score_script2 = os.path.join(self.script_folder, 'score', 'build_score_manual.py')
             score_file = os.path.join(self.movie_folder, 'drxtract', '82.DXR', 'score_tracks_82.DXR.json')
-            subprocess.run([sys.executable, score_script2, score_file, '4', 'JustDoIt'])
-            subprocess.run([sys.executable, score_script2, score_file, '5', 'JustDoIt'])
+
+            try:
+                subprocess.run([sys.executable, score_script, os.path.join(extract_folder, 'score.json')],
+                               capture_output=True).check_returncode()
+                subprocess.run([sys.executable, score_script2, score_file, '4', 'JustDoIt'],
+                               capture_output=True).check_returncode()
+                subprocess.run([sys.executable, score_script2, score_file, '5', 'JustDoIt'],
+                               capture_output=True).check_returncode()
+            except subprocess.CalledProcessError as e:
+                print(e.stderr.decode('utf-8'))
+                raise e
 
     def phaser(self, folder):
         if not os.path.exists(phaser_folder):
