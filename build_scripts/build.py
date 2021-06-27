@@ -53,8 +53,8 @@ class Build:
 
             score_script2 = os.path.join(self.script_folder, 'score', 'build_score_manual.py')
             score_file = os.path.join(self.movie_folder, 'drxtract', '82.DXR', 'score_tracks_82.DXR.json')
-            subprocess.run([score_script2, score_file, '4', 'JustDoIt'])
-            subprocess.run([score_script2, score_file, '5', 'JustDoIt'])
+            subprocess.run([sys.executable, score_script2, score_file, '4', 'JustDoIt'])
+            subprocess.run([sys.executable, score_script2, score_file, '5', 'JustDoIt'])
 
     def phaser(self, folder):
         if not os.path.exists(phaser_folder):
