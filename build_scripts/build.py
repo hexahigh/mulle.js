@@ -164,8 +164,8 @@ class Build:
             iso.get_file_from_iso(extracted_file, iso_path=file)
             if extract_content:
                 ShockwaveExtractor.main(['-e', '-i', extracted_file])
-            if self.language != 'sv':
-                self.rename()
+        if self.language != 'sv':
+            self.rename()
 
     def copy_images(self):
         plugin_parts = [22, 25, 29, 33, 36, 39, 43]
