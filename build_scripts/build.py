@@ -182,7 +182,10 @@ class Build:
         plugin_parts = [22, 25, 29, 33, 36, 39, 43]
         for part in plugin_parts:
             part_file = os.path.join(self.extract_folder, 'PLUGIN.CST', 'Standalone', '%s.bmp' % part)
-            output_file = os.path.join(self.dist_folder, 'info', 'img', '%s.png' % part)
+            info_img_path = os.path.join(self.dist_folder, 'info', 'img')
+            if not os.path.exists(info_img_path):
+                os.mkdir(info_img_path)
+            output_file = os.path.join(info_img_path, '%s.png' % part)
             subprocess.run(['magick', 'convert', part_file, output_file]).check_returncode()
 
         cursors = {
