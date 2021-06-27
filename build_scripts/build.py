@@ -101,6 +101,10 @@ class Build:
     def css(self):
         sass.compile(dirname=(os.path.join(self.project_folder, 'src'), self.dist_folder))
 
+    def rename(self):
+        rename_script = os.path.join(self.script_folder, 'rename.py')
+        subprocess.run([sys.executable, rename_script, self.extract_folder]).check_returncode()
+
     def download_game(self, show_progress=True):
         if self.language == 'no':
             url = 'https://archive.org/download/bygg-biler-med-mulle-mekk/Bygg%20biler%20med%20Mulle%20Mekk.iso'
@@ -160,6 +164,8 @@ class Build:
             iso.get_file_from_iso(extracted_file, iso_path=file)
             if extract_content:
                 ShockwaveExtractor.main(['-e', '-i', extracted_file])
+            if self.language != 'sv':
+                self.rename()
 
     def copy_images(self):
         plugin_parts = [22, 25, 29, 33, 36, 39, 43]
