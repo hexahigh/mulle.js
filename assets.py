@@ -389,8 +389,8 @@ for res in MulleResources:
 			if movie in director_data.data:
 				if 'opaque' in director_data.data[movie]:
 					opaque += director_data.resolve_list(director_data.data[movie]['opaque'])
-				if 'opaque_sw' in director_data.data[movie]:
-					opaque += director_data.resolve_list(director_data.data[movie]['opaque_sw'])
+				if 'opaque_sv' in director_data.data[movie]:
+					opaque += director_data.resolve_list(director_data.data[movie]['opaque_sv'])
 			else:
 				print('No opaque data for %s' % movie)
 
