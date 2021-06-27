@@ -35,7 +35,7 @@ jobs:
         with:
           path: |
             ~/build_scripts/iso
-          key: iso-${{ matrix.language }}-${{ hashFiles('**/iso/*.iso') }}
+          key: iso-${{ matrix.language }}-${{ hashFiles('**/mullebil_*.iso') }}
           restore-keys: iso-${{ matrix.language }}-
 
       - name: Get npm cache directory
