@@ -132,8 +132,10 @@ class MulleSprite extends Phaser.Sprite {
 
   /**
    * Set sprite frame by Director member
+   * Deprecated, use DirectorHelper.sprite
    * @param {string} dir
    * @param {number} num
+   * @deprecated
    */
   setDirectorMember (dir, num) {
     if (dir && num && spriteLookup[ dir + '_' + num ]) {
