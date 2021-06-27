@@ -6,6 +6,7 @@ import sys
 import pycdlib
 import requests
 from git import Repo
+import ShockwaveExtractor
 
 
 class Build:
@@ -64,9 +65,10 @@ class Build:
 
     def html(self):
         for folder in ['progress', 'info']:
-            os.mkdir(os.path.join(self.dist_folder, folder))
-            shutil.copytree(os.path.join(self.project_folder, folder),
-                            os.path.join(self.dist_folder, folder), dirs_exist_ok=True)
+            destination = os.path.join(self.dist_folder, folder)
+            print(destination)
+            os.mkdir(destination)
+            shutil.copytree(os.path.join(self.project_folder, folder), destination, dirs_exist_ok=True)
         shutil.copy(os.path.join(self.project_folder, 'src', 'index.html'), self.dist_folder)
 
     def css(self):
@@ -75,7 +77,7 @@ class Build:
              os.path.join(self.dist_folder, 'style.css')])
         process.check_returncode()
 
-    def download_game(self, language='se'):
+    def download_game(self, language='se', show_progress=True):
         if language == 'no':
             url = 'https://archive.org/download/bygg-biler-med-mulle-mekk/Bygg%20biler%20med%20Mulle%20Mekk.iso'
         elif language == 'se':
@@ -97,12 +99,13 @@ class Build:
             with open(local_file, 'wb') as fp:
                 print('Download to', local_file)
                 for chunk in r.iter_content(chunk_size=8192):
-                    print(fp.tell(), end='\r')
+                    if show_progress:
+                        print(fp.tell(), end='\r')
                     fp.write(chunk)
         return local_file
 
-    def extract_iso(self, language):
-        iso_path = self.download_game(language)
+    def extract_iso(self, language, extract_content=True):
+        iso_path = self.download_game(language, False)
 
         iso = pycdlib.PyCdlib()
         iso.open(iso_path)
@@ -125,6 +128,8 @@ class Build:
             file = iso.full_path_from_dirrecord(child)
             extracted_file = os.path.join(movies_path, os.path.basename(file).upper())
             iso.get_file_from_iso(extracted_file, iso_path=file)
+            if extract_content:
+                ShockwaveExtractor.main(['-e', '-i', extracted_file])
         return movies_path
 
 
