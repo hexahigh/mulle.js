@@ -11,6 +11,8 @@ from git import Repo
 import glob
 
 import ShockwaveExtractor
+from PyTexturePacker import Packer
+from topography import build_topography
 
 
 def download_file(url, local_file, show_progress=True):
@@ -208,6 +210,22 @@ class Build:
         output_file = os.path.join(self.dist_folder, 'loading.png')
         subprocess.run(['magick', 'convert', loading_file, output_file]).check_returncode()
 
+    def topography(self):
+        subprocess.run([sys.executable, os.path.join(self.script_folder, 'topography.py')])
+        source = os.path.join(self.extract_folder, 'CDDATA.CXT', 'Standalone')
+        topography_dir = os.path.join(self.dist_folder, 'assets', 'topography')
+        if not os.path.exists(topography_dir):
+            os.makedirs(topography_dir, exist_ok=True)
+
+        build_topography(source, topography_dir)
+
+        try:
+            subprocess.run(['node', os.path.join(self.script_folder, 'topography.js'), topography_dir],
+                           capture_output=True).check_returncode()
+        except subprocess.CalledProcessError as e:
+            print(e.stderr.decode('utf-8'))
+            raise e
+
 
 if __name__ == '__main__':
     if len(sys.argv) > 1 and len(sys.argv[1]) == 2:
@@ -238,3 +256,6 @@ if __name__ == '__main__':
     if 'download' in sys.argv:
         build.extract_iso()
         build.download_plugin()
+
+    if 'topography' in sys.argv:
+        build.topography()

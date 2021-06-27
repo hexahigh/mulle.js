@@ -78,3 +78,6 @@ jobs:
 
       - name: Build HTML and CSS
         run: python build_scripts/build.py ${{ matrix.language }} html_css
+
+      - name: Build topography
+        run: python build_scripts/build.py ${{ matrix.language }} topography
