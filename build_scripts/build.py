@@ -111,6 +111,10 @@ class Build:
     def css(self):
         sass.compile(dirname=(os.path.join(self.project_folder, 'src'), self.dist_folder))
 
+    def copy_data(self):
+        shutil.copytree(os.path.join(self.project_folder, 'data'), os.path.join(self.dist_folder, 'data'),
+                        dirs_exist_ok=True)
+
     def rename(self):
         rename_script = os.path.join(self.script_folder, 'rename.py')
         subprocess.run([sys.executable, rename_script, self.extract_folder]).check_returncode()
@@ -261,6 +265,7 @@ if __name__ == '__main__':
         build.html()
         build.copy_images()
         build.css()
+        build.copy_data()
 
     if 'download' in sys.argv:
         build.extract_iso()
