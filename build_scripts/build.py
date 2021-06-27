@@ -30,12 +30,15 @@ class Build:
         self.language = language
         self.script_folder = os.path.dirname(__file__)
         self.project_folder = os.path.realpath(os.path.join(self.script_folder, '..'))
+        self.build_folder = os.path.join(self.project_folder, 'build_data')
         self.dist_folder = os.path.join(self.project_folder, 'dist')
-        self.movie_folder = os.path.join(self.project_folder, 'Movies')
+        self.movie_folder = os.path.join(self.build_folder, 'Movies')
         self.extract_folder = os.path.join(self.project_folder, 'cst_out_new')
+        if not os.path.exists(self.build_folder):
+            os.mkdir(self.build_folder)
 
     def scores(self):
-        drxtract_folder = os.path.join(self.script_folder, 'drxtract')
+        drxtract_folder = os.path.join(self.build_folder, 'drxtract')
         if not os.path.exists(drxtract_folder):
             repo = Repo.clone_from('https://github.com/System25/drxtract.git', drxtract_folder)
             repo.git.checkout('be17978bb9dcf220f2c97c1b0f7a19022a95c001')
@@ -160,7 +163,7 @@ class Build:
     def download_plugin(self):
         url = 'https://web.archive.org/web/20011006153539if_/http://www.levende.no:80/mulle/plugin.exe'
         local_file = os.path.join(self.script_folder, 'iso', 'plugin.exe')
-        extract_dir = os.path.join(self.script_folder, 'Plugin')
+        extract_dir = os.path.join(self.build_folder, 'Plugin')
         if not os.path.exists(local_file):
             download_file(url, local_file, False)
         with zipfile.ZipFile(local_file, 'r') as zip_ref:

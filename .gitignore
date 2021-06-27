@@ -7,7 +7,7 @@ docs/
 mulle.sublime-workspace
 mulle.sublime-project
 cst_out_new/
-topography
+/build_data
 *.swp
 *.pyc
 /Movies
