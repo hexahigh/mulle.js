@@ -41,6 +41,8 @@ class Build:
             repo.git.checkout('be17978bb9dcf220f2c97c1b0f7a19022a95c001')
 
         files = glob.glob('%s/8*' % self.movie_folder)
+        if not files:
+            raise RuntimeError('No movies found for glob 8*')
         for movie_file in files:
             movie_name = os.path.basename(movie_file)
             movie_dir = os.path.dirname(movie_file)
@@ -51,20 +53,25 @@ class Build:
             drxtract_run.check_returncode()
             score_script = os.path.join(self.script_folder, 'score', 'score.py')
 
-            score_script2 = os.path.join(self.script_folder, 'score', 'build_score_manual.py')
-            score_file = os.path.join(self.movie_folder, 'drxtract', '82.DXR', 'score_tracks_82.DXR.json')
-
             try:
                 subprocess.run([sys.executable, score_script, os.path.join(extract_folder, 'score.json')],
                                capture_output=True).check_returncode()
-                subprocess.run([sys.executable, score_script2, score_file, '4', 'JustDoIt'],
-                               capture_output=True).check_returncode()
-                subprocess.run([sys.executable, score_script2, score_file, '5', 'JustDoIt'],
-                               capture_output=True).check_returncode()
+
             except subprocess.CalledProcessError as e:
                 print('Output from drextract', drxtract_run.stdout.decode('utf-8'))
                 print('Output from score:', e.stderr.decode('utf-8'))
                 raise e
+
+        score_script2 = os.path.join(self.script_folder, 'score', 'build_score_manual.py')
+        score_file = os.path.join(self.movie_folder, 'drxtract', '82.DXR', 'score_tracks_82.DXR.json')
+        try:
+            subprocess.run([sys.executable, score_script2, score_file, '4', 'JustDoIt'],
+                           capture_output=True).check_returncode()
+            subprocess.run([sys.executable, score_script2, score_file, '5', 'JustDoIt'],
+                           capture_output=True).check_returncode()
+        except subprocess.CalledProcessError as e:
+            print('Output from score:', e.stderr.decode('utf-8'))
+            raise e
 
     def phaser(self, folder):
         if not os.path.exists(phaser_folder):
