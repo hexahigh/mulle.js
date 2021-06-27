@@ -46,8 +46,9 @@ class Build:
             movie_dir = os.path.dirname(movie_file)
             extract_folder = os.path.join(movie_dir, 'drxtract', movie_name)
             os.makedirs(extract_folder, exist_ok=True)
-            subprocess.run([sys.executable, 'drxtract', 'pc', movie_file, extract_folder],
-                           cwd=drxtract_folder, capture_output=True).check_returncode()
+            drxtract_run = subprocess.run([sys.executable, 'drxtract', 'pc', movie_file, extract_folder],
+                                          cwd=drxtract_folder, capture_output=True)
+            drxtract_run.check_returncode()
             score_script = os.path.join(self.script_folder, 'score', 'score.py')
 
             score_script2 = os.path.join(self.script_folder, 'score', 'build_score_manual.py')
@@ -61,7 +62,8 @@ class Build:
                 subprocess.run([sys.executable, score_script2, score_file, '5', 'JustDoIt'],
                                capture_output=True).check_returncode()
             except subprocess.CalledProcessError as e:
-                print(e.stderr.decode('utf-8'))
+                print('Output from drextract', drxtract_run.stdout.decode('utf-8'))
+                print('Output from score:', e.stderr.decode('utf-8'))
                 raise e
 
     def phaser(self, folder):
