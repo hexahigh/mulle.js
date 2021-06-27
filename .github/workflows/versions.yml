@@ -49,6 +49,14 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
 
+    - name: Cache binaries
+      uses: actions/cache@v2
+      id: bin
+      with:
+        path: bin
+        key: bin-${{ hashFiles('bin/*') }}
+        restore-keys: bin-
+
     - run: npm install
     - run: pip install -r requirements.txt
     - name: Build webpack
