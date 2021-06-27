@@ -33,9 +33,8 @@ jobs:
         uses: actions/cache@v2
         id: iso
         with:
-          path: |
-            ~/build_scripts/iso
-          key: game-iso-${{ matrix.language }}-${{ hashFiles('**/mullebil_*.iso') }}
+          path: build_scripts/iso/mullebil_${{ matrix.language }}.iso
+          key: game-iso-${{ matrix.language }}-${{ hashFiles('build_scripts/iso/mullebil_*.iso') }}
           restore-keys: game-iso-${{ matrix.language }}-
 
       - name: Get npm cache directory
