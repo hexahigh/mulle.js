@@ -2,12 +2,25 @@ import os
 import shutil
 import subprocess
 import sys
+import zipfile
 
 import pycdlib
 import requests
-from git import Repo
-import ShockwaveExtractor
 import sass
+from git import Repo
+
+import ShockwaveExtractor
+
+
+def download_file(url, local_file, show_progress=True):
+    with requests.get(url, stream=True) as r:
+        r.raise_for_status()
+        with open(local_file, 'wb') as fp:
+            print('Download to', local_file)
+            for chunk in r.iter_content(chunk_size=8192):
+                if show_progress:
+                    print(fp.tell(), end='\r')
+                fp.write(chunk)
 
 
 class Build:
@@ -92,15 +105,19 @@ class Build:
         if os.path.exists(local_file):
             return local_file
 
-        with requests.get(url, stream=True) as r:
-            r.raise_for_status()
-            with open(local_file, 'wb') as fp:
-                print('Download to', local_file)
-                for chunk in r.iter_content(chunk_size=8192):
-                    if show_progress:
-                        print(fp.tell(), end='\r')
-                    fp.write(chunk)
+        download_file(url, local_file, show_progress)
         return local_file
+
+    def download_plugin(self):
+        url = 'https://web.archive.org/web/20011006153539if_/http://www.levende.no:80/mulle/plugin.exe'
+        local_file = os.path.join(self.script_folder, 'iso', 'plugin.exe')
+        extract_dir = os.path.join(self.script_folder, 'Plugin')
+        if not os.path.exists(local_file):
+            download_file(url, local_file, False)
+        with zipfile.ZipFile(local_file, 'r') as zip_ref:
+            zip_ref.extractall(extract_dir)
+        ShockwaveExtractor.main(['-e', '-i', os.path.join(extract_dir, '66.dxr')])
+        ShockwaveExtractor.main(['-e', '-i', os.path.join(extract_dir, 'Plugin.cst')])
 
     def extract_iso(self, language, extract_content=True):
         iso_path = self.download_game(language, False)
@@ -154,7 +171,10 @@ if __name__ == '__main__':
 
     if 'download-no' in sys.argv:
         build.extract_iso('no')
+        build.download_plugin()
     elif 'download-se' in sys.argv:
         build.extract_iso('se')
+        build.download_plugin()
     elif 'download-da' in sys.argv:
         build.extract_iso('da')
+        build.download_plugin()
