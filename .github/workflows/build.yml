@@ -50,8 +50,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install SASS
-        run: sudo apt-get install sass
+      - name: Install APT packages
+        run: sudo apt-get install ffmpeg optipng
 
       - run: npm install
 

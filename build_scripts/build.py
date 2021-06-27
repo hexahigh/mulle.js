@@ -7,6 +7,7 @@ import pycdlib
 import requests
 from git import Repo
 import ShockwaveExtractor
+import sass
 
 
 class Build:
@@ -72,10 +73,7 @@ class Build:
         shutil.copy(os.path.join(self.project_folder, 'src', 'index.html'), self.dist_folder)
 
     def css(self):
-        process = subprocess.run(
-            ['sass', os.path.join(self.project_folder, 'src', 'style.scss'),
-             os.path.join(self.dist_folder, 'style.css')])
-        process.check_returncode()
+        sass.compile(dirname=(os.path.join(self.project_folder, 'src'), self.dist_folder))
 
     def download_game(self, language='se', show_progress=True):
         if language == 'no':
