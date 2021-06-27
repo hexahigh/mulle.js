@@ -4,18 +4,22 @@ import MulleSprite from '../objects/sprite'
 // import MulleBuildCar from '../objects/buildcar'
 import MulleActor from '../objects/actor'
 import blinkThing from '../util/blinkThing'
+import SubtitleLoader from '../objects/SubtitleLoader'
 
 class FiggeFerrumState extends MulleState {
   preload () {
     super.preload()
 
     this.game.load.pack('figgeferrum', 'assets/figgeferrum.json', null, this)
+    this.subtitles = new SubtitleLoader(this.game, 'figgeferrum', ['english', 'swedish'])
+    this.subtitles.preload()
   }
 
   create () {
     super.create()
 
     this.game.mulle.addAudio('figgeferrum')
+    this.subtitles.load()
 
     this.car = null
 
@@ -70,24 +74,6 @@ class FiggeFerrumState extends MulleState {
     }
 
     console.log('last session', this.game.mulle.lastSession)
-
-    this.game.mulle.subtitle.setLines('92d002v0', 'swedish', [
-      "- Nu har 'en {Salka} sprungit bort igen.",
-      "- Int' har du sett'na?"
-    ], 'figge')
-
-    this.game.mulle.subtitle.setLines('92d003v0', 'swedish', [
-      "- Nä, int' har ja' sett din hund."
-    ], 'mulle')
-
-    this.game.mulle.subtitle.setLines('92d002v0', 'english', [
-      '- My {Salka} ran away again,',
-      '- Have you seen him?'
-    ], 'figge')
-
-    this.game.mulle.subtitle.setLines('92d003v0', 'english', [
-      "- Nope, haven't seen your dog."
-    ], 'mulle')
 
     // 92d002v0 - nu har en salka sprungit
     this.game.mulle.actors.figge.talk('92d002v0', () => {
