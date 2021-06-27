@@ -200,12 +200,12 @@ class Build:
     def copy_images(self):
         plugin_parts = [22, 25, 29, 33, 36, 39, 43]
         for part in plugin_parts:
-            part_file = os.path.join(self.extract_folder, 'PLUGIN.CST', 'Standalone', '%s.bmp' % part)
+            part_file = os.path.join(self.extract_folder, 'PLUGIN.CST', 'Standalone', '%s.png' % part)
             info_img_path = os.path.join(self.dist_folder, 'info', 'img')
             if not os.path.exists(info_img_path):
                 os.mkdir(info_img_path)
             output_file = os.path.join(info_img_path, '%s.png' % part)
-            subprocess.run(['magick', 'convert', part_file, output_file]).check_returncode()
+            shutil.copy(part_file, output_file)
 
         cursors = {
             109: 'default',
@@ -224,9 +224,9 @@ class Build:
             os.makedirs(ui_folder, exist_ok=True)
 
         for number, name in cursors.items():
-            part_file = os.path.join(self.extract_folder, '00.CXT', 'Standalone', '%d.bmp' % number)
+            part_file = os.path.join(self.extract_folder, '00.CXT', 'Standalone', '%d.png' % number)
             output_file = os.path.join(ui_folder, '%s.png' % name)
-            subprocess.run(['magick', 'convert', part_file, output_file]).check_returncode()
+            shutil.copy(part_file, output_file)
 
         loading_file = os.path.join(self.extract_folder, '00.CXT', 'Standalone', '122.bmp')
         output_file = os.path.join(self.dist_folder, 'loading.png')
@@ -278,6 +278,9 @@ if __name__ == '__main__':
         phaser_folder = os.path.join(build.project_folder, 'phaser-ce')
         build.phaser(phaser_folder)
 
+    if 'assets' in sys.argv:
+        build.assets()
+
     if 'scores' in sys.argv:
         build.scores()
 
@@ -291,9 +294,6 @@ if __name__ == '__main__':
 
     if 'topography' in sys.argv:
         build.topography()
-
-    if 'assets' in sys.argv:
-        build.assets()
 
     if 'assets-prod' in sys.argv:
         build.assets(7)
