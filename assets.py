@@ -226,6 +226,7 @@ if os.path.exists(os.path.join('cst_out_new', '66.DXR')):
 	resPlugin.addFile({'dir': '66.DXR','lib': 'Internal', 'num': [57, 59]})  # Crane
 	resPlugin.addFile({'dir': '66.DXR','lib': 'Internal', 'num': [69, 78]})  # Figge
 	resPlugin.addFile({'dir': '06.DXR','lib': 'Internal', 'num': 153})  # Close button
+	resPlugin.addFile({'dir': 'PLUGIN.CST', 'lib': 'Standalone', 'num': [21, 47]})  # Parts
 	MulleResources.append(resPlugin)
 
 

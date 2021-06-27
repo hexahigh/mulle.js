@@ -214,6 +214,7 @@ data = {
     },
     '94.DXR': {'folder': 'Internal', 'opaque': [200]},
     'CDDATA.CXT': {'folder': 'Standalone', 'opaque': [[629, 658]]},
+    'PLUGIN.CST': {'folder': 'Standalone', 'opaque': [18]},
 }
 
 
