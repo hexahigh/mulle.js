@@ -8,6 +8,7 @@ import pycdlib
 import requests
 import sass
 from git import Repo
+import glob
 
 import ShockwaveExtractor
 
@@ -28,11 +29,22 @@ class Build:
         self.script_folder = os.path.dirname(__file__)
         self.project_folder = os.path.realpath(os.path.join(self.script_folder, '..'))
         self.dist_folder = os.path.join(self.project_folder, 'dist')
+        self.movie_folder = os.path.join(self.project_folder, 'Movies')
+        self.extract_folder = os.path.join(self.project_folder, 'cst_out_new')
 
-    def drxtract_clone(self, folder):
-        repo = Repo.clone_from('https://github.com/System25/drxtract.git', folder)
-        repo.git.checkout('be17978bb9dcf220f2c97c1b0f7a19022a95c001')
-        return repo
+    def scores(self):
+        drxtract_folder = os.path.join(self.script_folder, 'drxtract')
+        if not os.path.exists(drxtract_folder):
+            repo = Repo.clone_from('https://github.com/System25/drxtract.git', drxtract_folder)
+            repo.git.checkout('be17978bb9dcf220f2c97c1b0f7a19022a95c001')
+
+        files = glob.glob('%s/8*' % self.movie_folder)
+        for movie_file in files:
+            movie_name = os.path.basename(movie_file)
+            movie_dir = os.path.dirname(movie_file)
+            extract_folder = os.path.join(movie_dir, 'drxtract', movie_name)
+            os.makedirs(extract_folder, exist_ok=True)
+            subprocess.run([sys.executable, 'drxtract', 'pc', movie_file, extract_folder], cwd=drxtract_folder)
 
     def phaser(self, folder):
         if not os.path.exists(phaser_folder):
@@ -80,8 +92,8 @@ class Build:
     def html(self):
         for folder in ['progress', 'info']:
             destination = os.path.join(self.dist_folder, folder)
-            print(destination)
-            os.mkdir(destination)
+            if not os.path.exists(destination):
+                os.mkdir(destination)
             shutil.copytree(os.path.join(self.project_folder, folder), destination, dirs_exist_ok=True)
         shutil.copy(os.path.join(self.project_folder, 'src', 'index.html'), self.dist_folder)
 
@@ -126,9 +138,9 @@ class Build:
 
         iso = pycdlib.PyCdlib()
         iso.open(iso_path)
-        movies_path = os.path.join(self.project_folder, 'Movies')
-        if not os.path.exists(movies_path):
-            os.mkdir(movies_path)
+
+        if not os.path.exists(self.movie_folder):
+            os.mkdir(self.movie_folder)
 
         try:
             children = iso.list_children(iso_path='/Movies')
@@ -143,15 +155,49 @@ class Build:
                 continue
 
             file = iso.full_path_from_dirrecord(child)
-            extracted_file = os.path.join(movies_path, os.path.basename(file).upper())
+            extracted_file = os.path.join(self.movie_folder, os.path.basename(file).upper())
             iso.get_file_from_iso(extracted_file, iso_path=file)
             if extract_content:
                 ShockwaveExtractor.main(['-e', '-i', extracted_file])
-        return movies_path
+
+    def copy_images(self):
+        plugin_parts = [22, 25, 29, 33, 36, 39, 43]
+        for part in plugin_parts:
+            part_file = os.path.join(self.extract_folder, 'PLUGIN.CST', 'Standalone', '%s.bmp' % part)
+            output_file = os.path.join(self.dist_folder, 'info', 'img', '%s.png' % part)
+            subprocess.run(['magick', 'convert', part_file, output_file]).check_returncode()
+
+        cursors = {
+            109: 'default',
+            110: 'grab',
+            111: 'left',
+            112: 'point',
+            113: 'back',
+            114: 'right',
+            115: 'drag_left',
+            116: 'drag_right',
+            117: 'drag_forward'
+        }
+
+        ui_folder = os.path.join(self.dist_folder, 'ui')
+        if not os.path.exists(ui_folder):
+            os.makedirs(ui_folder, exist_ok=True)
+
+        for number, name in cursors.items():
+            part_file = os.path.join(self.extract_folder, '00.CXT', 'Standalone', '%d.bmp' % number)
+            output_file = os.path.join(ui_folder, '%s.png' % name)
+            subprocess.run(['magick', 'convert', part_file, output_file]).check_returncode()
+
+        loading_file = os.path.join(self.extract_folder, '00.CXT', 'Standalone', '122.bmp')
+        output_file = os.path.join(self.dist_folder, 'loading.png')
+        subprocess.run(['magick', 'convert', loading_file, output_file]).check_returncode()
 
 
 if __name__ == '__main__':
     build = Build()
+
+    if 'build-prod' in sys.argv:
+        sys.argv = ['webpack-prod', 'phaser', 'download-se', 'scores', 'html_css']
 
     if 'webpack-dev' in sys.argv:
         build.webpack()
@@ -159,9 +205,7 @@ if __name__ == '__main__':
         build.webpack(True)
 
     if 'scores' in sys.argv:
-        drxtract_folder = os.path.join(build.script_folder, 'drxtract')
-        if not os.path.exists(drxtract_folder):
-            build.drxtract_clone(drxtract_folder)
+        build.scores()
 
     if 'phaser' in sys.argv:
         phaser_folder = os.path.join(build.project_folder, 'phaser-ce')
@@ -169,6 +213,7 @@ if __name__ == '__main__':
 
     if 'html_css' in sys.argv:
         build.html()
+        build.copy_images()
         build.css()
 
     if 'download-no' in sys.argv:
