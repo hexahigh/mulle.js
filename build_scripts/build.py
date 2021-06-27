@@ -25,7 +25,8 @@ def download_file(url, local_file, show_progress=True):
 
 
 class Build:
-    def __init__(self):
+    def __init__(self, language='sv'):
+        self.language = language
         self.script_folder = os.path.dirname(__file__)
         self.project_folder = os.path.realpath(os.path.join(self.script_folder, '..'))
         self.dist_folder = os.path.join(self.project_folder, 'dist')
@@ -100,14 +101,14 @@ class Build:
     def css(self):
         sass.compile(dirname=(os.path.join(self.project_folder, 'src'), self.dist_folder))
 
-    def download_game(self, language='se', show_progress=True):
-        if language == 'no':
+    def download_game(self, show_progress=True):
+        if self.language == 'no':
             url = 'https://archive.org/download/bygg-biler-med-mulle-mekk/Bygg%20biler%20med%20Mulle%20Mekk.iso'
-        elif language == 'se':
+        elif self.language == 'sv':
             url = 'https://archive.org/download/byggbilarmedmullemeck/byggbilarmedmullemeck.iso'
-        elif language == 'da':
+        elif self.language == 'da':
             url = 'https://archive.org/download/byg-bil-med-mulle-meck/Byg-bil-med-Mulle-Meck.iso'
-        elif language == 'nl':
+        elif self.language == 'nl':
             url = 'https://archive.org/download/1.mielmonteurbouwtautosiso/1.Miel%20Monteur%20Bouwt%20Auto%27s%20ISO.iso'
         else:
             raise AttributeError('Invalid language')
@@ -133,8 +134,8 @@ class Build:
         ShockwaveExtractor.main(['-e', '-i', os.path.join(extract_dir, '66.dxr')])
         ShockwaveExtractor.main(['-e', '-i', os.path.join(extract_dir, 'Plugin.cst')])
 
-    def extract_iso(self, language, extract_content=True):
-        iso_path = self.download_game(language, False)
+    def extract_iso(self, extract_content=True):
+        iso_path = self.download_game(False)
 
         iso = pycdlib.PyCdlib()
         iso.open(iso_path)
@@ -194,10 +195,13 @@ class Build:
 
 
 if __name__ == '__main__':
-    build = Build()
+    if len(sys.argv) > 1 and len(sys.argv[1]) == 2:
+        build = Build(sys.argv[1])
+    else:
+        build = Build()
 
     if 'build-prod' in sys.argv:
-        sys.argv = ['webpack-prod', 'phaser', 'download-se', 'scores', 'html_css']
+        sys.argv = ['webpack-prod', 'phaser', 'download', 'scores', 'html_css']
 
     if 'webpack-dev' in sys.argv:
         build.webpack()
@@ -216,12 +220,6 @@ if __name__ == '__main__':
         build.copy_images()
         build.css()
 
-    if 'download-no' in sys.argv:
-        build.extract_iso('no')
-        build.download_plugin()
-    elif 'download-se' in sys.argv:
-        build.extract_iso('se')
-        build.download_plugin()
-    elif 'download-da' in sys.argv:
-        build.extract_iso('da')
+    if 'download' in sys.argv:
+        build.extract_iso()
         build.download_plugin()

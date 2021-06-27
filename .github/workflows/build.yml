@@ -66,10 +66,10 @@ jobs:
         run: python build_scripts/build.py phaser
 
       - name: Download game
-        run: python build_scripts/build.py download-${{ matrix.language }}
+        run: python build_scripts/build.py ${{ matrix.language }} download
 
       - name: Extract scores
-        run: python build_scripts/build.py scores
+        run: python build_scripts/build.py ${{ matrix.language }} scores
 
       - name: Build HTML and CSS
-        run: python build_scripts/build.py html_css
+        run: python build_scripts/build.py ${{ matrix.language }} html_css
