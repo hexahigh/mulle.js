@@ -32,6 +32,11 @@ jobs:
       with:
         python-version: 3.9
 
+    - name: Install imagemagick
+      run: |
+        deployment/imagemagick.sh
+        export PATH="$PWD/bin:$PATH"
+
     - name: Get npm cache directory
       id: npm-cache-dir
       run: |

@@ -55,6 +55,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install ffmpeg optipng
 
+      - name: Install imagemagick
+        run: |
+          deployment/imagemagick.sh
+          export PATH="$PWD/bin:$PATH"
+
       - run: npm install
 
       - run: pip install -r requirements.txt
