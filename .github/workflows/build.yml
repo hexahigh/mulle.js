@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ no, sv ]
+        language: [ no, sv, da ]
 
     steps:
       - name: Checkout project
