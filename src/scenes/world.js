@@ -667,8 +667,6 @@ class WorldState extends MulleState {
   shutdown () {
     this.topBitmap.destroy()
 
-    this.clientCars.destroy()
-
     if (this.cutscene) {
       this.cutscene.destroy()
       this.cutscene = null
@@ -677,6 +675,7 @@ class WorldState extends MulleState {
     // networking stuff
     if (this.game.mulle.net.connected) {
       this.game.mulle.net.socket.removeEventListener('message', this.networkListener)
+      this.clientCars.destroy()
     }
 
     if (this.netLoop) this.game.time.events.remove(this.netLoop)
