@@ -116,7 +116,7 @@ class Build:
         if not os.path.exists(iso_folder):
             os.mkdir(iso_folder)
 
-        local_file = os.path.join(iso_folder, 'mullebil_%s.iso' % language)
+        local_file = os.path.join(iso_folder, 'mullebil_%s.iso' % self.language)
         if os.path.exists(local_file):
             return local_file
 

@@ -10,7 +10,7 @@ except ImportError:
     from .data import director_data
 
 # \s+ls.+/([0-9]+)\..+\s+rm.+/([0-9]+)\..+
-# SW: $1 NO: $2
+# SV: $1 NO: $2
 
 no_path = sys.argv[1]
 if not os.path.exists(no_path):
@@ -33,10 +33,9 @@ def topic_range(range_values):
 for movie, topic in director_data.data.items():
     if movie_filter and movie != movie_filter:
         continue
-    if 'range_sw' not in topic:
+    if 'range_sv' not in topic:
         print('No range in %s' % topic)
         continue
-
 
     metadata_no_file = os.path.join(no_path, movie, 'metadata.json')
     metadata_no_file_renamed = os.path.join(
@@ -46,15 +45,15 @@ for movie, topic in director_data.data.items():
     metadata_renamed = json.load(open(metadata_no_file, 'r'))
     metadata_renamed['libraries'][0]['members'] = {}
 
-    for key, area in topic['range_sw'].items():
+    for key, area in topic['range_sv'].items():
         print(key)
 
         range_no = topic_range(topic['range_no'][key])
-        range_sw = topic_range(topic['range_sw'][key])
-        if len(range_no) != len(range_sw):
+        range_sv = topic_range(topic['range_sv'][key])
+        if len(range_no) != len(range_sv):
             raise ValueError(
                 'Ranges %s have different length: %d/%d'
-                % (key, len(range_no), len(range_sw))
+                % (key, len(range_no), len(range_sv))
             )
 
         source_folder = os.path.join(no_path, movie, topic['folder'])
@@ -68,12 +67,12 @@ for movie, topic in director_data.data.items():
             os.mkdir(source_folder)
 
         range_key = 0
-        for number in range_sw:
+        for number in range_sv:
             cast_no = str(range_no[range_key])
-            cast_sw = str(number)
+            cast_sv = str(number)
             try:
                 data = metadata_no['libraries'][0]['members'][cast_no]
-                metadata_renamed['libraries'][0]['members'][cast_sw] = data
+                metadata_renamed['libraries'][0]['members'][cast_sv] = data
             except KeyError:
                 print('Missing metadata for %s' % cast_no)
 
@@ -84,7 +83,7 @@ for movie, topic in director_data.data.items():
                 if not os.path.exists(source_file):
                     continue
                 renamed_file = os.path.join(
-                    source_folder, '%d.%s' % (range_sw[range_key], extension)
+                    source_folder, '%d.%s' % (range_sv[range_key], extension)
                 )
 
                 """print(source_file)

@@ -2,7 +2,7 @@ data = {
     '00.CXT': {  # UI
         'file': '00.CXT',
         'folder': 'Standalone',
-        'range_sw': {
+        'range_sv': {
             'sounds': [416, 421],
             'sounds2': [433, 461],
             'engine_sounds': [485, 493],
@@ -20,13 +20,13 @@ data = {
         },
         'opaque': [[64, 76], [81, 86]],  # Identical for both languages
         'opaque_no': [451, 452, 453],
-        'opaque_sw': [84, 122, 123],
+        'opaque_sv': [84, 122, 123],
         'identical': [[3, 119], [129, 371]],
     },
     '02.DXR': {  # Junk yard
         'file': '02.DXR',
         'folder': 'Internal',
-        'range_sw': {
+        'range_sv': {
             'voices': [123, 137],
             'arrows': [162, 185],
             'mulle_body': [209, 210],
@@ -46,7 +46,7 @@ data = {
     '03.DXR': {  # Garage
         'file': '03.DXR',
         'folder': 'Internal',
-        'range_sw': {'voices': [262, 264]},
+        'range_sv': {'voices': [262, 264]},
         'range_no': {'voices': [259, 261]},
         'identical': [[28, 258]],
         'opaque': [33, 100, 101],
@@ -54,7 +54,7 @@ data = {
     '04.DXR': {
         'file': '04.DXR',
         'folder': 'Internal',
-        'range_sw': {
+        'range_sv': {
             'background': 37,
             'mulle_ground': [121, 134],
             'crash_sound': [312, 314],
@@ -78,7 +78,7 @@ data = {
             99,  # Animations
         ],
         'opaque': [16, 30],
-        'opaque_sw': [37, 47],
+        'opaque_sv': [37, 47],
         'opaque_no': [145, 146],
     },
     '05.DXR': {'folder': 'Internal', 'opaque': [25, 26, 53, 54, 57]},
@@ -91,7 +91,7 @@ data = {
     '08.DXR': {  # Diploma
         'file': '08.DXR',
         'folder': 'Internal',
-        'range_sw': {'text': 69},
+        'range_sv': {'text': 69},
         'range_no': {'text': 87},
         'identical': [[15, 71], [81, 96]],
         'opaque': [31, 39, 40, 66, 70, 71],
@@ -171,7 +171,7 @@ data = {
         'opaque': [25],
         'identical': [18, 25],
         'range_no': {'sound': 200},
-        'range_sw': {'sound': 201},
+        'range_sv': {'sound': 201},
     },
     '85.DXR': {  # RoadDog
         'folder': 'Internal',
@@ -202,7 +202,7 @@ data = {
             'audio2': [195, 201],
             'dogAnimChart': 33,
         },
-        'range_sw': {
+        'range_sv': {
             'can': 11,
             'background': 1,
             'neighbor': [16, 27],
