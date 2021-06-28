@@ -76,8 +76,9 @@ class Build:
             print('Output from score:', e.stderr.decode('utf-8'))
             raise e
 
-    def phaser(self, folder):
-        if not os.path.exists(phaser_folder):
+    def phaser(self):
+        folder = os.path.join(self.build_folder, 'phaser-ce')
+        if not os.path.exists(folder):
             Repo.clone_from('https://github.com/photonstorm/phaser-ce.git', folder, branch='v2.16.0',
                             single_branch=None)
 
@@ -108,8 +109,8 @@ class Build:
             '--sourcemap'
         ], cwd=folder).check_returncode()
 
-        shutil.copy(os.path.join(phaser_folder, 'dist', 'phaser.min.js'), self.dist_folder)
-        shutil.copy(os.path.join(phaser_folder, 'dist', 'phaser.map'), self.dist_folder)
+        shutil.copy(os.path.join(folder, 'dist', 'phaser.min.js'), self.dist_folder)
+        shutil.copy(os.path.join(folder, 'dist', 'phaser.map'), self.dist_folder)
 
     def webpack(self, prod=False):
         if not prod:
@@ -283,8 +284,7 @@ if __name__ == '__main__':
         build.download_plugin()
 
     if 'phaser' in sys.argv:
-        phaser_folder = os.path.join(build.project_folder, 'phaser-ce')
-        build.phaser(phaser_folder)
+        build.phaser()
 
     if 'assets' in sys.argv:
         build.assets()
