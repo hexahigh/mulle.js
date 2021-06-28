@@ -68,6 +68,7 @@ jobs:
 
       - name: Install APT packages
         run: |
+          mkdir -p /tmp/apt
           sudo cp -r /tmp/apt /var/cache
           sudo apt-get update
           sudo apt-get install ffmpeg optipng
