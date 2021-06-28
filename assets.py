@@ -127,7 +127,7 @@ resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '21-27'})
 resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': 31})
 resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '39-40'})
 resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '66-71'})
-# resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '81-87'}) #  Strings
+resDiploma.addFile({'dir': '08.DXR', 'lib': 'Internal', 'num': '81-87'})  # Strings
 MulleResources.append(resDiploma)
 
 resCutscenes = MulleResource('cutscenes')
@@ -442,19 +442,24 @@ for res in MulleResources:
             # print("audio " + f['dir'] + " " + str(lib['name']) + " " + str(f['num']))
 
             if mem['castType'] == 12 or mem['castType'] == 3:
+                if f['dir'] not in textString:
+                    textString[f['dir']] = {}
+
                 filePath = fileBasePath + ".txt"
                 p['path'] = filePath
                 fp = open(filePath, 'rb')
                 string = fp.read()
                 string = string.decode('iso8859-1')
                 if mem['castType'] == 12:
-                    if f['dir'] not in textString:
-                        textString[f['dir']] = {}
                     textString[f['dir']][f['num']] = string
                 elif mem['castType'] == 3:
                     if f['dir'] not in animations:
                         animations[f['dir']] = {}
-                    animations[f['dir']][f['num']] = parse_animation_chart(string)
+                    try:
+                        animations[f['dir']][f['num']] = parse_animation_chart(string)
+                    except RuntimeError as e:
+                        print(str(e))
+                        textString[f['dir']][f['num']] = string
 
     if len(textString) > 0:
         file = '%s/%s-strings.json' % (assetOutPath, resName)
