@@ -3,18 +3,16 @@
 var MapObject = {}
 
 MapObject.onCreate = function () {
-  this.setDirectorMember('CDDATA.CXT', 497)
+  this.animationHelper.add('idle', 'normal', 1, 12, true)
 
-  this.addAnimation('idle', [ ['CDDATA.CXT', 497], ['CDDATA.CXT', 498] ], 2, true)
-
-  var parting = this.addAnimation('parting', [ ['CDDATA.CXT', 499], ['CDDATA.CXT', 500] ], 5, false)
+  const parting = this.animationHelper.add('parting', 'Parting', 1, 5)
   parting.onComplete.add(() => {
     this.animations.play('parted')
   })
 
-  this.addAnimation('parted', [ ['CDDATA.CXT', 501], ['CDDATA.CXT', 502] ], 2, true)
+  this.animationHelper.add('parted', 'Outer', 1, 12, true)
 
-  var gathering = this.addAnimation('gathering', [ ['CDDATA.CXT', 500], ['CDDATA.CXT', 499] ], 5, false)
+  const gathering = this.animationHelper.add('gathering', 'Gathering')
   gathering.onComplete.add(() => {
     this.animations.play('idle')
   })
@@ -39,8 +37,8 @@ MapObject.onEnterInner = function (car) {
 
       this.playedSound = true
 
-      var s = this.game.mulle.playAudio('31e001v0')
-      s.onStop.addOnce(() => {
+      const audio_allowed = this.game.mulle.playAudio('31e001v0')
+      audio_allowed.onStop.addOnce(() => {
         this.playedSound = null
       })
     }
@@ -48,8 +46,8 @@ MapObject.onEnterInner = function (car) {
     if (!this.playedSound) {
       this.playedSound = true
 
-      var s = this.game.mulle.playAudio('31d001v0')
-      s.onStop.addOnce(() => {
+      const audio_error = this.game.mulle.playAudio('31d001v0')
+      audio_error.onStop.addOnce(() => {
         this.playedSound = null
       })
     }
@@ -57,11 +55,10 @@ MapObject.onEnterInner = function (car) {
     car.speed = 0
     car.stepback(2)
     this.enteredInner = false
-    // car.position.set( car.lastPosition.x, car.lastPosition.y );
   }
 }
 
-MapObject.onExitInner = function (car) {
+MapObject.onExitInner = function () {
   this.animations.play('gathering')
 }
 
