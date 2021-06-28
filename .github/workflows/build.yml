@@ -68,11 +68,12 @@ jobs:
 
       - name: Install APT packages
         run: |
-          mkdir -p /tmp/apt
+          mkdir -p /tmp/apt/archives
           sudo cp -r /tmp/apt /var/cache
           sudo apt-get update
           sudo apt-get install ffmpeg optipng
-          sudo cp -r /var/cache/apt /tmp
+          sudo cp /var/cache/apt/*.bin /tmp/apt
+          sudo cp -r /var/cache/apt/archives/*.deb /tmp/apt/archives
 
       - name: Install imagemagick
         run: |
