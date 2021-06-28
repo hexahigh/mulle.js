@@ -1,5 +1,6 @@
 import glob
 import os
+import platform
 import shutil
 import subprocess
 import sys
@@ -36,6 +37,13 @@ class Build:
         self.extract_folder = os.path.join(self.project_folder, 'cst_out_new')
         if not os.path.exists(self.build_folder):
             os.mkdir(self.build_folder)
+
+        if platform.system() == 'Windows':
+            self.npm = 'npm.CMD'
+            self.npx = 'npx.CMD'
+        else:
+            self.npm = 'npm'
+            self.npx = 'npx'
 
     def scores(self):
         drxtract_folder = os.path.join(self.build_folder, 'drxtract')
@@ -82,8 +90,8 @@ class Build:
             Repo.clone_from('https://github.com/photonstorm/phaser-ce.git', folder, branch='v2.16.0',
                             single_branch=None)
 
-        subprocess.run(['npm', 'uninstall', 'fsevents'], cwd=folder).check_returncode()
-        subprocess.run(['npm', 'install'], cwd=folder).check_returncode()
+        subprocess.run([self.npm, 'uninstall', 'fsevents'], cwd=folder).check_returncode()
+        subprocess.run([self.npm, 'install'], cwd=folder).check_returncode()
 
         exclude = ['gamepad',
                    'bitmaptext',
@@ -101,7 +109,7 @@ class Build:
                    ]
 
         subprocess.run([
-            'npx',
+            self.npx,
             'grunt',
             'custom',
             '--exclude=' + ','.join(exclude),
@@ -117,7 +125,7 @@ class Build:
             config = os.path.join(self.project_folder, 'webpack.dev.js')
         else:
             config = os.path.join(self.project_folder, 'webpack.prod.js')
-        process = subprocess.run(['npx', 'webpack-cli', '-c', config])
+        process = subprocess.run([self.npx, 'webpack-cli', '-c', config])
         process.check_returncode()
 
     def html(self):
