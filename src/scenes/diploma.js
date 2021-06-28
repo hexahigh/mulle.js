@@ -61,7 +61,7 @@ class DiplomaState extends MulleState {
     this.userName.setTextBounds(150, this.header.height + this.header.y - 6, 303, 43)
     this.scroll_layer.add(this.userName)
 
-    this.forCarText = new Phaser.Text(this.game,  0, 0, strings[this.DirResource][87], {
+    this.forCarText = new Phaser.Text(this.game,  0, 0, strings[this.DirResource][69], {
       font: '24pt Arial',
       boundsAlignH: 'center',
       boundsAlignV: 'center'
