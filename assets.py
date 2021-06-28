@@ -12,36 +12,9 @@ from PyTexturePacker import Utils as PyTexturePackerUtils
 
 from audiosprite import AudioSprite
 from build_scripts.parse_animation_chart import parse_animation_chart
+from build_scripts.MulleResource import MulleResource
+from build_scripts.data import director_data
 
-try:
-    from build_scripts.data import director_data
-except ImportError:
-    from .build_scripts.data import director_data
-
-
-class MulleResource:
-
-	def __init__(self, name):
-
-		self.name = name
-		self.files = []
-
-		self.opaque = False
-
-	def addFile( self, opt ):
-
-		if (type(opt['num']) is str and '-' in opt['num']) or type(opt['num']) == list:
-			if type(opt['num']) == list:
-				files = opt['num']
-			else:
-				files = opt['num'].split('-')
-
-			for i in range( int(files[0]), int(files[1]) + 1 ):
-				self.addFile({ 'dir': opt['dir'], 'lib': opt['lib'], 'num': i })
-
-		else:
-
-			self.files.append(opt)
 
 optimizeImages = int(sys.argv[1])
 
