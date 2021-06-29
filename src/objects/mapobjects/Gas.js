@@ -6,7 +6,7 @@ MapObject.onCreate = function () {
 
 }
 
-MapObject.onEnterInner = function (car) {
+MapObject.onEnterOuter = function (car) {
   console.log('fill gas')
 
   var snd = this.game.mulle.playAudio('31e006v0')
