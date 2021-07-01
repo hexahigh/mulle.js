@@ -57,7 +57,9 @@ class movingAnimation {
     let x
     let y
 
-    if (this.offsetX === 0 && this.offsetY === 0) { [x, y] = DirectorHelper.CenterToOuter(this.frames[frameNum].x, this.frames[frameNum].y, this.frames[frameNum].h, this.frames[frameNum].w) } else {
+    if (this.offsetX === 0 && this.offsetY === 0) {
+      [x, y] = DirectorHelper.CenterToOuter(this.frames[frameNum].x, this.frames[frameNum].y, this.frames[frameNum].h, this.frames[frameNum].w)
+    } else {
       x = this.frames[frameNum].x - this.offsetX
       y = this.frames[frameNum].y - this.offsetY
     }
@@ -105,9 +107,13 @@ class movingAnimation {
 
   setNextFrame () {
     this.setFrame(this.currentFrame + 1)
-    if (this.currentFrame + 1 < this.frameCount) { game.time.events.add(this.delay, this.setNextFrame, this) } else if (this.destroy) {
+    if (this.currentFrame + 1 < this.frameCount) {
+      game.time.events.add(this.delay, this.setNextFrame, this)
+    } else if (this.destroy) {
       this.sprite.destroy()
-      if (this.callback !== undefined) { this.callback.apply(this.callbackContext) }
+      if (this.callback !== undefined) {
+        this.callback.apply(this.callbackContext)
+      }
     }
   }
 
