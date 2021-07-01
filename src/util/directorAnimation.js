@@ -33,15 +33,17 @@ class directorAnimation {
     }
 
     const DirectorFrames = []
+    const DirectorFramesObjects = []
     let key, frame
     for (const frameName of frames) {
       if (frameName === 'Dummy')
         continue
       [key, frame] = DirectorHelper.getDirectorImage(game, movie, frameName)
       DirectorFrames.push(frame.name)
+      DirectorFramesObjects.push(frame)
     }
 
-    return [key, DirectorFrames]
+    return [key, DirectorFrames, DirectorFramesObjects]
   }
 
   /**

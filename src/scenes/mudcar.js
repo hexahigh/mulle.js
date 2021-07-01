@@ -25,7 +25,7 @@ class MudCarState extends MulleState {
 
     let suckFrames = [1,1,1,1,1,2,3,3,3,3,3,3,3,2]
     suckFrames = directorAnimation.offset(suckFrames, 25)
-    const [, suckFrameSprites] = directorAnimation.resolveDirectorFrames(this.game, this.dirResource, suckFrames)
+    const [, suckFrameSprites,] = directorAnimation.resolveDirectorFrames(this.game, this.dirResource, suckFrames)
     const suckAnimation = driverHead.animations.add('suck', suckFrameSprites, 12, true)
     // suckAnimation.onComplete.add(this.checkStrength, this)
     driverHead.animations.play('suck')
@@ -109,7 +109,7 @@ class MudCarState extends MulleState {
   weakCar () {
     let weakFrames = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 4, 4, 3, 3, 2, 2, 4, 4, 5, 5, 5, 5, 5]
     weakFrames = directorAnimation.offset(weakFrames, 33)
-    const [key, weakFrameSprites] = directorAnimation.resolveDirectorFrames(this.game, this.dirResource, weakFrames)
+    const [, weakFrameSprites,] = directorAnimation.resolveDirectorFrames(this.game, this.dirResource, weakFrames)
     const weakAnimation = this.rope.animations.add('weak', weakFrameSprites, 12)
 
     console.log('Engine too weak')
