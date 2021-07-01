@@ -26,6 +26,22 @@ class DirectorHelper {
   }
 
   /**
+   * Get frame from sprite sheet
+   * @param {string} spriteSheetKey
+   * @param {string|int} castNumber Cast number
+   * @returns {Phaser.Frame}
+   */
+  static getSpriteSheetImage(spriteSheetKey, castNumber) {
+    const spriteSheet = game.cache.getImage(spriteSheetKey, true)
+    for (const frame of spriteSheet.frameData.getFrames()) {
+      if (frame.dirNum === castNumber) {
+        return frame
+      }
+    }
+    console.error('No image with cast number', castNumber)
+  }
+
+  /**
    * Get sprite by director movie and cast number
    * @param {string} movie Director movie
    * @param {string} member Director cast member
