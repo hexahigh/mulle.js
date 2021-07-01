@@ -109,11 +109,12 @@ class movingAnimation {
     this.setFrame(this.currentFrame + 1)
     if (this.currentFrame + 1 < this.frameCount) {
       game.time.events.add(this.delay, this.setNextFrame, this)
-    } else if (this.destroy) {
-      this.sprite.destroy()
-      if (this.callback !== undefined) {
+    } else {
+      if (this.destroy)
+        this.sprite.destroy()
+
+      if (this.callback !== undefined)
         this.callback.apply(this.callbackContext)
-      }
     }
   }
 
