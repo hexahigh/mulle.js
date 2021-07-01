@@ -24,11 +24,8 @@ class MudCarState extends MulleState {
     const driverHead = DirectorHelper.sprite(this.game, 412, 216, this.dirResource, 26)
     this.car_layer.add(driverHead)
 
-    let suckFrames = [1,1,1,1,1,2,3,3,3,3,3,3,3,2]
-    suckFrames = directorAnimation.offset(suckFrames, 25)
-    const [, suckFrameSprites,] = directorAnimation.resolveDirectorFrames(this.game, this.dirResource, suckFrames)
-    const suckAnimation = driverHead.animations.add('suck', suckFrameSprites, 12, true)
-    // suckAnimation.onComplete.add(this.checkStrength, this)
+    const suckFrames = this.animations['TittAnimChart']['Actions']['suck']
+    directorAnimation.addAnimation(driverHead, 'suck', suckFrames, 26, true)
     driverHead.animations.play('suck')
 
     //Help! i'm stuck in the mud
@@ -83,10 +80,8 @@ class MudCarState extends MulleState {
     this.addPart()
     this.game.mulle.playAudio('82e002v0', () => { this.buffaEnterAnimation() })
 
-    let strongFrames = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5]
-    strongFrames = directorAnimation.offset(strongFrames, 33)
-    const [, strongFrameSprites,] = directorAnimation.resolveDirectorFrames(this.game, this.dirResource, strongFrames)
-    const strongAnimation = this.rope.animations.add('strong', strongFrameSprites, 12)
+    let strongFrames = this.animations['StrongCarAnimChart']['Actions']['strong']
+    const strongAnimation = directorAnimation.addAnimation(this.rope, 'strong', strongFrames, 34)
     strongAnimation.onComplete.add(this.pullCar, this)
     this.rope.animations.play('strong', 12)
   }
@@ -108,10 +103,8 @@ class MudCarState extends MulleState {
   }
 
   weakCar () {
-    let weakFrames = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 4, 4, 3, 3, 2, 2, 4, 4, 5, 5, 5, 5, 5]
-    weakFrames = directorAnimation.offset(weakFrames, 33)
-    const [, weakFrameSprites,] = directorAnimation.resolveDirectorFrames(this.game, this.dirResource, weakFrames)
-    const weakAnimation = this.rope.animations.add('weak', weakFrameSprites, 12)
+    let weakFrames = this.animations['WeakCarAnimChart']['Actions']['Svag']
+    directorAnimation.addAnimation(this.rope, 'weak', weakFrames, 34)
 
     console.log('Engine too weak')
     this.rope.animations.play('weak', 12, true)
