@@ -4,16 +4,13 @@ class directorAnimation {
   /**
    *
    * @param {array} frames
-   * @param {int|string} offset Offset number or frame name
+   * @param {int} offset Offset number
    * @return {[]}
    */
-  static offset(frames, offset) {
+  static offset (frames, offset) {
     const framesOffset = []
-    if(typeof(offset)==='string') {
-      DirectorHelper.getDirectorImage()
-    }
 
-    for(const frame of frames) {
+    for (const frame of frames) {
       framesOffset.push(frame + offset)
     }
     return framesOffset
