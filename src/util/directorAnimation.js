@@ -19,9 +19,9 @@ class directorAnimation {
   /**
    * Resolve a list of director frame numbers
    * @param {MulleGame|Phaser.Game} game
-   * @param {string} movie
-   * @param {array} frames
-   * @return {array}
+   * @param {string} movie Director movie
+   * @param {array} frames List of frames relative to first frame
+   * @return {array} Resolved frames
    */
   static resolveDirectorFrames (game, movie, frames) {
     if (!movie) {
@@ -51,8 +51,7 @@ class directorAnimation {
    * @param {array} frames Frames relative to first frame
    * @return {array} Resolved frames
    */
-  static createAnimation(game, movie, firstFrame, frames)
-  {
+  static createAnimation (game, movie, firstFrame, frames) {
     const offset_frames = directorAnimation.offset(frames, firstFrame - 1)
     return this.resolveDirectorFrames(game, movie, offset_frames)
   }
