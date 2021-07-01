@@ -22,13 +22,13 @@ class DiplomaState extends MulleState {
     this.ui_layer = this.game.add.group()
     this.scroll_layer = this.game.add.group()
 
-    this.header = DirectorHelper.sprite(this.game, 14,2, this.DirResource, 71, false)
+    this.header = DirectorHelper.sprite(this.game, 14,2, this.DirResource, 71, false, false)
 
     this.scroll_layer.add(this.header)
 
     this.rightMenuRectangle = new Phaser.Rectangle(0, -9, 587, 503)
 
-    this.wood = DirectorHelper.sprite(this.game, 614, 240, this.DirResource, 15, true)
+    this.wood = DirectorHelper.sprite(this.game, 614, 240, this.DirResource, 15)
     this.ui_layer.add(this.wood)
 
     this.upButton = DirectorHelper.button(this.game, 612, 20, this.scrollUp, this, this.DirResource, 17, 17, true)

@@ -64,7 +64,10 @@ class MudCarState extends MulleState {
     /*this.game.mulle.playAudio('82d006v0', () => {
 
     }*/
-    const mulle = new MulleActor(this.game, -59, 166, 'mulleDefault')
+    const mulle = new MulleActor(this.game, 15, 254, 'mulleDefault')
+    const buffa = DirectorHelper.sprite(this.game, 218, 244, this.dirResource, 57)
+    this.game.add.existing(buffa)
+
     mulle.talkAnimation = 'talkRegular'
     mulle.silenceAnimation = 'idle'
     this.game.add.existing(mulle)
@@ -97,7 +100,7 @@ class MudCarState extends MulleState {
     JustDoItAnimation.play()
 
     const JustDoItRope = this.game.cache.getJSON('JustDoIt_rope')
-    const JustDoItRopeAnimation = new movingAnimation(this.game, this.dirResource, JustDoItRope, 12, 320, -43)
+    const JustDoItRopeAnimation = new movingAnimation(this.game, this.dirResource, JustDoItRope)
     this.game.add.existing(JustDoItRopeAnimation.sprite)
     JustDoItRopeAnimation.play()
     // TODO: Medal
@@ -129,13 +132,13 @@ class MudCarState extends MulleState {
     this.background_layer = this.game.add.group()
     this.car_layer = this.game.add.group()
 
-    const background = DirectorHelper.sprite(this.game, 0, 0, this.dirResource, 1)
+    const background = DirectorHelper.sprite(this.game, 320, 240, this.dirResource, 1)
     this.background_layer.add(background)
 
-    this.stuckCar = DirectorHelper.sprite(this.game, 389, 279, this.dirResource, 43, true)
+    this.stuckCar = DirectorHelper.sprite(this.game, 389, 279, this.dirResource, 43)
     this.car_layer.add(this.stuckCar)
 
-    this.rope = DirectorHelper.sprite(this.game, 3, 291, this.dirResource, 34, false)
+    this.rope = DirectorHelper.sprite(this.game, 321, 248, this.dirResource, 34)
     this.car_layer.add(this.rope)
 
     this.driverAnimation()

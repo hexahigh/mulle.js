@@ -499,7 +499,7 @@ class MulleDriveCar extends MulleSprite {
             } else {
               if (!this.game.mulle.user.Car.hasMedal(3)) {
                 this.game.mulle.user.Car.addMedal(3)
-                const medal_sprite = DirectorHelper.sprite(this.game, 16, 420, this.DirResource, 71)
+                const medal_sprite = DirectorHelper.sprite(this.game, 16, 420, this.DirResource, 71, false, false) //TODO: Add blink
                 this.game.add.existing(medal_sprite)
               }
 

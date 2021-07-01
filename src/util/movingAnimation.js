@@ -21,18 +21,21 @@ class movingAnimation {
    * @param {int} offsetX
    * @param {int} offsetY
    * @param {boolean} destroy Destroy sprite after animation
+   * @param {boolean} director_pos Use position without conversion
    */
-  constructor (game, movie, frames, fps = 12, offsetX = 0, offsetY = 0, destroy = true) {
+  constructor (game, movie, frames, fps = 12, offsetX = 0, offsetY = 0, destroy = true, director_pos = true) {
     this.game = game
     this.movie = movie
     this.frames = frames
     this.offsetX = offsetX
     this.offsetY = offsetY
     this.destroy = destroy
+    this.director_pos = director_pos
 
-    const [spriteSheet, spriteFrames] = this.resolveCastToSprites()
+    const [spriteSheet, spriteFrames, spriteFrameObjects] = this.resolveCastToSprites()
     this.spriteSheet = spriteSheet
     this.spriteFrames = spriteFrames
+    this.spriteFrameObjects = spriteFrameObjects
     this.createSprite()
 
     this.frameCount = frames.length
@@ -68,9 +71,13 @@ class movingAnimation {
   }
 
   createSprite () {
-    const [x, y] = this.getPosition(0)
-
-    this.sprite = new Phaser.Sprite(this.game, x, y, this.spriteSheet, this.spriteFrames[0])
+    if (!this.director_pos) {
+      const [x, y] = this.getPosition(0)
+      this.sprite = new Phaser.Sprite(this.game, x, y, this.spriteSheet, this.spriteFrameObjects[0].name)
+    } else {
+      this.sprite = new Phaser.Sprite(this.game, null, null, this.spriteSheet)
+      this.setFrame(0)
+    }
     this.currentSprite = this.spriteFrames[0]
     this.currentFrame = 0
   }
@@ -91,13 +98,18 @@ class movingAnimation {
    * @param {int} frameNum
    */
   setFrame (frameNum) {
-    const frame = this.frames[frameNum]
-    // console.log('Set frame', frameNum, frame['x'], frame['y'], frame['h'], frame['w'])
     this.currentFrame = frameNum
-    // const [x, y] = DirectorHelper.CenterToOuter(frame['x'], frame['y'], frame['h'], frame['w'])
-    const [x, y] = this.getPosition(frameNum)
-    this.sprite.x = x
-    this.sprite.y = y
+    if (!this.director_pos) {
+      const [x, y] = this.getPosition(frameNum)
+      this.sprite.x = x
+      this.sprite.y = y
+    } else {
+      const frame = this.spriteFrameObjects[frameNum]
+      this.sprite.x = this.frames[frameNum].x
+      this.sprite.y = this.frames[frameNum].y
+      this.sprite.pivot = frame.regpoint
+    }
+
     if (this.spriteFrames[frameNum] !== this.currentSprite) {
       console.log(`Set texture to ${this.spriteFrames[frameNum]} at frame ${frameNum}`)
       this.sprite.loadTexture(this.spriteSheet, this.spriteFrames[frameNum])

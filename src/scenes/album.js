@@ -228,7 +228,7 @@ class AlbumState extends MulleState {
     this.background_layer.add(this.background)
 
     // Car name
-    this.name_input = DirectorHelper.sprite(this.game, 210, 427, this.DirResource, 101)
+    this.name_input = DirectorHelper.sprite(this.game, 210, 427, this.DirResource, 101, false, false)
     this.album_ui.add(this.name_input)
     this.carName = new TextInput(this.game, this.name_input.x + 5, this.name_input.y + 5, 203, 20)
     this.carName.id('car_name')

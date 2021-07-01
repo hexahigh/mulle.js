@@ -145,9 +145,10 @@ class DirectorHelper {
    * @param {string} movie Director movie
    * @param {int|string} member Director cast number or name
    * @param {boolean} center Treat given coordinates as center and convert to top left
+   * @param {boolean} use_regpoint Use Director regpoint as Phaser pivot point
    * @return {Phaser.Sprite}
    */
-  static sprite (game, x, y, movie, member, center = false) {
+  static sprite (game, x, y, movie, member, center = false, use_regpoint = true) {
     const [key, frame] = this.getDirectorImage(game, movie, member)
     if (x === null && y === null) {
       x = 320 - frame.regpoint.x
@@ -158,7 +159,10 @@ class DirectorHelper {
       [x, y] = this.CenterToOuter(x, y, frame.height, frame.width)
     }
 
-    return new Phaser.Sprite(game, x, y, key, frame.name)
+    const sprite = new Phaser.Sprite(game, x, y, key, frame.name)
+    if (use_regpoint)
+      sprite.pivot = frame.regpoint
+    return sprite
   }
 
   /**
