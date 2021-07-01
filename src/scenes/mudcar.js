@@ -14,13 +14,14 @@ class MudCarState extends MulleState {
     this.dirResource = '82.DXR'
     this.game.load.json('JustDoIt_car', 'data/score/82.DXR_JustDoIt_4.json')
     this.game.load.json('JustDoIt_rope', 'data/score/82.DXR_JustDoIt_5.json')
+    this.game.load.json('MudcarAnimations', 'data/82.DXR-animations.json')
   }
 
   /**
    * Animation "titt", driver talks on the phone
    */
   driverAnimation() {
-    const driverHead = DirectorHelper.sprite(this.game, 412, 216, this.dirResource, 26, true)
+    const driverHead = DirectorHelper.sprite(this.game, 412, 216, this.dirResource, 26)
     this.car_layer.add(driverHead)
 
     let suckFrames = [1,1,1,1,1,2,3,3,3,3,3,3,3,2]
@@ -80,11 +81,11 @@ class MudCarState extends MulleState {
 
   strongCar () {
     this.addPart()
-    this.game.mulle.playAudio('82e002v0', () => { this.findPart() })
+    this.game.mulle.playAudio('82e002v0', () => { this.buffaEnterAnimation() })
 
     let strongFrames = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5]
     strongFrames = directorAnimation.offset(strongFrames, 33)
-    const [, strongFrameSprites] = directorAnimation.resolveDirectorFrames(this.game, this.dirResource, strongFrames)
+    const [, strongFrameSprites,] = directorAnimation.resolveDirectorFrames(this.game, this.dirResource, strongFrames)
     const strongAnimation = this.rope.animations.add('strong', strongFrameSprites, 12)
     strongAnimation.onComplete.add(this.pullCar, this)
     this.rope.animations.play('strong', 12)
@@ -103,7 +104,7 @@ class MudCarState extends MulleState {
     const JustDoItRopeAnimation = new movingAnimation(this.game, this.dirResource, JustDoItRope)
     this.game.add.existing(JustDoItRopeAnimation.sprite)
     JustDoItRopeAnimation.play()
-    // TODO: Medal
+    this.game.mulle.user.Car.addCache('#RescuedMudCar')
   }
 
   weakCar () {
@@ -124,6 +125,27 @@ class MudCarState extends MulleState {
 
   }
 
+  buffaEnterAnimation () {
+    const sittFrames = this.animations['SittAnimChart']['Actions']['Sitt']
+    let x = -16
+    const step = 5
+    let pos = 0
+    const offset = 50
+    let frames = []
+    for (const cast of sittFrames) {
+      frames[pos] = {
+        x: x + (step * pos),
+        y: 239,
+        cast: offset + pos
+      }
+      pos += 1
+    }
+
+    this.buffaAnimation = new movingAnimation(this.game, this.dirResource, frames)
+    this.game.add.existing(this.buffaAnimation.sprite)
+    this.buffaAnimation.play(this.findPart, this)
+  }
+
   create () {
     super.create()
     this.game.mulle.addAudio('mudcar')
@@ -140,6 +162,7 @@ class MudCarState extends MulleState {
 
     this.rope = DirectorHelper.sprite(this.game, 321, 248, this.dirResource, 34)
     this.car_layer.add(this.rope)
+    this.animations = this.game.cache.getJSON('MudcarAnimations')
 
     this.driverAnimation()
   }
