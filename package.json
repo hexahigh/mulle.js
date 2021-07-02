@@ -4,7 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build": "gulp",
+		"build": "python3 build_scripts/build.py build",
+	  	"build-prod": "python3 build_scripts/build.py build-prod",
+	  	"clean": "python3 build_scripts/cleanup.py",
 		"start": "webpack serve --config webpack.dev.js",
 		"start-prod": "webpack serve --config webpack.prod.js",
 		"server": "node server/server.js"
