@@ -45,23 +45,29 @@ class Build:
             self.npm = 'npm'
             self.npx = 'npx'
 
-    def scores(self):
+    def drxtract(self, movie_file):
         drxtract_folder = os.path.join(self.build_folder, 'drxtract')
         if not os.path.exists(drxtract_folder):
             repo = Repo.clone_from('https://github.com/System25/drxtract.git', drxtract_folder)
             repo.git.checkout('be17978bb9dcf220f2c97c1b0f7a19022a95c001')
 
+        movie_name = os.path.basename(movie_file)
+        movie_dir = os.path.dirname(movie_file)
+        extract_folder = os.path.join(movie_dir, 'drxtract', movie_name)
+        os.makedirs(extract_folder, exist_ok=True)
+
+        drxtract_run = subprocess.run([sys.executable, 'drxtract', 'pc', movie_file, extract_folder],
+                                      cwd=drxtract_folder, capture_output=True)
+        drxtract_run.check_returncode()
+        return extract_folder
+
+    def scores(self):
         files = glob.glob('%s/8*' % self.movie_folder)
         if not files:
             raise RuntimeError('No movies found for glob 8*')
+
         for movie_file in files:
-            movie_name = os.path.basename(movie_file)
-            movie_dir = os.path.dirname(movie_file)
-            extract_folder = os.path.join(movie_dir, 'drxtract', movie_name)
-            os.makedirs(extract_folder, exist_ok=True)
-            drxtract_run = subprocess.run([sys.executable, 'drxtract', 'pc', movie_file, extract_folder],
-                                          cwd=drxtract_folder, capture_output=True)
-            drxtract_run.check_returncode()
+            extract_folder = self.drxtract(movie_file)
             score_script = os.path.join(self.script_folder, 'score', 'score.py')
 
             try:
@@ -69,7 +75,6 @@ class Build:
                                capture_output=True).check_returncode()
 
             except subprocess.CalledProcessError as e:
-                print('Output from drextract', drxtract_run.stdout.decode('utf-8'))
                 print('Output from score:', e.stderr.decode('utf-8'))
                 raise e
 
