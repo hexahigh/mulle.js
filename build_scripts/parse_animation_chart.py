@@ -4,8 +4,7 @@ import re
 def parse_animation_chart(animation_chart):
     matches_outer = re.match(r'\[#Actions:\[(.+)\], #Paths:\[(.*)\]\]', animation_chart)
     if not matches_outer:
-        print('Unable to parse: %s' % animation_chart)
-        return
+        raise RuntimeError('Unable to parse "%s" as animation' % animation_chart)
     animations = {}
 
     for action_match in re.findall(r'#([a-zA-Z0-9]+):\[(.*?)\](?:, |$)', matches_outer.group(1)):
