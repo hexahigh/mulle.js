@@ -122,7 +122,7 @@ data = {
             [97, 115],
         ],
     },
-    '82.DXR': {
+    '82.DXR': {  # Mudcar
         'folder': 'Internal',
         'identical': [
             1,
@@ -135,7 +135,7 @@ data = {
             174,
             [200, 202],
         ],
-        'opaque': [1, 18, 19, [26, 31]],
+        'opaque': [1, 18, 19],
     },
     '83.DXR': {  # Tree
         'folder': 'Internal',
