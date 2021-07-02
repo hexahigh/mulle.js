@@ -6,6 +6,10 @@ import partUtil from '../util/partUtil'
 import blinkThing from '../util/blinkThing'
 import MulleActor from '../objects/actor'
 
+/**
+ * Car stuck in mud
+ * 82.DXR
+ */
 class MudCarState extends MulleState {
   preload () {
     super.preload()
@@ -77,6 +81,7 @@ class MudCarState extends MulleState {
   }
 
   strongCar () {
+    this.moose()
     this.addPart()
     this.game.mulle.playAudio('82e002v0', () => { this.buffaEnterAnimation() })
 
@@ -103,6 +108,7 @@ class MudCarState extends MulleState {
   }
 
   weakCar () {
+    this.moose()
     let weakFrames = this.animations['WeakCarAnimChart']['Actions']['Svag']
     directorAnimation.addAnimation(this.rope, 'weak', weakFrames, 34)
 
@@ -137,6 +143,14 @@ class MudCarState extends MulleState {
     this.buffaAnimation = new movingAnimation(this.game, this.dirResource, frames)
     this.game.add.existing(this.buffaAnimation.sprite)
     this.buffaAnimation.play(this.findPart, this)
+  }
+
+  moose() {
+    const mooseFrames = this.animations['MooseAnimChart']['Actions']['Blink']
+    const mooseSprite = DirectorHelper.sprite(this.game, 87, 155, this.dirResource, 18)
+    this.game.add.existing(mooseSprite)
+    directorAnimation.addAnimation(mooseSprite, 'blink', mooseFrames, 18)
+    mooseSprite.animations.play('blink', 12, false, true)
   }
 
   create () {
