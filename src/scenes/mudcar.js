@@ -45,7 +45,7 @@ class MudCarState extends MulleState {
   checkStrength() {
     const strength = this.game.mulle.user.Car.getProperty('strength')
     console.log('Car strength is', strength)
-    if (strength < 1) { // TODO: Check number
+    if (strength <= 2) {
       this.weakCar()
     } else {
       this.strongCar()
