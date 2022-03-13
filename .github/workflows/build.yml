@@ -104,3 +104,8 @@ jobs:
 
       - name: Build assets
         run: python build_scripts/build.py ${{ matrix.language }} assets
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist-${{ matrix.language }}
+          path: dist
