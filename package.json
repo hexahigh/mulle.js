@@ -37,6 +37,6 @@
 		"maxrects-packer": "^1.2.0",
 		"moment": "^2.20.1",
 		"typescript": "^2.7.2",
-		"webpack-dev-server": "next"
+		"webpack-dev-server": "^4.0.0"
 	}
 }
